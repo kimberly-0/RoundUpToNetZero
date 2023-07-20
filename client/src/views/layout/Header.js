@@ -3,13 +3,13 @@ import { FaBell } from 'react-icons/fa';
 
 function Header() {
     return (
-        <div className='header'>
-            <div className='header__title'>
-                <img />
-                <h1>Round Up to Net Zero</h1>
+        <header className='header'>
+            <div className='header__title-box'>
+                <p className='logo'>0</p>
+                <h1 className='title'>Round Up to <span className='highlighted'>Net</span> Zero</h1>
             </div>
-            <p><FaBell /></p>
-        </div>
+            <a className='notifications-button'><FaBell /></a>
+        </header>
     )
 }
 
