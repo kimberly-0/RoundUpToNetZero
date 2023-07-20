@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { FaLeaf } from 'react-icons/fa';
 
 export default function InvestmentHistory() {
@@ -5,7 +6,10 @@ export default function InvestmentHistory() {
         <div className='component-container investment-history-container'>
             <div className='component-header'>
                 <h3 className='component-title'>Investment history</h3>
-                <button className='component-button'>+ Invest now</button>
+                <Link 
+                    to='/invest'
+                    className='component-button'
+                >+ Invest now</Link>
             </div>
 
             <table>
