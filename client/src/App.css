@@ -7,6 +7,7 @@
   --text-grey: #72767C;
   --text-light-grey: #C4C4C4;
   --blue-grey: #F3F5F8;
+  --black: #242731;
   --dark-green: #2B4F43;
   --green: #719771;
   --light-green: #D6E4D6;
@@ -26,6 +27,7 @@ body {
   font-family: 'DM Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--black);
   background-color: var(--background-light-grey);
 }
 
