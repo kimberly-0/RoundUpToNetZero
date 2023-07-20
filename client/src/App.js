@@ -1,6 +1,5 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import Layout from './views/layout/Layout';
 import LogIn from './views/pages/LogIn';
 import Dashboard from './views/pages/Dashboard';
 import TransactionHistory from './views/pages/TransactionHistory';
