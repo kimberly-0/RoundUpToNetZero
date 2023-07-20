@@ -158,7 +158,7 @@ body {
 /* -------- Components -------- */
 
 .component-container {
-  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  padding: 1rem 1.3rem;
   border-radius: 1rem;
   background-color: var(--white);
   text-align: left;
@@ -189,6 +189,7 @@ body {
   background-color: var(--dark-green);
   color: var(--white);
   font-weight: 600;
+  text-decoration: none;
 }
 
 .component-container table {
@@ -230,9 +231,10 @@ body {
 }
 
 .balance-container .balance-title {
-  margin: 0 0 .5rem 0;
+  margin: .8rem 0;
   color: var(--text-grey);
   font-weight: 600;
+  font-size: 1rem;
 }
 
 .balance-container .balance-amount {
