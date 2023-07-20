@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path='/' element={<LogIn />} />
+        <Route path='/' element={<Dashboard />} />
         <Route path='/log-in' element={<LogIn />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/transaction-history' element={<TransactionHistory />} />
