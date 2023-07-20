@@ -8,7 +8,7 @@ function Header() {
                 <p className='logo'>0</p>
                 <h1 className='title'>Round Up to <span className='highlighted'>Net</span> Zero</h1>
             </div>
-            <a href='#' className='notifications-button'><FaBell /></a>
+            <button className='notifications-button'><FaBell /></button>
         </header>
     )
 }
