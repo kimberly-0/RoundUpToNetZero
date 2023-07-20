@@ -1,12 +1,12 @@
 import Header from './Header';
-import SideMenu from './SideMenu';
+import SideNav from './SideNav';
 
 const Layout = ({ children }) => {
     return(
         <>
             <Header />
 
-            <SideMenu />
+            <SideNav />
 
             <main>{ children }</main>
         </>
