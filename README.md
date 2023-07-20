@@ -6,7 +6,7 @@ Building a Sustainable Future, One Rounded-Up Purchase at a Time
 
 Click [here](https://www.figma.com/proto/0RjM1GiPZ0zNG4QvFowbPQ/Round-Up-To-Net-Zero-(prototype)---Kimberly-D.?type=design&node-id=17-186&t=QxbcOKGL35xFT1y3-1&scaling=min-zoom&page-id=0%3A1&starting-point-node-id=17%3A186) to view the Figma prototype
 
-Click [here]() to view the presentation slides
+Click [here](https://www.dropbox.com/scl/fi/ahjwhf58b6czipxrld2wn/Kimberly-D_IEUK23_Technology-Presentation.pdf?rlkey=py7k9wgwfc3u3mz30jdna9dhb&dl=0) to view the presentation slides
 
 ## Getting started
 
