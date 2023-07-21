@@ -217,6 +217,22 @@ body {
   font-weight: 500;
 }
 
+.component-container table .align-right {
+  text-align: right;
+}
+
+.impact-icon.high {
+  color: var(--green);
+}
+
+.impact-icon.medium {
+  color: var(--yellow);
+}
+
+.impact-icon.low {
+  color: var(--orange);
+}
+
 .balance-container {
   display: flex;
   flex-direction: row;
