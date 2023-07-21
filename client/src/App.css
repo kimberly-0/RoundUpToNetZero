@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400&display=swap');
 
 :root {
+  font-size: 14px;
   --background-light-grey: #F5F5F5;
   --text-dark-grey: #5F6165;
   --text-grey: #72767C;
@@ -26,7 +27,6 @@
 
 body {
   margin: 0;
-  font-size: 14px;
   font-family: 'DM Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -160,6 +160,71 @@ body {
   flex-basis: 0;
 }
 
+.page-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.page-header__info {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.balanace-info {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  padding: .7rem 1.2rem;
+  border-radius: 1.5rem;
+  background-color: var(--white);
+  color: var(--text-grey);
+}
+
+.balance-info__label, .balance-info__amount {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.balanace-info.coloured {
+  background-color: var(--green);
+  color: var(--white);
+}
+
+.balanace-info.coloured .balance-info__label {
+  color: var(--light-green);
+}
+
+.balanace-info.coloured .balance-info__amount {
+  font-weight: 700;
+}
+
+.page-header__buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.rounded-button {
+  border: none;
+  border-radius: 1.5rem;
+  padding: .7rem 1.2rem;
+  background-color: var(--white);
+  color: var(--text-grey);
+  font-size: 1rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.rounded-button.coloured {
+    background-color: var(--dark-green);
+    color: var(--white);
+}
+
+
 /* -------- Components -------- */
 
 .component-container {
@@ -197,6 +262,7 @@ body {
   text-decoration: none;
   text-align: center;
   margin-left: 10px;
+  white-space: nowrap;
 }
 
 .component-button-text-only {
@@ -204,29 +270,34 @@ body {
   color: var(--text-light-grey);
 }
 
-.component-container table {
+table {
   width: 100%;
   border-collapse: collapse;
   border: none;
   
 }
 
-.component-container table th, .component-container table td {
+table th, table td {
   padding: .8rem 0;
 }
 
-.component-container table th {
+table th {
   border-top: 1.5px solid var(--lines-light-grey);
   color: var(--text-grey);
   font-weight: 600;
 }
 
-.component-container table tr {
+table tr {
   border-top: 1px solid var(--lines-light-grey);
   font-weight: 500;
 }
 
-.component-container table .align-right {
+table tr.top-row, table tr.top-row th {
+  border-top: none;
+  padding-top: 0;
+}
+
+table .align-right {
   text-align: right;
 }
 
