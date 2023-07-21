@@ -3,7 +3,7 @@ import Layout from '../layout/Layout';
 function Invest() {
   return (
     <Layout>
-        <h2>Invest</h2>
+        <h2 className='page-title'>Invest</h2>
     </Layout>
   );
 }
