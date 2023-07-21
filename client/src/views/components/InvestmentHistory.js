@@ -4,30 +4,30 @@ import { FaLeaf } from 'react-icons/fa';
 export default function InvestmentHistory() {
 
     const investments = [{
-        "id": 1,
-        "date": "02/07/2023",
-        "description": "Smart thermostat",
-        "impact": "high"
+        id: 1,
+        date: "02/07/2023",
+        description: "Smart thermostat",
+        impact: "high"
     }, {
-        "id": 2,
-        "date": "15/06/2023",
-        "description": "Electric bicycle",
-        "impact": "high"
+        id: 2,
+        date: "15/06/2023",
+        description: "Electric bicycle",
+        impact: "high"
     }, {
-        "id": 3,
-        "date": "24/05/2023",
-        "description": "Carbon neutral printer",
-        "impact": "medium"
+        id: 3,
+        date: "24/05/2023",
+        description: "Carbon neutral printer",
+        impact: "medium"
     }, {
-        "id": 4,
-        "date": "08/05/2023",
-        "description": "Plant a tree",
-        "impact": "low"
+        id: 4,
+        date: "08/05/2023",
+        description: "Plant a tree",
+        impact: "low"
     }, {
-        "id": 5,
-        "date": "29/04/2023",
-        "description": "Smart plug",
-        "impact": "medium"
+        id: 5,
+        date: "29/04/2023",
+        description: "Smart plug",
+        impact: "medium"
     }];
 
     return (
