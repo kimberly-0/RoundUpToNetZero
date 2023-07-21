@@ -301,18 +301,6 @@ table .align-right {
   text-align: right;
 }
 
-.impact-icon.high {
-  color: var(--green);
-}
-
-.impact-icon.medium {
-  color: var(--yellow);
-}
-
-.impact-icon.low {
-  color: var(--orange);
-}
-
 .balance-container {
   display: flex;
   flex-direction: row;
@@ -353,4 +341,38 @@ table .align-right {
 .balance-container.coloured .balance-amount {
   color: white;  
   font-weight: bold;
+}
+
+.impact-icon.high {
+  color: var(--green);
+}
+
+.impact-icon.medium {
+  color: var(--yellow);
+}
+
+.impact-icon.low {
+  color: var(--orange);
+}
+
+.impact-label {
+  display: inline-block;
+  margin: 0;
+  padding: .1rem .7rem;
+  border-radius: .4rem;
+  color: white;
+  font-weight: 600;
+  align-self: center;
+}
+
+.impact-label.high {
+  background-color: var(--green);
+}
+
+.impact-label.medium {
+  background-color: var(--yellow);
+}
+
+.impact-label.low {
+  background-color: var(--orange);
 }
