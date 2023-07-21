@@ -3,7 +3,7 @@ import Layout from '../layout/Layout';
 function TransactionHistory() {
   return (
     <Layout>
-        <h2>Transaction History</h2>
+        <h2 className='page-title'>Transaction History</h2>
     </Layout>
   );
 }
