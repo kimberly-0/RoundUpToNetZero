@@ -3,7 +3,7 @@ export default function MoneyBalance({ balances, isColoured }) {
         <div className={`component-container balance-container ${isColoured ? "coloured" : ""}`}>
             {balances.map(balance => {
                 return (
-                    <div>
+                    <div key={balance.id}>
                         <h4 
                             className='balance-title'>
                                 {balance.title}

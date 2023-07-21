@@ -193,6 +193,13 @@ body {
   color: var(--white);
   font-weight: 600;
   text-decoration: none;
+  text-align: center;
+  margin-left: 10px;
+}
+
+.component-button-text-only {
+  text-decoration: none;
+  color: var(--text-light-grey);
 }
 
 .component-container table {
@@ -215,6 +222,22 @@ body {
 .component-container table tr {
   border-top: 1px solid var(--lines-light-grey);
   font-weight: 500;
+}
+
+.component-container table .align-right {
+  text-align: right;
+}
+
+.impact-icon.high {
+  color: var(--green);
+}
+
+.impact-icon.medium {
+  color: var(--yellow);
+}
+
+.impact-icon.low {
+  color: var(--orange);
 }
 
 .balance-container {

@@ -1,6 +1,8 @@
 import Layout from '../layout/Layout';
 import MoneyBalance from '../components/MoneyBalance';
 import InvestmentHistory from '../components/InvestmentHistory';
+import TransactionHistory from '../components/TransactionHistory';
+import ContributionsGraph from '../components/ContributionsGraph';
 
 function Dashboard() {
     return (
@@ -10,6 +12,8 @@ function Dashboard() {
             <div className='columns'>
                 <MoneyBalance 
                     balances={[{
+                        id: 1,
+                        group: 1,
                         title: 'Net Zero Fund',
                         amount: 262.42
                     }]} 
@@ -18,9 +22,13 @@ function Dashboard() {
 
                 <MoneyBalance 
                     balances={[{
+                        id: 2,
+                        group: 2,
                         title: 'Total Net Zero Fund contributions',
                         amount: 780.72
                     }, {
+                        id: 3,
+                        group: 2,
                         title: 'Total invested',
                         amount: 518.30
                     }]} 
@@ -29,8 +37,12 @@ function Dashboard() {
             </div>
 
             <div className='columns'>
-                    <InvestmentHistory />
-                    <InvestmentHistory />
+                <InvestmentHistory />
+                <TransactionHistory />
+            </div>
+
+            <div>
+                <ContributionsGraph />
             </div>
         </Layout>
     );
