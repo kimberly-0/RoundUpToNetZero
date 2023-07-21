@@ -10,6 +10,8 @@ function Dashboard() {
             <div className='columns'>
                 <MoneyBalance 
                     balances={[{
+                        id: 1,
+                        group: 1,
                         title: 'Net Zero Fund',
                         amount: 262.42
                     }]} 
@@ -18,9 +20,13 @@ function Dashboard() {
 
                 <MoneyBalance 
                     balances={[{
+                        id: 2,
+                        group: 2,
                         title: 'Total Net Zero Fund contributions',
                         amount: 780.72
                     }, {
+                        id: 3,
+                        group: 2,
                         title: 'Total invested',
                         amount: 518.30
                     }]} 
