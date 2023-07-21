@@ -1,6 +1,8 @@
 import Layout from '../layout/Layout';
 import MoneyBalance from '../components/MoneyBalance';
 import InvestmentHistory from '../components/InvestmentHistory';
+import TransactionHistory from '../components/TransactionHistory';
+import ContributionsGraph from '../components/ContributionsGraph';
 
 function Dashboard() {
     return (
@@ -35,8 +37,12 @@ function Dashboard() {
             </div>
 
             <div className='columns'>
-                    <InvestmentHistory />
-                    <InvestmentHistory />
+                <InvestmentHistory />
+                <TransactionHistory />
+            </div>
+
+            <div>
+                <ContributionsGraph />
             </div>
         </Layout>
     );
