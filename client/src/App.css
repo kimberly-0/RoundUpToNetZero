@@ -193,6 +193,13 @@ body {
   color: var(--white);
   font-weight: 600;
   text-decoration: none;
+  text-align: center;
+  margin-left: 10px;
+}
+
+.component-button-text-only {
+  text-decoration: none;
+  color: var(--text-light-grey);
 }
 
 .component-container table {
