@@ -14,7 +14,7 @@ export default function TransactionHistory() {
 
     return (
         <Layout>
-            <h2 className='page-title'>Transaction History</h2>
+            <h2 className='page-title'>Transaction history</h2>
 
             <div className='page-header'>
                 <div className='page-header__info'>
