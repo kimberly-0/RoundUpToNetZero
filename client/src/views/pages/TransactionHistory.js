@@ -17,7 +17,7 @@ export default function TransactionHistory() {
             <h2 className='page-title'>Transaction History</h2>
 
             <div className='page-header'>
-                <div className='page-header-info'>
+                <div className='page-header__info'>
                     <div className='balanace-info coloured'>
                         <h6 className='balance-info__label'>Net Zero Fund</h6>
                         <p className='balance-info__amount'>£262.42</p>
@@ -27,17 +27,17 @@ export default function TransactionHistory() {
                         <p className='balance-info__amount'>£780.72</p>
                     </div>
                 </div>
-                <div className='page-header-buttons'>
-                    <select className='filter-button' name="sort-by" id="sort-by"> 
+                <div className='page-header__buttons'>
+                    <select className='rounded-button' name="sort-by" id="sort-by"> 
                         <option value="newest">Newest</option>
                         <option value="oldest">Oldest</option> 
                         <option value="trans-amount">Transaction amount</option> 
                         <option value="contr-amount">Contribution amount</option> 
                     </select>
-                    <button className='filter-button'>Filter</button>
+                    <button className='rounded-button'>Filter</button>
                     <Link 
                         to='/transaction-history' // TO DO: add correct route
-                        className='component-button'
+                        className='rounded-button coloured'
                     >+ Add new</Link>
                 </div>
             </div>
@@ -46,7 +46,7 @@ export default function TransactionHistory() {
                 {transactions?.length > 0 ? (
                     <table>
                         <thead>
-                            <tr>
+                            <tr className='top-row'>
                                 <th>Date</th>
                                 <th>Amount</th>
                                 <th>Rounded up</th>
@@ -56,7 +56,7 @@ export default function TransactionHistory() {
                             </tr>
                         </thead>
                         <tbody>
-                            {transactions.slice(0, 5).map(transaction => 
+                            {transactions.map(transaction => 
                                 <tr key={transaction.id}>
                                     <td>{transaction.date}</td>
                                     <td>{transaction.amount.toFixed(2)}</td>
