@@ -376,3 +376,7 @@ table .align-right {
 .impact-label.low {
   background-color: var(--orange);
 }
+
+.graph-container canvas {
+  max-height: 15rem;
+}
