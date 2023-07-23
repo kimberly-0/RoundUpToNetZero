@@ -80,7 +80,7 @@ function getContributionsPerMonth({ userId, monthsIncluded }) {
             const monthString = ((month < 10) ? ("0" + month) : month).toString();
             const monthYear = monthString + "/" + date.getFullYear();
 
-            const existingContribution = sumContributionsPerMonthYear.find(contribution => contribution.date == monthYear);
+            const existingContribution = sumContributionsPerMonthYear.find(contribution => contribution.date === monthYear);
 
             if (existingContribution) {
                 resultTwo.push(existingContribution)
