@@ -3,8 +3,22 @@ import MoneyBalance from '../components/MoneyBalance';
 import InvestmentHistory from '../components/InvestmentHistory';
 import TransactionHistory from '../components/TransactionHistory';
 import ContributionsGraph from '../components/ContributionsGraph';
+import { useAsync } from '../../hooks/useAsync';
+import { getTotalNZFundContributions } from "../../services/userTransactions";
+import { getTotalInvested } from "../../services/userInvestments";
 
 function Dashboard() {
+
+    const userId = 0;
+
+    const { loadingA, errorA, value: totalNZFundContribution } = useAsync(() => getTotalNZFundContributions({ userId }), [userId]);
+
+    const { loadingB, errorB, value: totalInvested } = useAsync(() => getTotalInvested({ userId }), [userId]);
+
+    if (loadingA || loadingB) return <h1>Loading</h1>
+
+    if (errorA || errorB) return <h1 className="error-msg">{errorA || errorB}</h1>
+    
     return (
         <Layout>
             <h2 className='page-title'>Dashboard</h2>
@@ -12,25 +26,19 @@ function Dashboard() {
             <div className='columns'>
                 <MoneyBalance 
                     balances={[{
-                        id: 1,
-                        group: 1,
                         title: 'Net Zero Fund',
-                        amount: 262.42
+                        amount: (totalNZFundContribution - totalInvested).toFixed(2) || 0
                     }]} 
                     isColoured={true} 
                 />
 
                 <MoneyBalance 
                     balances={[{
-                        id: 2,
-                        group: 2,
                         title: 'Total Net Zero Fund contributions',
-                        amount: 780.72
+                        amount: totalNZFundContribution?.toFixed(2) || 0
                     }, {
-                        id: 3,
-                        group: 2,
                         title: 'Total invested',
-                        amount: 518.30
+                        amount: totalInvested?.toFixed(2) || 0
                     }]} 
                     isColoured={false} 
                 />

@@ -1,9 +1,9 @@
 export default function MoneyBalance({ balances, isColoured }) {
     return (
         <div className={`component-container balance-container ${isColoured ? "coloured" : ""}`}>
-            {balances.map(balance => {
+            {balances.map((balance, i) => {
                 return (
-                    <div key={balance.id}>
+                    <div key={i}>
                         <h4 
                             className='balance-title'>
                                 {balance.title}
