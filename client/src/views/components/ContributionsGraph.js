@@ -72,27 +72,22 @@ function getContributionsPerMonth({ userId, monthsIncluded }) {
             return r;
         }, {}));
 
-        // Create second result array with all months included and set contribution to 0 where there's missing data
-        const resultTwo = [];
-
+        // Create result array with all months included and set contribution to 0 where there's missing data
+        const result = [];
         monthsIncluded.forEach(date => {
             const month = date.getMonth() + 1;
             const monthString = ((month < 10) ? ("0" + month) : month).toString();
             const monthYear = monthString + "/" + date.getFullYear();
 
             const existingContribution = sumContributionsPerMonthYear.find(contribution => contribution.date === monthYear);
-
             if (existingContribution) {
-                resultTwo.push(existingContribution)
+                result.push(existingContribution);
             } else {
-                resultTwo.push({
-                    date: monthString + "/" + date.getFullYear(),
-                    contributed: 0
-                })
+                result.push({date: monthYear, contributed: 0});
             }
         })
 
-        return resultTwo;
+        return result;
 
     }).catch(error => console.log(error));
 }
