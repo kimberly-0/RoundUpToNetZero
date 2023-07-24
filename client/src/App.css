@@ -285,7 +285,11 @@ table {
 }
 
 table th, table td {
-  padding: .8rem 0;
+  padding: .8rem .5rem .8rem 0;
+}
+
+table th:last-child, table td:last-child {
+  padding-right: 0;
 }
 
 table th {
@@ -384,6 +388,13 @@ table .align-right {
   background-color: var(--orange);
 }
 
+.contributions-graph-container {
+  flex-grow: 1;
+  /* height: 100%; */
+}
+
 .graph-container canvas {
-  max-height: 15rem;
+  /* max-height: 15rem; */
+  max-height: 20rem;
+  /* height: 100%; */
 }
