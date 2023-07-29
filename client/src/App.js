@@ -1,5 +1,6 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
+import { useUser } from './hooks/useUser';
 import LogIn from './views/pages/LogIn';
 import Dashboard from './views/pages/Dashboard';
 import TransactionHistory from './views/pages/TransactionHistory';
@@ -9,7 +10,8 @@ import Settings from './views/pages/Settings';
 
 function App() {
 
-  const loggedInUserId = 1;
+  // const loggedInUserId = 1;
+  const loggedInUserId = useUser().id;
 
   return (
     <div className="App">
