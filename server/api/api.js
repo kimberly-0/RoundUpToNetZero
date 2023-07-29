@@ -4,8 +4,8 @@ const app = require('../server');
 const apiRouter = express.Router();
 module.exports = apiRouter;
 
-const onRequestHook = require('./activeUser');
-apiRouter.use(onRequestHook); // fake user login before each request
+// const onRequestHook = require('./activeUser');
+// apiRouter.use(onRequestHook); // fake user login before each request
 
 const investmentsRouter = require('./investments');
 apiRouter.use('/investments', investmentsRouter);
