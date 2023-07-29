@@ -10,10 +10,10 @@ CREATE TABLE "Company" (
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "companyId" TEXT,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "companyId" TEXT,
     CONSTRAINT "User_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -51,14 +51,14 @@ CREATE TABLE "Purchases" (
 -- CreateTable
 CREATE TABLE "Transaction" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "userId" TEXT NOT NULL,
-    "paymethodId" TEXT NOT NULL,
-    "companyId" TEXT,
     "date" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "description" TEXT,
     "amount" DECIMAL NOT NULL,
     "roundedAmount" INTEGER NOT NULL,
     "fundContribution" DECIMAL NOT NULL,
+    "userId" TEXT NOT NULL,
+    "paymethodId" TEXT NOT NULL,
+    "companyId" TEXT,
     CONSTRAINT "Transaction_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Transaction_paymethodId_fkey" FOREIGN KEY ("paymethodId") REFERENCES "Paymethod" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Transaction_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company" ("id") ON DELETE CASCADE ON UPDATE CASCADE
