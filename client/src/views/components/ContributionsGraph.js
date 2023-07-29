@@ -92,11 +92,9 @@ function getContributionsPerMonth({ userId, monthsIncluded }) {
     }).catch(error => console.log(error));
 }
 
-export default function ContributionsGraph() {
+export default function ContributionsGraph({ userId }) {
 
     const pastTwelveMonths = getPastTwelveMonths();
-
-    const userId = 0;
     
     const { loading, error, value: contributionsPerMonth } = useAsync(() => getContributionsPerMonth({ userId, monthsIncluded: pastTwelveMonths }), [userId]);
 

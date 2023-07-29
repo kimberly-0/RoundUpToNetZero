@@ -7,9 +7,7 @@ import { useAsync } from '../../hooks/useAsync';
 import { getTotalNZFundContributions } from "../../services/userTransactions";
 import { getTotalInvested } from "../../services/userInvestments";
 
-function Dashboard() {
-
-    const userId = 0;
+function Dashboard({ userId }) {
 
     const { loadingA, errorA, value: totalNZFundContribution } = useAsync(() => getTotalNZFundContributions({ userId }), [userId]);
 
@@ -18,6 +16,12 @@ function Dashboard() {
     if (loadingA || loadingB) return <h1>Loading</h1>
 
     if (errorA || errorB) return <h1 className="error-msg">{errorA || errorB}</h1>
+
+    const dataNetZeroFund = (typeof (totalNZFundContribution - totalInvested).toFixed(2) === 'number') ? (totalNZFundContribution - totalInvested).toFixed(2) : 0;
+
+    const dataTotalNZFundContributions = (typeof totalNZFundContribution?.toFixed(2) === 'number') ? totalNZFundContribution?.toFixed(2) : 0;
+
+    const dataTotalInvested = (typeof totalInvested?.toFixed(2) === 'number') ? totalInvested?.toFixed(2) : 0;
     
     return (
         <Layout>
@@ -27,7 +31,7 @@ function Dashboard() {
                 <MoneyBalance 
                     balances={[{
                         title: 'Net Zero Fund',
-                        amount: (totalNZFundContribution - totalInvested).toFixed(2) || 0
+                        amount: dataNetZeroFund
                     }]} 
                     isColoured={true} 
                 />
@@ -35,22 +39,22 @@ function Dashboard() {
                 <MoneyBalance 
                     balances={[{
                         title: 'Total Net Zero Fund contributions',
-                        amount: totalNZFundContribution?.toFixed(2) || 0
+                        amount: dataTotalNZFundContributions
                     }, {
                         title: 'Total invested',
-                        amount: totalInvested?.toFixed(2) || 0
+                        amount: dataTotalInvested
                     }]} 
                     isColoured={false} 
                 />
             </div>
 
             <div className='columns'>
-                <InvestmentHistory />
-                <TransactionHistory />
+                <InvestmentHistory userId={userId} />
+                <TransactionHistory userId={userId} />
             </div>
 
             <div>
-                <ContributionsGraph />
+                <ContributionsGraph userId={userId} />
             </div>
         </Layout>
     );

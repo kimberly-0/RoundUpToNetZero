@@ -3,10 +3,11 @@ import { useAsync } from '../../hooks/useAsync';
 import { getInvestments } from '../../services/userInvestments';
 import { FaLeaf } from 'react-icons/fa';
 
-export default function InvestmentHistory() {
+export default function InvestmentHistory({ userId }) {
 
-    const userId = 0;
     const { loading, error, value: investments } = useAsync(() => getInvestments({ userId }), [userId]);
+
+    // console.log("Investments: " + JSON.stringify(investments));
 
     if (loading) return <h1>Loading</h1>
 
@@ -33,10 +34,10 @@ export default function InvestmentHistory() {
                     </thead>
                     <tbody>
                         {investments.slice(0, 5).map(investment => 
-                            <tr key={investment.id}>
+                            <tr key={investment.investment_id}>
                                 <td>{investment.date}</td>
                                 <td>{investment.description}</td>
-                                <td className="align-right"><FaLeaf className={`impact-icon ${investment.impact || ""}`}/></td>
+                                <td className="align-right">{investment.impact && <FaLeaf className={`impact-icon ${investment.impact || ""}`}/>}</td>
                             </tr>
                         )}
                     </tbody>

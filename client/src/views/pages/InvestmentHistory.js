@@ -3,9 +3,8 @@ import { useAsync } from '../../hooks/useAsync';
 import { getInvestments } from '../../services/userInvestments';
 import Layout from '../layout/Layout';
 
-export default function InvestmentHistory() {
+export default function InvestmentHistory({ userId }) {
 
-    const userId = 0;
     const { loading, error, value: investments } = useAsync(() => getInvestments({ userId }), [userId]);
 
     if (loading) return <h1>Loading</h1>
@@ -52,12 +51,12 @@ export default function InvestmentHistory() {
                         </thead>
                         <tbody>
                             {investments.map(investment => 
-                                <tr key={investment.id}>
+                                <tr key={investment.investment_id}>
                                     <td>{investment.date}</td>
                                     <td>{investment.description}</td>
                                     <td>{investment.benefit}</td>
-                                    <td>£{investment.price.toFixed(2)}</td>
-                                    <td><p className={`impact-label ${investment.impact}`}>{investment.impact}</p></td>
+                                    <td>{investment.price && `£${investment.price?.toFixed(2)}`}</td>
+                                    <td>{investment.impact && <p className={`impact-label ${investment.impact}`}>{investment.impact}</p>}</td>
                                 </tr>
                             )}
                         </tbody>
