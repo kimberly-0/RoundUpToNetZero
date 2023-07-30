@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useAsync } from '../../hooks/useAsync';
-import { getInvestments } from '../../services/userInvestments';
+import { getPurchases } from '../../services/userInvestments';
 import Layout from '../layout/Layout';
 
 export default function InvestmentHistory({ userId }) {
 
-    const { loading, error, value: investments } = useAsync(() => getInvestments({ userId }), [userId]);
+    const { loading, error, value: purchases } = useAsync(() => getPurchases({ userId }), [userId]);
 
     if (loading) return <h1>Loading</h1>
 
@@ -38,7 +38,7 @@ export default function InvestmentHistory({ userId }) {
             </div>
 
             <div className='page-table-container component-container'>
-                {investments?.length > 0 ? (
+                {purchases?.length > 0 ? (
                     <table>
                         <thead>
                             <tr className='top-row'>
@@ -50,13 +50,13 @@ export default function InvestmentHistory({ userId }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {investments.map(investment => 
-                                <tr key={investment.investment_id}>
-                                    <td>{investment.date}</td>
-                                    <td>{investment.description}</td>
-                                    <td>{investment.benefit}</td>
-                                    <td>{investment.price && `£${investment.price?.toFixed(2)}`}</td>
-                                    <td>{investment.impact && <p className={`impact-label ${investment.impact}`}>{investment.impact}</p>}</td>
+                            {purchases.map(purchase => 
+                                <tr key={purchase.id}>
+                                    <td>{purchase.date}</td>
+                                    <td>{purchase.investment.description}</td>
+                                    <td>{purchase.investment.benefit}</td>
+                                    <td>{purchase.pricePaid && `£${Number(purchase.pricePaid)?.toFixed(2)}`}</td>
+                                    <td>{purchase.investment.impact && <p className={`impact-label ${purchase.investment.impact}`}>{purchase.investment.impact}</p>}</td>
                                 </tr>
                             )}
                         </tbody>

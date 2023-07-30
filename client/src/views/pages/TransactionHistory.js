@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { useAsync } from '../../hooks/useAsync';
 import { getTransactions } from '../../services/userTransactions';
 import Layout from '../layout/Layout';
-import { convertToDecimalNum } from '../../utils/convertToDecimalNum';
 
 export default function TransactionHistory({ userId }) {
 
@@ -59,10 +58,10 @@ export default function TransactionHistory({ userId }) {
                             {transactions.map(transaction => 
                                 <tr key={transaction.id}>
                                     <td>{transaction.date}</td>
-                                    <td>{convertToDecimalNum(transaction.amount)}</td>
-                                    <td>{convertToDecimalNum(transaction.rounded_amount).substring(0, convertToDecimalNum(transaction.rounded_amount).length - 3)}</td>
-                                    <td>{convertToDecimalNum(transaction.fund_contribution)}</td>
-                                    <td>{transaction.paymethod}</td>
+                                    <td>{Number(transaction.amount)}</td>
+                                    <td>{transaction.roundedAmount}</td>
+                                    <td>{Number(transaction.fundContribution).toFixed(2)}</td>
+                                    <td>{transaction.paymethod.type} ending in {transaction.paymethod.cardNumber}</td>
                                     <td>{transaction.description}</td>
                                 </tr>
                             )}

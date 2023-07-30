@@ -1,15 +1,15 @@
 import { makeRequest  } from './makeRequest';
 
-export function getInvestments({ userId }) {
-    return makeRequest(`/users/${userId}/investments`);
+export function getPurchases({ userId }) {
+    return makeRequest(`/users/${userId}/purchases`);
 }
 
 export function getTotalInvested({ userId }) {
-    return getInvestments({ userId }).then(investments => {
-        if (investments) {
+    return getPurchases({ userId }).then(purchases => {
+        if (purchases) {
             let totalInvested = 0;
-            investments.forEach(investment => {
-                totalInvested += investment.price;
+            purchases.forEach(purchase => {
+                totalInvested += purchase.price;
             })
             return totalInvested;
         }
