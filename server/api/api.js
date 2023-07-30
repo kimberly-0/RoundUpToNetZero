@@ -16,14 +16,11 @@ apiRouter.use('/companies', companiesRouter);
 const usersRouter = require('./users');
 apiRouter.use('/users', usersRouter);
 
-const paymentsRouter = require('./payments');
-usersRouter.use('/:userId/payments', paymentsRouter);
+const paymethodsRouter = require('./paymethods');
+usersRouter.use('/:userId/paymethods', paymethodsRouter);
 
 const transactionsRouter = require('./transactions');
 usersRouter.use('/:userId/transactions', transactionsRouter);
 
-const userInvestmentsRouter = require('./user_investments');
-usersRouter.use('/:userId/investments', userInvestmentsRouter);
-
-const userCompaniesRouter = require('./user_companies');
-usersRouter.use('/:userId/companies', userCompaniesRouter);
+const purchasedInvestmentsRouter = require('./purchasedInvestments');
+usersRouter.use('/:userId/purchases', purchasedInvestmentsRouter);

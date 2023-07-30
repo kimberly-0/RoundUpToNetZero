@@ -7,7 +7,7 @@ async function seed() {
     await prisma.paymethod.deleteMany()
     await prisma.transaction.deleteMany()
     await prisma.investment.deleteMany()
-    await prisma.purchases.deleteMany()
+    await prisma.purchase.deleteMany()
 
     /*
     Create companies
@@ -107,29 +107,29 @@ async function seed() {
     /*
     Create users' purchased investments
     */
-    const purchasedInvestment1 = await prisma.purchases.create({ data: { 
-        purchaseDate: '2023-03-23T00:00:00.000Z', 
+    const purchasedInvestment1 = await prisma.purchase.create({ data: { 
+        date: '2023-03-23T00:00:00.000Z', 
         pricePaid: 337.65,
         userId: johnDoe.id,
         investmentId: coffeeMachine.id,
     }, })
 
-    const purchasedInvestment2 = await prisma.purchases.create({ data: { 
-        purchaseDate: '2023-04-29T00:00:00.000Z', 
+    const purchasedInvestment2 = await prisma.purchase.create({ data: { 
+        date: '2023-04-29T00:00:00.000Z', 
         pricePaid: 31.49,
         userId: johnDoe.id,
         investmentId: smartPlug.id,
     }, })
 
-    const purchasedInvestment3 = await prisma.purchases.create({ data: { 
-        purchaseDate: '2023-05-08T00:00:00.000Z', 
+    const purchasedInvestment3 = await prisma.purchase.create({ data: { 
+        date: '2023-05-08T00:00:00.000Z', 
         pricePaid: 11.99,
         userId: johnDoe.id,
         investmentId: plantATree.id,
     }, })
 
-    const purchasedInvestment4 = await prisma.purchases.create({ data: { 
-        purchaseDate: '2023-07-02T00:00:00.000Z', 
+    const purchasedInvestment4 = await prisma.purchase.create({ data: { 
+        date: '2023-07-02T00:00:00.000Z', 
         pricePaid: 112.98,
         userId: johnDoe.id,
         investmentId: smartThermostat.id,

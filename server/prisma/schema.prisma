@@ -27,7 +27,7 @@ model User {
     password             String
     paymethods           Paymethod[]
     transactions         Transaction[]
-    purchasedInvestments Purchases[]
+    purchasedInvestments Purchase[]
     company              Company?      @relation(fields: [companyId], references: [id], onDelete: Cascade)
     companyId            String?
 }
@@ -43,18 +43,18 @@ model Paymethod {
 }
 
 model Investment {
-    id                   String      @id @default(uuid())
+    id                   String     @id @default(uuid())
     description          String?
     benefit              String?
     originalPrice        Decimal
     discountedPrice      Decimal
     impact               String?
-    purchasedInvestments Purchases[]
+    purchasedInvestments Purchase[]
 }
 
-model Purchases {
-    purchaseId   String     @id @default(uuid())
-    purchaseDate DateTime   @default(now())
+model Purchase {
+    id           String     @id @default(uuid())
+    date         DateTime   @default(now())
     pricePaid    Decimal
     user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId       String
