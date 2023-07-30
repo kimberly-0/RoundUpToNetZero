@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAsync } from '../../hooks/useAsync';
 import { getPurchases } from '../../services/userInvestments';
 import Layout from '../layout/Layout';
+import { parseDate } from '../../util/parseDate';
 
 export default function InvestmentHistory({ userId }) {
 
@@ -52,7 +53,7 @@ export default function InvestmentHistory({ userId }) {
                         <tbody>
                             {purchases.map(purchase => 
                                 <tr key={purchase.id}>
-                                    <td>{purchase.date}</td>
+                                    <td>{parseDate(purchase.date)}</td>
                                     <td>{purchase.investment.description}</td>
                                     <td>{purchase.investment.benefit}</td>
                                     <td>{purchase.pricePaid && `£${Number(purchase.pricePaid)?.toFixed(2)}`}</td>

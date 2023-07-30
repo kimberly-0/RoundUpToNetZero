@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAsync } from '../../hooks/useAsync';
 import { getTransactions } from '../../services/userTransactions';
 import Layout from '../layout/Layout';
+import { parseDate } from '../../util/parseDate';
 
 export default function TransactionHistory({ userId }) {
 
@@ -57,10 +58,10 @@ export default function TransactionHistory({ userId }) {
                         <tbody>
                             {transactions.map(transaction => 
                                 <tr key={transaction.id}>
-                                    <td>{transaction.date}</td>
-                                    <td>{Number(transaction.amount)}</td>
-                                    <td>{transaction.roundedAmount}</td>
-                                    <td>{Number(transaction.fundContribution).toFixed(2)}</td>
+                                    <td>{parseDate(transaction.date)}</td>
+                                    <td>£{Number(transaction.amount)}</td>
+                                    <td>£{transaction.roundedAmount}</td>
+                                    <td>£{Number(transaction.fundContribution).toFixed(2)}</td>
                                     <td>{transaction.paymethod.type} ending in {transaction.paymethod.cardNumber}</td>
                                     <td>{transaction.description}</td>
                                 </tr>

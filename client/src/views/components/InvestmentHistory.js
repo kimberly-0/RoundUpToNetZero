@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAsync } from '../../hooks/useAsync';
 import { getPurchases } from '../../services/userInvestments';
 import { FaLeaf } from 'react-icons/fa';
+import { parseDate } from '../../util/parseDate';
 
 export default function InvestmentHistory({ userId }) {
 
@@ -33,7 +34,7 @@ export default function InvestmentHistory({ userId }) {
                     <tbody>
                         {purchases.slice(0, 5).map(purchase => 
                             <tr key={purchase.id}>
-                                <td>{purchase.date}</td>
+                                <td>{parseDate(purchase.date)}</td>
                                 <td>{purchase.investment.description}</td>
                                 <td className="align-right">{purchase.investment.impact && <FaLeaf className={`impact-icon ${purchase.investment.impact || ""}`}/>}</td>
                             </tr>
