@@ -10,19 +10,12 @@ import { getTotalInvested } from "../../services/userInvestments";
 function Dashboard({ userId }) {
 
     const { loadingA, errorA, value: totalNZFundContribution } = useAsync(() => getTotalNZFundContributions({ userId }), [userId]);
-
     const { loadingB, errorB, value: totalInvested } = useAsync(() => getTotalInvested({ userId }), [userId]);
 
     if (loadingA || loadingB) return <h1>Loading</h1>
 
     if (errorA || errorB) return <h1 className="error-msg">{errorA || errorB}</h1>
 
-    const dataNetZeroFund = (typeof (totalNZFundContribution - totalInvested).toFixed(2) === 'number') ? (totalNZFundContribution - totalInvested).toFixed(2) : 0;
-
-    const dataTotalNZFundContributions = (typeof totalNZFundContribution?.toFixed(2) === 'number') ? totalNZFundContribution?.toFixed(2) : 0;
-
-    const dataTotalInvested = (typeof totalInvested?.toFixed(2) === 'number') ? totalInvested?.toFixed(2) : 0;
-    
     return (
         <Layout>
             <h2 className='page-title'>Dashboard</h2>
@@ -31,7 +24,7 @@ function Dashboard({ userId }) {
                 <MoneyBalance 
                     balances={[{
                         title: 'Net Zero Fund',
-                        amount: dataNetZeroFund
+                        amount: totalNZFundContribution - totalInvested
                     }]} 
                     isColoured={true} 
                 />
@@ -39,10 +32,10 @@ function Dashboard({ userId }) {
                 <MoneyBalance 
                     balances={[{
                         title: 'Total Net Zero Fund contributions',
-                        amount: dataTotalNZFundContributions
+                        amount: totalNZFundContribution
                     }, {
                         title: 'Total invested',
-                        amount: dataTotalInvested
+                        amount: totalInvested
                     }]} 
                     isColoured={false} 
                 />

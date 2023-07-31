@@ -10,7 +10,7 @@ export default function MoneyBalance({ balances, isColoured }) {
                         </h4>
                         <p 
                             className='balance-amount'>
-                                £{balance.amount}
+                                £{typeof balance.amount === 'number' ? balance.amount?.toFixed(2) : 0}
                         </p>
                     </div>
                 )
