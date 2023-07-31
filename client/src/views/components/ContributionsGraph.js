@@ -66,19 +66,17 @@ function getContributionsPerMonth({ userId, monthsIncluded }) {
 
         // Find sum of all contributions made in the same month and year
         const sumContributionsPerMonthYear = Object.values(transactions.reduce((r, transaction) => {
-            let monthYear = transaction.date.substring(3);
+            const date = new Date(Date.parse(transaction.date));
+            const monthYear = (date.getMonth() + 1) + "/" + date.getFullYear();
             r[monthYear] = r[monthYear] || {date: monthYear, contributed : 0};
-            r[monthYear].contributed += transaction.contributed;
+            r[monthYear].contributed += Number(transaction.fundContribution);
             return r;
         }, {}));
 
         // Create result array with all months included and set contribution to 0 where there's missing data
         const result = [];
-        monthsIncluded.forEach(date => {
-            const month = date.getMonth() + 1;
-            const monthString = ((month < 10) ? ("0" + month) : month).toString();
-            const monthYear = monthString + "/" + date.getFullYear();
-
+        monthsIncluded.forEach(date => {            
+            const monthYear = (date.getMonth() + 1) + "/" + date.getFullYear();
             const existingContribution = sumContributionsPerMonthYear.find(contribution => contribution.date === monthYear);
             if (existingContribution) {
                 result.push(existingContribution);
