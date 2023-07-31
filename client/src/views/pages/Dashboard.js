@@ -7,18 +7,15 @@ import { useAsync } from '../../hooks/useAsync';
 import { getTotalNZFundContributions } from "../../services/userTransactions";
 import { getTotalInvested } from "../../services/userInvestments";
 
-function Dashboard() {
-
-    const userId = 0;
+function Dashboard({ userId }) {
 
     const { loadingA, errorA, value: totalNZFundContribution } = useAsync(() => getTotalNZFundContributions({ userId }), [userId]);
-
     const { loadingB, errorB, value: totalInvested } = useAsync(() => getTotalInvested({ userId }), [userId]);
 
     if (loadingA || loadingB) return <h1>Loading</h1>
 
     if (errorA || errorB) return <h1 className="error-msg">{errorA || errorB}</h1>
-    
+
     return (
         <Layout>
             <h2 className='page-title'>Dashboard</h2>
@@ -27,7 +24,7 @@ function Dashboard() {
                 <MoneyBalance 
                     balances={[{
                         title: 'Net Zero Fund',
-                        amount: (totalNZFundContribution - totalInvested).toFixed(2) || 0
+                        amount: totalNZFundContribution - totalInvested
                     }]} 
                     isColoured={true} 
                 />
@@ -35,22 +32,22 @@ function Dashboard() {
                 <MoneyBalance 
                     balances={[{
                         title: 'Total Net Zero Fund contributions',
-                        amount: totalNZFundContribution?.toFixed(2) || 0
+                        amount: totalNZFundContribution
                     }, {
                         title: 'Total invested',
-                        amount: totalInvested?.toFixed(2) || 0
+                        amount: totalInvested
                     }]} 
                     isColoured={false} 
                 />
             </div>
 
             <div className='columns'>
-                <InvestmentHistory />
-                <TransactionHistory />
+                <InvestmentHistory userId={userId} />
+                <TransactionHistory userId={userId} />
             </div>
 
             <div>
-                <ContributionsGraph />
+                <ContributionsGraph userId={userId} />
             </div>
         </Layout>
     );

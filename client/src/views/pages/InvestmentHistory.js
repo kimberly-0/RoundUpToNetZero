@@ -1,16 +1,19 @@
 import { Link } from 'react-router-dom';
 import { useAsync } from '../../hooks/useAsync';
-import { getInvestments } from '../../services/userInvestments';
+import { getPurchases } from '../../services/userInvestments';
+import { getTotalInvested } from "../../services/userInvestments";
 import Layout from '../layout/Layout';
+import { parseDate } from '../../util/parseDate';
 
-export default function InvestmentHistory() {
+export default function InvestmentHistory({ userId }) {
 
-    const userId = 0;
-    const { loading, error, value: investments } = useAsync(() => getInvestments({ userId }), [userId]);
+    const { loadingA, errorA, value: purchases } = useAsync(() => getPurchases({ userId }), [userId]);
 
-    if (loading) return <h1>Loading</h1>
+    const { loadingB, errorB, value: totalInvested } = useAsync(() => getTotalInvested({ userId }), [userId]);
 
-    if (error) return <h1 className="error-msg">{error}</h1>
+    if (loadingA || loadingB) return <h1>Loading</h1>
+
+    if (errorA || errorB) return <h1 className="error-msg">{errorA || errorB}</h1>
 
     return (
         <Layout>
@@ -20,7 +23,7 @@ export default function InvestmentHistory() {
                 <div className='page-header__info'>
                     <div className='balanace-info'>
                         <h6 className='balance-info__label'>Total invested</h6>
-                        <p className='balance-info__amount'>£518.30</p>
+                        <p className='balance-info__amount'>£{typeof totalInvested === 'number' ? totalInvested?.toFixed(2) : 0}</p>
                     </div>
                 </div>
                 <div className='page-header__buttons'>
@@ -39,7 +42,7 @@ export default function InvestmentHistory() {
             </div>
 
             <div className='page-table-container component-container'>
-                {investments?.length > 0 ? (
+                {purchases?.length > 0 ? (
                     <table>
                         <thead>
                             <tr className='top-row'>
@@ -51,13 +54,13 @@ export default function InvestmentHistory() {
                             </tr>
                         </thead>
                         <tbody>
-                            {investments.map(investment => 
-                                <tr key={investment.id}>
-                                    <td>{investment.date}</td>
-                                    <td>{investment.description}</td>
-                                    <td>{investment.benefit}</td>
-                                    <td>£{investment.price.toFixed(2)}</td>
-                                    <td><p className={`impact-label ${investment.impact}`}>{investment.impact}</p></td>
+                            {purchases.map(purchase => 
+                                <tr key={purchase.id}>
+                                    <td>{parseDate(purchase.date)}</td>
+                                    <td>{purchase.investment.description}</td>
+                                    <td>{purchase.investment.benefit}</td>
+                                    <td>{purchase.pricePaid && `£${Number(purchase.pricePaid)?.toFixed(2)}`}</td>
+                                    <td>{purchase.investment.impact && <p className={`impact-label ${purchase.investment.impact}`}>{purchase.investment.impact}</p>}</td>
                                 </tr>
                             )}
                         </tbody>

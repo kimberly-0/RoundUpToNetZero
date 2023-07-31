@@ -1,44 +1,46 @@
 const express = require('express');
-const sqlite3 = require('sqlite3');
-const db = new sqlite3.Database(process.env.TEST_DATABASE || './database/database.sqlite');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
 const investmentsRouter = express.Router();
 module.exports = investmentsRouter;
 
-investmentsRouter.param('investmentId', (req, res, next, id) => {
-    db.get('SELECT * FROM Investment WHERE id = $id', {
-        $id: id
-    }, (err, investment) => {
-        if (err) {
-            next(err);
-        } else if (investment) {
-            req.investment = investment;
-            next();
-        } else {
-            res.status(404).send("Investment not found");
-        }
+const INVESTMENT_SELECT_FIELDS = {
+    id: true,
+    description: true,
+    benefit: true,
+    originalPrice: true,
+    discountedPrice: true,
+    impact: true,
+}
+
+investmentsRouter.param('investmentId', async (req, res, next, investmentId) => {
+    await prisma.investment.findUniqueOrThrow({ 
+        where: { id: investmentId },
+    })
+    .then(investment => {
+        req.investment = investment;
+        next();
+        return;
+    })
+    .catch(error => {
+        console.log(error);
+        return res.status(404).send("Investment not found");
     });
 });
-
-const validateInvestment = (req, res, next) => {
-    const toCreateInvestment = req.body.investment;
-    if (!toCreateInvestment.description || !toCreateInvestment.original_price || !toCreateInvestment.discounted_price) {
-        return res.status(400).send();
-    }
-    next();
-};
 
 /*
 Get -> Read operations:
 */
 
-investmentsRouter.get('/', (req, res, next) => {
-    db.all('SELECT * FROM Investment', (err, investments) => {
-        if (err) {
-            next(err);
-        } else {
-            res.status(200).json(investments);
-        }
+investmentsRouter.get('/', async (req, res) => {
+    return await prisma.investment.findMany({ 
+        select: INVESTMENT_SELECT_FIELDS,
+    }).then(investment => {
+        return res.status(200).json(investment);
+    }).catch(error => {
+        console.log(error);
+        return res.status(400).send("Investment not found");
     });
 });
 
@@ -50,26 +52,30 @@ investmentsRouter.get('/:investmentId', (req, res, next) => {
 Post -> Create operations:
 */
 
-investmentsRouter.post('/', validateInvestment, (req, res, next) => {
-    const toCreateInvestment = req.body.investment;    
-    db.run('INSERT INTO Investment (description, benefit, original_price, discounted_price, impact) VALUES ($description, $benefit, $original_price, $discounted_price, $impact)', {
-        $description: toCreateInvestment.description,
-        $benefit: toCreateInvestment.benefit || null,
-        $original_price: toCreateInvestment.original_price,
-        $discounted_price: toCreateInvestment.discounted_price,
-        $impact: toCreateInvestment.impact || null
-    }, function(err) {
-        if (err) {
-            next(err);
-        }
-        db.get('SELECT * FROM Investment WHERE id = $id', {
-            $id: this.lastID
-        }, (err, investment) => {
-            if (!investment) {
-                return res.status(500).send();
-            }
-            res.status(201).send(investment);
-        });
+const validateInvestment = (req, res, next) => {
+    const toCreateInvestment = req.body.investment;
+    if (!toCreateInvestment.description || !toCreateInvestment.originalPrice || !toCreateInvestment.discountedPrice) {
+        return res.status(400).send();
+    }
+    next();
+};
+
+investmentsRouter.post('/', validateInvestment, async (req, res) => {
+    const newInvestment = req.body.investment;
+    return await prisma.investment.create({
+        data: {
+            description: newInvestment.description,
+            benefit: newInvestment.benefit,
+            originalPrice: newInvestment.originalPrice,
+            discountedPrice: newInvestment.discountedPrice,
+            impact: newInvestment.impact,
+        },
+        select: INVESTMENT_SELECT_FIELDS
+    }).then(investment => {
+        return res.status(201).send(investment);
+    }).catch(error => {
+        console.log(error);
+        return res.status(400).send("Unable to create investment");
     });
 });
 
@@ -77,29 +83,23 @@ investmentsRouter.post('/', validateInvestment, (req, res, next) => {
 Put -> Update operations:
 */
 
-investmentsRouter.put('/:investmentId', (req, res, next) => {
-    const newInvestment = req.body.investment;    
-    db.run('UPDATE Investment SET description = $description, benefit = $benefit, original_price = $original_price, discounted_price = $discounted_price, impact = $impact WHERE id = $id', {
-        $id: req.investment.id,
-        $description: newInvestment.description || req.investment.description,
-        $benefit: newInvestment.benefit || req.investment.benefit,
-        $original_price: newInvestment.original_price || req.investment.original_price,
-        $discounted_price: newInvestment.discounted_price || req.investment.discounted_price,
-        $impact: newInvestment.impact || req.investment.impact
-    }, (err) => {
-        if (err) {
-            next(err);
-        }
-        db.get('SELECT * FROM Investment WHERE id = $id', {
-            $id: req.investment.id
-        }, (err, investment) => {
-            if (err) {
-                next(err);
-            } else if (!investment) {
-                return res.status(500).send();
-            }
-            res.status(200).send(investment);
-        });
+investmentsRouter.put('/:investmentId', validateInvestment, async (req, res) => {
+    const newInvestment = req.body.investment;
+    return await prisma.investment.update({
+        where: { id: req.investment.id },
+        data: {
+            description: newInvestment.description || req.investment.description,
+            benefit: newInvestment.benefit || req.investment.benefit,
+            originalPrice: newInvestment.originalPrice || req.investment.originalPrice,
+            discountedPrice: newInvestment.discountedPrice || req.investment.discountedPrice,
+            impact: newInvestment.impact || req.investment.impact,
+        },
+        select: INVESTMENT_SELECT_FIELDS
+    }).then(investment => {
+        return res.status(201).send(investment);
+    }).catch(error => {
+        console.log(error);
+        return res.status(400).send("Unable to update investment");
     });
 });
 
@@ -107,13 +107,14 @@ investmentsRouter.put('/:investmentId', (req, res, next) => {
 Delete -> Delete operations:
 */
 
-investmentsRouter.delete('/:investmentId', (req, res, next) => {
-    db.run('DELETE FROM Investment WHERE id = $id', {
-        $id: req.investment.id,
-    }, (err) => {
-        if (err) {
-            next(err);
-        }
-        return res.status(202).send();
-    });
+investmentsRouter.delete('/:investmentId', async (req, res) => {
+    return await prisma.investment.delete({
+        where: { id: req.investment.id },
+        select: { id: true },
+    }).then(investment => {
+        return res.status(202).send(investment);
+    }).catch(error => {
+        console.log(error);
+        return res.status(400).send("Unable to delete investment");
+    })
 });
