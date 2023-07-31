@@ -9,7 +9,7 @@ export function getTotalNZFundContributions({ userId }) {
         if (transactions) {
             let totalContribution = 0;
             transactions.forEach(transaction => {
-                totalContribution += transaction.fund_contribution;
+                totalContribution += Number(transaction.fundContribution);
             })
             return totalContribution;
         }

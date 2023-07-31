@@ -9,7 +9,7 @@ export function getTotalInvested({ userId }) {
         if (purchases) {
             let totalInvested = 0;
             purchases.forEach(purchase => {
-                totalInvested += purchase.price;
+                totalInvested += Number(purchase.pricePaid);
             })
             return totalInvested;
         }
