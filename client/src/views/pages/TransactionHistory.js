@@ -1,16 +1,22 @@
 import { Link } from 'react-router-dom';
 import { useAsync } from '../../hooks/useAsync';
 import { getTransactions } from '../../services/userTransactions';
+import { getTotalNZFundContributions } from "../../services/userTransactions";
+import { getTotalInvested } from "../../services/userInvestments";
 import Layout from '../layout/Layout';
 import { parseDate } from '../../util/parseDate';
 
 export default function TransactionHistory({ userId }) {
 
-    const { loading, error, value: transactions } = useAsync(() => getTransactions({ userId }), [userId]);
+    const { loadingA, errorA, value: totalNZFundContribution } = useAsync(() => getTotalNZFundContributions({ userId }), [userId]);
 
-    if (loading) return <h1>Loading</h1>
+    const { loadingB, errorB, value: totalInvested } = useAsync(() => getTotalInvested({ userId }), [userId]);
 
-    if (error) return <h1 className="error-msg">{error}</h1>
+    const { loadingC, errorC, value: transactions } = useAsync(() => getTransactions({ userId }), [userId]);
+
+    if (loadingA || loadingB || loadingC) return <h1>Loading</h1>
+
+    if (errorA || errorB || errorC) return <h1 className="error-msg">{errorA || errorB || errorC}</h1>
 
     return (
         <Layout>
@@ -20,11 +26,11 @@ export default function TransactionHistory({ userId }) {
                 <div className='page-header__info'>
                     <div className='balanace-info coloured'>
                         <h6 className='balance-info__label'>Net Zero Fund</h6>
-                        <p className='balance-info__amount'>£262.42</p>
+                        <p className='balance-info__amount'>£{typeof (totalNZFundContribution - totalInvested) === 'number' ? (totalNZFundContribution - totalInvested)?.toFixed(2) : 0}</p>
                     </div>
                     <div className='balanace-info'>
                         <h6 className='balance-info__label'>Total contributions</h6>
-                        <p className='balance-info__amount'>£780.72</p>
+                        <p className='balance-info__amount'>£{typeof totalNZFundContribution === 'number' ? totalNZFundContribution?.toFixed(2) : 0}</p>
                     </div>
                 </div>
                 <div className='page-header__buttons'>
