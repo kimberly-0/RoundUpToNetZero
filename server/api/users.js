@@ -21,7 +21,7 @@ const USER_SELECT_FIELDS = {
 }
 
 usersRouter.param('userId', async (req, res, next, userId) => {    
-    await prisma.user.findUniqueOrThrow({ where: { id: userId } })
+    await prisma.user.findUnique({ where: { id: userId } })
     .then(user => {
         req.user = user;
         next();
