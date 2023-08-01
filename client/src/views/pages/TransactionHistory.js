@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAsync } from '../../hooks/useAsync';
 import { getTransactions } from '../../services/userTransactions';
@@ -5,14 +6,17 @@ import { getTotalNZFundContributions } from "../../services/userTransactions";
 import { getTotalInvested } from "../../services/userInvestments";
 import Layout from '../layout/Layout';
 import { parseDate } from '../../util/parseDate';
+import { sortTransactionsBy } from '../../util/sortBy';
 
 export default function TransactionHistory({ userId }) {
 
-    const { loadingA, errorA, value: totalNZFundContribution } = useAsync(() => getTotalNZFundContributions({ userId }), [userId]);
+    const [sortType, setSortType] = useState('newest');
 
-    const { loadingB, errorB, value: totalInvested } = useAsync(() => getTotalInvested({ userId }), [userId]);
+    const { loadingA, errorA, value: transactions } = useAsync(() => getTransactions({ userId }), [userId]);
 
-    const { loadingC, errorC, value: transactions } = useAsync(() => getTransactions({ userId }), [userId]);
+    const { loadingB, errorB, value: totalNZFundContribution } = useAsync(() => getTotalNZFundContributions({ userId }), [userId]);
+
+    const { loadingC, errorC, value: totalInvested } = useAsync(() => getTotalInvested({ userId }), [userId]);
 
     if (loadingA || loadingB || loadingC) return <h1>Loading</h1>
 
@@ -34,11 +38,18 @@ export default function TransactionHistory({ userId }) {
                     </div>
                 </div>
                 <div className='page-header__buttons'>
-                    <select className='rounded-button' name="sort-by" id="sort-by"> 
+                    <select 
+                        className='rounded-button' 
+                        name="sort-by" 
+                        id="sort-by" 
+                        onChange={e => {setSortType(e.target.value)}}
+                    > 
                         <option value="newest">Newest</option>
                         <option value="oldest">Oldest</option> 
-                        <option value="trans-amount">Transaction amount</option> 
-                        <option value="contr-amount">Contribution amount</option> 
+                        <option value="trans-amount-desc">Amount desc</option> 
+                        <option value="trans-amount-asc">Amount asc</option> 
+                        <option value="contr-amount-desc">NZF contribution desc</option>
+                        <option value="contr-amount-asc">NZF contribution asc</option> 
                     </select>
                     <button className='rounded-button'>Filter</button>
                     <Link 
@@ -62,7 +73,7 @@ export default function TransactionHistory({ userId }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {transactions.map(transaction => 
+                            {sortTransactionsBy(transactions, sortType).map(transaction => 
                                 <tr key={transaction.id}>
                                     <td>{parseDate(transaction.date)}</td>
                                     <td>£{Number(transaction.amount)}</td>
