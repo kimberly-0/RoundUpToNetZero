@@ -12,7 +12,7 @@ export function makeRequest(url, options) {
             return res.data
         })
         .catch(error => {
-            console.log("Error : " + JSON.stringify(error.response.data))
+            console.log("Error : " + JSON.stringify(error?.response?.data))
             return Promise.reject(error?.response?.data ?? "Error")
         })
 }
