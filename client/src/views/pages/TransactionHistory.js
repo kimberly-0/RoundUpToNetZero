@@ -51,7 +51,7 @@ export default function TransactionHistory({ userId }) {
                         <option value="contr-amount-desc">NZF contribution desc</option>
                         <option value="contr-amount-asc">NZF contribution asc</option> 
                     </select>
-                    <button className='rounded-button'>Filter</button>
+                    {/* <button className='rounded-button'>Filter</button> */}
                     <Link 
                         to='/transaction-history' // TO DO: add correct route
                         className='rounded-button coloured'

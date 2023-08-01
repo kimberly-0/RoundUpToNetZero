@@ -44,7 +44,7 @@ export default function InvestmentHistory({ userId }) {
                         <option value="impact-desc">Impact desc</option> 
                         <option value="impact-asc">Impact asc</option> 
                     </select>
-                    <button className='rounded-button'>Filter</button>
+                    {/* <button className='rounded-button'>Filter</button> */}
                     <Link 
                         to='/invest'
                         className='rounded-button coloured'
