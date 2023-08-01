@@ -44,6 +44,9 @@ purchasedInvestmentsRouter.get('/', async (req, res) => {
     return await prisma.purchase.findMany({ 
         select: PURCHASES_SELECT_FIELDS,
     }).then(purchases => {
+        purchases.sort(function(a, b){
+            return new Date(b.date) - new Date(a.date);
+        });
         return res.status(200).json(purchases);
     }).catch(error => {
         console.log(error);
