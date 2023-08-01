@@ -1,7 +1,10 @@
 import { makeRequest  } from './makeRequest';
 
 export function getPurchases({ userId }) {
-    return makeRequest(`/users/${userId}/purchases`);
+    return makeRequest(`/users/${userId}/purchases`).catch(error => {
+        console.log(error);
+        return [];
+    });
 }
 
 export function getTotalInvested({ userId }) {

@@ -1,7 +1,10 @@
 import { makeRequest  } from './makeRequest';
 
 export function getTransactions({ userId }) {
-    return makeRequest(`/users/${userId}/transactions`)
+    return makeRequest(`/users/${userId}/transactions`).catch(error => {
+        console.log(error);
+        return [];
+    });
 }
 
 export function getTotalNZFundContributions({ userId }) {
