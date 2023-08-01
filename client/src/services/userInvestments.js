@@ -2,7 +2,7 @@ import { makeRequest  } from './makeRequest';
 
 export function getPurchases({ userId }) {
     return makeRequest(`/users/${userId}/purchases`).catch(error => {
-        console.log(error);
+        console.log("Unable to retrieve purchases");
         return [];
     });
 }

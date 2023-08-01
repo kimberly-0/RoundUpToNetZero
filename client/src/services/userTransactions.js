@@ -2,7 +2,7 @@ import { makeRequest  } from './makeRequest';
 
 export function getTransactions({ userId }) {
     return makeRequest(`/users/${userId}/transactions`).catch(error => {
-        console.log(error);
+        console.log("Unable to retrieve transactions");
         return [];
     });
 }
