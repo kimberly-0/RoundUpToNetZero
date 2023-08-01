@@ -37,6 +37,7 @@ export const options = {
       text: 'Net Zero Fund contributions',
     },
   },
+  y: { min: 0 },
 };
 
 // Get current month and past 12 months
