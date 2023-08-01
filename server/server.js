@@ -1,12 +1,14 @@
 const express = require('express')
 const app = express()
 const path = require('path')
+const dotenv = require('dotenv')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 
+dotenv.config()
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.CLIENT_URL,
     credentials: true
 }))
 app.use(bodyParser.json())
