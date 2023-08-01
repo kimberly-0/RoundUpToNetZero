@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAsync } from '../../hooks/useAsync';
 import { getPurchases } from '../../services/userInvestments';
 import { getTotalInvested } from "../../services/userInvestments";
 import Layout from '../layout/Layout';
 import { parseDate } from '../../util/parseDate';
+import { sortPurchasesBy } from '../../util/sortBy';
 
 export default function InvestmentHistory({ userId }) {
+
+    const [sortType, setSortType] = useState('newest');
 
     const { loadingA, errorA, value: purchases } = useAsync(() => getPurchases({ userId }), [userId]);
 
@@ -27,13 +31,20 @@ export default function InvestmentHistory({ userId }) {
                     </div>
                 </div>
                 <div className='page-header__buttons'>
-                    <select className='rounded-button' name="sort-by" id="sort-by"> 
+                    <select 
+                        className='rounded-button' 
+                        name="sort-by" 
+                        id="sort-by"
+                        onChange={e => {setSortType(e.target.value)}}
+                    > 
                         <option value="newest">Newest</option>
                         <option value="oldest">Oldest</option> 
-                        <option value="price">Price</option> 
-                        <option value="impact">Impact</option> 
+                        <option value="price-desc">Price desc</option>
+                        <option value="price-asc">Price asc</option> 
+                        <option value="impact-desc">Impact desc</option> 
+                        <option value="impact-asc">Impact asc</option> 
                     </select>
-                    <button className='rounded-button'>Filter</button>
+                    {/* <button className='rounded-button'>Filter</button> */}
                     <Link 
                         to='/invest'
                         className='rounded-button coloured'
@@ -54,7 +65,7 @@ export default function InvestmentHistory({ userId }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {purchases.map(purchase => 
+                            {sortPurchasesBy(purchases, sortType).map(purchase => 
                                 <tr key={purchase.id}>
                                     <td>{parseDate(purchase.date)}</td>
                                     <td>{purchase.investment.description}</td>
