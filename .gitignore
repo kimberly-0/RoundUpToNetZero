@@ -3,6 +3,3 @@ node_modules
 .env
 build
 npmlist.json
-
-// Temp
-mock_data.js
