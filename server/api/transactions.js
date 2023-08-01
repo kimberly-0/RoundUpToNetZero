@@ -57,6 +57,11 @@ transactionsRouter.get('/', async (req, res) => {
     return await prisma.transaction.findMany({ 
         select: TRANSACTION_SELECT_FIELDS,
     }).then(transactions => {
+
+        transactions.sort(function(a, b){
+            return new Date(b.date) - new Date(a.date);
+        });
+        
         return res.status(200).json(transactions);
     }).catch(error => {
         console.log(error);
