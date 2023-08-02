@@ -403,6 +403,22 @@ table .align-right {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media only screen and (max-width: 1000px) {
+  .products-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .products-container {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .product-container {
