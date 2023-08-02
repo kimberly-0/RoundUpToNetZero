@@ -2,15 +2,16 @@ import { useState } from 'react';
 import Layout from '../layout/Layout';
 import InvestmentProduct from '../components/InvestmentProduct';
 import { useAsync } from '../../hooks/useAsync';
-import { getTransactions } from '../../services/userTransactions';
+import { getInvestmentProducts } from '../../services/investments';
 import { getTotalNZFundContributions } from "../../services/userTransactions";
 import { getTotalInvested } from "../../services/userInvestments";
+import { sortProductsBy } from '../../util/sortBy';
 
 function Invest({ userId }) {
 
     const [sortType, setSortType] = useState('newest');
 
-    const { loadingA, errorA, value: transactions } = useAsync(() => getTransactions({ userId }), [userId]);
+    const { loadingA, errorA, value: products } = useAsync(getInvestmentProducts);
 
     const { loadingB, errorB, value: totalNZFundContribution } = useAsync(() => getTotalNZFundContributions({ userId }), [userId]);
 
@@ -19,13 +20,6 @@ function Invest({ userId }) {
     if (loadingA || loadingB || loadingC) return <h1>Loading</h1>
 
     if (errorA || errorB || errorC) return <h1 className="error-msg">{errorA || errorB || errorC}</h1>
-
-    // TO DELETE: 
-    const description = "Smart thermostat";
-    const benefit = "Reduce energy consumption";
-    const originalPrice = 132.91;
-    const discountedPrice = 112.98;
-    const impact = "high";
 
     return (
         <Layout>
@@ -55,51 +49,23 @@ function Invest({ userId }) {
             </div>
             
             <div className='products-container'>
-                <InvestmentProduct 
-                    description={description} 
-                    benefit={benefit} 
-                    originalPrice={originalPrice}
-                    discountedPrice={discountedPrice}
-                    impact={impact}
-                />
-
-                <InvestmentProduct 
-                    description={description} 
-                    benefit={benefit} 
-                    originalPrice={originalPrice}
-                    discountedPrice={discountedPrice}
-                    impact={impact}
-                />
-                <InvestmentProduct 
-                    description={description} 
-                    benefit={benefit} 
-                    originalPrice={originalPrice}
-                    discountedPrice={discountedPrice}
-                    impact={impact}
-                />
-                <InvestmentProduct 
-                    description={description} 
-                    benefit={benefit} 
-                    originalPrice={originalPrice}
-                    discountedPrice={discountedPrice}
-                    impact={impact}
-                />
-                <InvestmentProduct 
-                    description={description} 
-                    benefit={benefit} 
-                    originalPrice={originalPrice}
-                    discountedPrice={discountedPrice}
-                    impact={impact}
-                />
-                <InvestmentProduct 
-                    description={description} 
-                    benefit={benefit} 
-                    originalPrice={originalPrice}
-                    discountedPrice={discountedPrice}
-                    impact={impact}
-                />
+                {products?.length > 0 ? (
+                    <>
+                    {sortProductsBy(products, sortType).map(product => 
+                        <InvestmentProduct 
+                            key={product.id}
+                            description={product.description} 
+                            benefit={product.benefit} 
+                            originalPrice={product.originalPrice}
+                            discountedPrice={product.discountedPrice}
+                            impact={product.impact}
+                        />
+                    )}
+                    </>
+                ) : (
+                    <p>No investment products could be found</p>
+                )}
             </div>
-
         </Layout>
     );
 }
