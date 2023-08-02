@@ -19,6 +19,16 @@ export function sortTransactionsBy(array, sortType) {
     });
 }
 
+function getImpactValue(impact) {
+    if (impact === 'high') {
+        return 2;
+    } else if (impact === 'medium') {
+        return 1;
+    } else if (impact === 'low') {
+        return 0;
+    }
+}
+
 export function sortPurchasesBy(array, sortType) {
     return array.sort(function(a, b) {
         switch (sortType) {
@@ -40,12 +50,19 @@ export function sortPurchasesBy(array, sortType) {
     });
 }
 
-function getImpactValue(impact) {
-    if (impact === 'high') {
-        return 2;
-    } else if (impact === 'medium') {
-        return 1;
-    } else if (impact === 'low') {
-        return 0;
-    }
+export function sortProductsBy(array, sortType) {
+    return array.sort(function(a, b) {
+        switch (sortType) {
+            case 'price-desc':
+                return b.discountedPrice - a.discountedPrice;
+            case 'price-asc':
+                return a.discountedPrice - b.discountedPrice;
+            case 'impact-desc':
+                return getImpactValue(b.impact) - getImpactValue(a.impact);
+            case 'impact-asc':
+                return getImpactValue(a.impact) - getImpactValue(b.impact);
+            default:
+                return 0;
+        }
+    });
 }
