@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useUser } from './hooks/useUser';
 import LogIn from './views/pages/LogIn';
 import Dashboard from './views/pages/Dashboard';
@@ -10,19 +10,18 @@ import Settings from './views/pages/Settings';
 
 function App() {
 
-  // const loggedInUserId = 1;
   const loggedInUserId = useUser().id;
 
   return (
     <div className="App">
       <Routes>
-        <Route path='/' element={<Dashboard userId={loggedInUserId}/>} />
-        <Route path='/log-in' element={<LogIn />} />
-        <Route path='/dashboard' element={<Dashboard userId={loggedInUserId}/>} />
-        <Route path='/transaction-history' element={<TransactionHistory userId={loggedInUserId}/>} />
-        <Route path='/investment-history' element={<InvestmentHistory userId={loggedInUserId}/>} />
-        <Route path='/invest' element={<Invest userId={loggedInUserId}/>} />
-        <Route path='/settings' element={<Settings userId={loggedInUserId}/>} />
+        <Route path='/' element={ <Navigate to={loggedInUserId ? "/dashboard" : "/log-in"} />  } />
+        <Route path='/log-in' element={ <LogIn /> } />
+        <Route path='/dashboard' element={ <Dashboard userId={loggedInUserId}/> } />
+        <Route path='/transaction-history' element={ <TransactionHistory userId={loggedInUserId}/> } />
+        <Route path='/investment-history' element={ <InvestmentHistory userId={loggedInUserId}/> } />
+        <Route path='/invest' element={ <Invest userId={loggedInUserId}/> } />
+        <Route path='/settings' element={ <Settings userId={loggedInUserId}/> } />
       </Routes>
     </div>
   );
