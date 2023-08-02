@@ -398,3 +398,62 @@ table .align-right {
   max-height: 20rem;
   /* height: 100%; */
 }
+
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media only screen and (max-width: 1000px) {
+  .products-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .products-container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.product-container {
+  flex-grow: 1;
+}
+
+.product-container .product-description {
+  margin: 0 0 .3rem 0;
+  font-size: 1.1rem;
+}
+
+.product-container .product-benefit {
+  margin: 0 0 .5rem 0;
+  font-size: 1rem;
+  color: var(--text-dark-grey);
+}
+
+.product-container-footer {
+  margin-top: 1.2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.product-container-footer p {
+  margin: 0;
+}
+
+.product-container-footer .price-container {
+  display: flex;
+  gap: 0.8rem;
+  font-weight: bold;
+}
+
+.price-container .original-price {
+  color: var(--text-light-grey);
+  text-decoration: line-through;
+}
