@@ -53,7 +53,7 @@ export default function TransactionHistory({ userId }) {
                     </select>
                     {/* <button className='rounded-button'>Filter</button> */}
                     <Link 
-                        to='/transaction-history' // TO DO: add correct route
+                        to='/add-transaction'
                         className='rounded-button coloured'
                     >+ Add new</Link>
                 </div>
