@@ -16,7 +16,7 @@ export default function TransactionHistory({ userId }) {
             <div className='component-header'>
                 <h3 className='component-title'>Transaction history</h3>
                 <Link 
-                    to='/transaction-history' // TO DO: add correct route
+                    to='/add-transaction'
                     className='component-button'
                 >+ Add new</Link>
             </div>
