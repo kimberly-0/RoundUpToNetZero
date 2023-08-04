@@ -449,7 +449,7 @@ table .align-right {
 
 .product-container-footer .price-container {
   display: flex;
-  gap: 0.8rem;
+  gap: .8rem;
   font-weight: bold;
 }
 
@@ -457,3 +457,80 @@ table .align-right {
   color: var(--text-light-grey);
   text-decoration: line-through;
 }
+
+.details-section {
+  display: grid;
+  grid-auto-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media only screen and (max-width: 750px) {
+  .details-section {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.section-title {
+  font-size: 1.2rem;
+  margin: 2rem 0 1.5rem 0;
+}
+
+.section-title:first-child {
+  margin-top: .5rem;
+}
+
+.input-container label {
+  display: block;
+  margin-bottom: .5rem;
+  font-size: .9rem;
+  font-weight: 500;
+  color: var(--text-dark-grey);
+}
+
+.input-container input {
+  width: 100%;
+}
+
+.section-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 300px;
+  margin-top: 1.5rem;
+}
+
+.section-row p {
+  margin: 0;
+}
+
+.contribution-section {
+  margin-bottom: 1.5rem;
+  color: var(--text-dark-grey);
+}
+
+form input, form select {
+  width: 100%;
+  padding: .8rem;
+  border-radius: .5rem;
+  border: 1px solid var(--text-light-grey);
+  color: var(--text-dark-grey);
+}
+
+/* form select {
+  background-image: url('https://svgrepo.com/show/80156/down-arrow.svg');
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  background-position: calc(100% - 16px);
+} */
+
+.button-section {
+  display: flex;
+  justify-content: right;
+}
+
+.form-button {
+  margin: 1rem 0 .5rem 0;
+}
+
