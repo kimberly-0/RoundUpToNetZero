@@ -78,7 +78,7 @@ Post -> Create operations:
 const validateTransaction = (req, res, next) => {
     const toCreateTransaction = req.body.transaction;
     if (!toCreateTransaction.paymethodId || !toCreateTransaction.companyId || !toCreateTransaction.amount || !toCreateTransaction.roundedAmount || !toCreateTransaction.fundContribution) {
-        return res.status(400).send();
+        return res.status(400).send("Missing information");
     }
 
     // If date is missing, set transaction date to now
@@ -122,7 +122,7 @@ const validatePayment = (req, res, next) => {
     });
 };
 
-transactionsRouter.post('/', validateTransaction, validateCompany, validatePayment, async (req, res) => {
+transactionsRouter.post('/', validateTransaction, validateCompany, validatePayment, async (req, res) => {    
     const newTransaction = req.body.transaction;
     return await prisma.transaction.create({
         data: {
@@ -131,7 +131,7 @@ transactionsRouter.post('/', validateTransaction, validateCompany, validatePayme
             amount: newTransaction.amount,
             roundedAmount: newTransaction.roundedAmount,
             fundContribution: newTransaction.fundContribution,
-            userId: req.user.id,
+            userId: newTransaction.userId,
             paymethodId: req.paymethod.id,
             companyId: req.company.id,
         },
