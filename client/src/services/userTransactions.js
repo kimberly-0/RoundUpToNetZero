@@ -7,6 +7,13 @@ export function getTransactions({ userId }) {
     });
 }
 
+export function createTransaction({ userId, transaction }) {
+    return makeRequest(`/users/${userId}/transactions`, {
+        method: "POST",
+        data: { transaction: transaction },
+    });
+}
+
 export function getTotalNZFundContributions({ userId }) {
     return getTransactions({ userId }).then(transactions => {
         if (transactions) {
