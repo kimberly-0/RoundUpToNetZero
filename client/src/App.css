@@ -527,10 +527,22 @@ form input, form select {
 
 .button-section {
   display: flex;
-  justify-content: right;
-}
-
-.form-button {
+  justify-content: flex-end;
   margin: 1rem 0 .5rem 0;
 }
 
+.form-button {
+  justify-self: right;
+  align-self: end;
+}
+
+.hide {
+  display: none !important;
+}
+
+.error-msg {
+  flex-grow: 1;
+  align-self: flex-end;
+  margin: 0;
+  color: red;
+}
