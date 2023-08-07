@@ -1,14 +1,30 @@
 import { useState, useEffect } from 'react';
 import { roundUp } from '../../util/roundUp';
 
-export function TransactionForm({loading, error, onSubmit, user, paymethods}) {
-
-    const [date, setDate] = useState(new Date(Date.now()).toISOString().split('T')[0] || '');
-    const [description, setDescription] = useState('');
-    const [amount, setAmount] = useState('');
-    const [roundedAmount, setRoundedAmount] = useState(0);
-    const [fundContribution, setFundContribution] = useState(0);
-    const [paymethodId, setPaymethodId] = useState('');
+export function TransactionForm({
+    loading, 
+    error, 
+    onSubmit, 
+    user, 
+    paymethods, 
+    initialData = {
+        date: new Date(Date.now()).toISOString().split('T')[0] || '',
+        description: '',
+        amount: 0,
+        roundedAmount: 0,
+        fundContribution: 0,
+        paymethod: {
+            id: '',
+        },
+    }
+}) {
+    
+    const [date, setDate] = useState(initialData.date.split('T')[0]);
+    const [description, setDescription] = useState(initialData.description);
+    const [amount, setAmount] = useState(initialData.amount);
+    const [roundedAmount, setRoundedAmount] = useState(initialData.roundedAmount);
+    const [fundContribution, setFundContribution] = useState(initialData.fundContribution);
+    const [paymethodId, setPaymethodId] = useState(initialData.paymethod.id);
 
     useEffect(() => {
         setRoundedAmount(roundUp(amount));
@@ -18,7 +34,7 @@ export function TransactionForm({loading, error, onSubmit, user, paymethods}) {
     function handleSubmit(e) {
         e.preventDefault();
         onSubmit({
-            date: date + 'T00:00:00.000Z',
+            date: date.toISOString().split('T')[0] + 'T00:00:00.000Z',
             description: description,
             amount: amount,
             roundedAmount: roundedAmount,
@@ -105,11 +121,11 @@ export function TransactionForm({loading, error, onSubmit, user, paymethods}) {
             <div className='transaction-form-section contribution-section'>
                 <div className='section-row'>
                     <p>Transaction will be rounded up to</p>
-                    <p>£{roundedAmount.toFixed(2)}</p>
+                    <p>£{Number(roundedAmount)?.toFixed(2)}</p>
                 </div>
                 <div className='section-row'>
                     <p>Contribution to Net Zero Fund</p>
-                    <p>£{fundContribution.toFixed(2)}</p>
+                    <p>£{Number(fundContribution)?.toFixed(2)}</p>
                 </div>
             </div>
 
@@ -120,7 +136,7 @@ export function TransactionForm({loading, error, onSubmit, user, paymethods}) {
                     className='form-button rounded-button coloured' 
                     type='submit'
                     disabled={loading}
-                >Process transaction</button>
+                >{initialData ? 'Save' : 'Process transaction'}</button>
             </div>
         </form>
     )
