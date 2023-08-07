@@ -6,6 +6,7 @@ import Dashboard from './views/pages/Dashboard';
 import TransactionHistory from './views/pages/TransactionHistory';
 import SingleTransaction from './views/pages/SingleTransaction';
 import AddTransaction from './views/pages/AddTransaction';
+import EditTransaction from './views/pages/EditTransaction';
 import InvestmentHistory from './views/pages/InvestmentHistory';
 import Invest from './views/pages/Invest';
 import Settings from './views/pages/Settings';
@@ -22,6 +23,7 @@ function App() {
         <Route path='/dashboard' element={ <Dashboard userId={loggedInUserId}/> } />
         <Route path='/transaction-history' element={ <TransactionHistory userId={loggedInUserId}/> } />
         <Route path='/transaction/:id' element={ <SingleTransaction userId={loggedInUserId}/> } />
+        <Route path='/edit-transaction/:id' element={ <EditTransaction userId={loggedInUserId}/> } />
         <Route path='/add-transaction' element={ <AddTransaction userId={loggedInUserId}/> } />
         <Route path='/investment-history' element={ <InvestmentHistory userId={loggedInUserId}/> } />
         <Route path='/invest' element={ <Invest userId={loggedInUserId}/> } />
