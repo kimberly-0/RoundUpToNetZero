@@ -4,6 +4,7 @@ import { useUser } from './hooks/useUser';
 import LogIn from './views/pages/LogIn';
 import Dashboard from './views/pages/Dashboard';
 import TransactionHistory from './views/pages/TransactionHistory';
+import SingleTransaction from './views/pages/SingleTransaction';
 import AddTransaction from './views/pages/AddTransaction';
 import InvestmentHistory from './views/pages/InvestmentHistory';
 import Invest from './views/pages/Invest';
@@ -20,6 +21,7 @@ function App() {
         <Route path='/log-in' element={ <LogIn /> } />
         <Route path='/dashboard' element={ <Dashboard userId={loggedInUserId}/> } />
         <Route path='/transaction-history' element={ <TransactionHistory userId={loggedInUserId}/> } />
+        <Route path='/transaction/:id' element={ <SingleTransaction userId={loggedInUserId}/> } />
         <Route path='/add-transaction' element={ <AddTransaction userId={loggedInUserId}/> } />
         <Route path='/investment-history' element={ <InvestmentHistory userId={loggedInUserId}/> } />
         <Route path='/invest' element={ <Invest userId={loggedInUserId}/> } />
