@@ -30,7 +30,7 @@ export default function SingleTransaction({ userId }) {
 
     if (loading) return <h1>Loading</h1>
 
-    if (error) return <h1 className="error-msg">{error}</h1>
+    if (error || errorDelete) return <h1 className="error-msg">{error || errorDelete}</h1>
 
     return (
         <Layout>
