@@ -553,6 +553,15 @@ form input, form select {
 .form-button {
   justify-self: right;
   align-self: end;
+  cursor: pointer;
+}
+
+input, select { 
+  cursor: pointer;
+}
+
+.form-button:disabled, input:disabled {
+  cursor: not-allowed;
 }
 
 .hide {
