@@ -1,11 +1,14 @@
-import { useParams } from 'react-router-dom';
-import Layout from '../layout/Layout';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useAsync } from '../../hooks/useAsync';
 import { getTransactionById } from '../../services/userTransactions';
 import { parseDate } from '../../util/parseDate';
-import { FaTrash, FaEdit } from 'react-icons/fa'
+import Layout from '../layout/Layout';
+import { FaTrash } from 'react-icons/fa'
+// import { FaTrash, FaEdit } from 'react-icons/fa'
 
 export default function SingleTransaction({ userId }) {
+
+    const navigate = useNavigate();
 
     const params = useParams();
 
@@ -63,6 +66,7 @@ export default function SingleTransaction({ userId }) {
                             <button 
                                 className='form-button rounded-button coloured' 
                                 type='button'
+                                onClick={() => navigate(`/edit-transaction/${transaction.id}`)}
                                 disabled={loading}
                             >Edit transaction</button>
                             <button 
