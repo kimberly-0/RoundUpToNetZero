@@ -9,6 +9,7 @@ import Layout from '../layout/Layout';
 export default function EditTransaction({ userId }) {
 
     const params = useParams();
+    const navigate = useNavigate();
 
     const { loading, error, value: transaction } = useAsync(() => getTransactionById({ userId, transactionId: params.id }), [userId]);
 
@@ -18,11 +19,9 @@ export default function EditTransaction({ userId }) {
 
     const { loadingUpdate, errorUpdate, execute: updateTransactionFn } = useAsyncFn(updateTransaction);
     
-    const navigate = useNavigate();
-    
     function onTransactionUpdate(transaction) {
-        return updateTransactionFn({ transaction }).then(() => {
-            navigate(`/transaction/${transaction.id}`);
+        return updateTransactionFn({ userId, transactionId: params.id, transaction }).then(() => {
+            navigate(`/transaction/${params.id}`);
         })
     };
 
@@ -36,6 +35,7 @@ export default function EditTransaction({ userId }) {
 
             <div className='page-table-container component-container'>
                 <TransactionForm 
+                    formType={'edit'}
                     loading={loadingUpdate}
                     error={errorUpdate}
                     onSubmit={onTransactionUpdate}
