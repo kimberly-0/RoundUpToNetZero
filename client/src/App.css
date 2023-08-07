@@ -17,6 +17,7 @@
   --light-green: #D6E4D6;
   --yellow: #CDB86D;
   --orange: #C09064;
+  --red: #ff4d4d;
 }
 
 /* -------- Layout -------- */
@@ -229,9 +230,27 @@ body {
   white-space: nowrap;
 }
 
+.icon-button {
+  padding: .7rem .9rem;
+}
+
 .rounded-button.coloured {
     background-color: var(--dark-green);
     color: var(--white);
+}
+
+.rounded-button.red {
+  background-color: var(--red);
+  color: var(--white);
+}
+
+.transaction-history-table-body tr {
+  transition: background-color 0.2s ease-out;
+}
+
+.transaction-history-table-body tr:hover {
+  background-color: var(--lines-light-grey);
+  cursor: pointer;
 }
 
 
@@ -484,9 +503,8 @@ table .align-right {
 .input-container label {
   display: block;
   margin-bottom: .5rem;
-  font-size: .9rem;
-  font-weight: 500;
-  color: var(--text-dark-grey);
+  font-weight: 600;
+  color: var(--text-grey);
 }
 
 .input-container input {
@@ -528,6 +546,7 @@ form input, form select {
 .button-section {
   display: flex;
   justify-content: flex-end;
+  gap: 0.8rem;
   margin: 1rem 0 .5rem 0;
 }
 
