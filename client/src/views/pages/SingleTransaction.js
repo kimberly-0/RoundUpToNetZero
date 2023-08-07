@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useAsync } from '../../hooks/useAsync';
-import { getTransactionById } from '../../services/userTransactions';
+import { useAsync, useAsyncFn } from '../../hooks/useAsync';
+import { getTransactionById, deleteTransaction } from '../../services/userTransactions';
 import { parseDate } from '../../util/parseDate';
 import Layout from '../layout/Layout';
 import { FaTrash } from 'react-icons/fa'
@@ -8,11 +8,25 @@ import { FaTrash } from 'react-icons/fa'
 
 export default function SingleTransaction({ userId }) {
 
+    const params = useParams();
     const navigate = useNavigate();
 
-    const params = useParams();
-
     const { loading, error, value: transaction } = useAsync(() => getTransactionById({ userId, transactionId: params.id }), [userId]);
+
+    const { loadingDelete, errorDelete, execute: deleteTransactionFn } = useAsyncFn(deleteTransaction);
+
+    function onTransactionDelete() {
+        if (window.confirm("Are you sure you want to delete this transaction?")) {
+            return deleteTransactionFn({ userId, transactionId: params.id }).then(() => {
+                navigate(`/transaction-history`);
+            }).catch(error => {
+                console.log("Error: " + error)
+            });
+        } else {
+            console.log("Transaction not deleted")
+            return
+        }
+    };
 
     if (loading) return <h1>Loading</h1>
 
@@ -41,7 +55,7 @@ export default function SingleTransaction({ userId }) {
 
                             <div className='input-container'>
                                 <label htmlFor="paymethodId">Payment method</label>
-                                <p>{transaction.paymethod.type} ending {transaction.paymethod.cardNumber}</p>
+                                <p>{transaction.paymethod?.type} ending {transaction.paymethod?.cardNumber}</p>
                             </div>
 
                             <div className='input-container'>
@@ -72,7 +86,8 @@ export default function SingleTransaction({ userId }) {
                             <button 
                                 className='form-button rounded-button icon-button red' 
                                 type='button'
-                                disabled={loading}
+                                onClick={onTransactionDelete}
+                                disabled={loadingDelete}
                             ><FaTrash /></button>
                         </div>
                     </div>
