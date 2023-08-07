@@ -21,6 +21,13 @@ export function createTransaction({ userId, transaction }) {
     });
 }
 
+export function updateTransaction({ userId, transactionId, transaction }) {
+    return makeRequest(`/users/${userId}/transactions/${transactionId}`, {
+        method: "PUT",
+        data: { transaction: transaction },
+    });
+}
+
 export function getTotalNZFundContributions({ userId }) {
     return getTransactions({ userId }).then(transactions => {
         if (transactions) {
