@@ -8,14 +8,14 @@ import { TransactionForm } from '../components/TransactionForm';
 
 export default function AddTransaction({ userId }) {
 
+    const navigate = useNavigate();
+
     const { loadingUser, errorUser, value: user } = useAsync(() => getUser({ userId }), [userId]);
 
     const { loadingPaymethods, errorPaymethods, value: paymethods } = useAsync(() => getPaymethods({ userId }), [userId]);
 
     const { loading, error, execute: createTransactionFn } = useAsyncFn(createTransaction);
     
-    const navigate = useNavigate();
-
     function onTransactionCreate(transaction) {
         return createTransactionFn({ transaction }).then(() => {
             navigate('/transaction-history');
@@ -32,6 +32,7 @@ export default function AddTransaction({ userId }) {
 
             <div className='page-table-container component-container'>
                 <TransactionForm 
+                    formType={'add'}
                     loading={loading}
                     error={error}
                     onSubmit={onTransactionCreate}

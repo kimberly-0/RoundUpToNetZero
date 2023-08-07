@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAsync } from '../../hooks/useAsync';
 import { getTransactions } from '../../services/userTransactions';
 import { getTotalNZFundContributions } from "../../services/userTransactions";
@@ -17,6 +17,11 @@ export default function TransactionHistory({ userId }) {
     const { loadingB, errorB, value: totalNZFundContribution } = useAsync(() => getTotalNZFundContributions({ userId }), [userId]);
 
     const { loadingC, errorC, value: totalInvested } = useAsync(() => getTotalInvested({ userId }), [userId]);
+
+    const navigate = useNavigate();
+    const viewTransaction = (transaction) => {
+        navigate(`/transaction/${transaction.id}`);
+    }
 
     if (loadingA || loadingB || loadingC) return <h1>Loading</h1>
 
@@ -72,9 +77,9 @@ export default function TransactionHistory({ userId }) {
                                 <th>Description</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className='transaction-history-table-body'>
                             {sortTransactionsBy(transactions, sortType).map(transaction => 
-                                <tr key={transaction.id}>
+                                <tr key={transaction.id} onClick={() => viewTransaction(transaction)}>
                                     <td>{parseDate(transaction.date)}</td>
                                     <td>£{Number(transaction.amount)}</td>
                                     <td>£{transaction.roundedAmount}</td>

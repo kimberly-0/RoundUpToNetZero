@@ -36,6 +36,7 @@ const TRANSACTION_SELECT_FIELDS = {
 transactionsRouter.param('transactionId', async (req, res, next, transactionId) => {
     await prisma.transaction.findUniqueOrThrow({ 
         where: { id: transactionId },
+        select: TRANSACTION_SELECT_FIELDS,
     })
     .then(transaction => {
         req.transaction = transaction;
