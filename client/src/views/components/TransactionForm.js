@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { roundUp } from '../../util/roundUp';
 
 export function TransactionForm({
+    formType,
     loading, 
     error, 
     onSubmit, 
@@ -10,7 +11,7 @@ export function TransactionForm({
     initialData = {
         date: new Date(Date.now()).toISOString().split('T')[0] || '',
         description: '',
-        amount: 0,
+        amount: '',
         roundedAmount: 0,
         fundContribution: 0,
         paymethod: {
@@ -34,7 +35,7 @@ export function TransactionForm({
     function handleSubmit(e) {
         e.preventDefault();
         onSubmit({
-            date: date.toISOString().split('T')[0] + 'T00:00:00.000Z',
+            date: date + 'T00:00:00.000Z',
             description: description,
             amount: amount,
             roundedAmount: roundedAmount,
@@ -43,12 +44,12 @@ export function TransactionForm({
             paymethodId: paymethodId,
             companyId: user.companyId
         }).then(() => {
-            setDate(new Date(Date.now()).toISOString().split('T')[0] || '');
-            setDescription('');
-            setAmount('');
-            setRoundedAmount(0);
-            setFundContribution(0);
-            setPaymethodId('');
+            // setDate(new Date(Date.now()).toISOString().split('T')[0] || '');
+            // setDescription('');
+            // setAmount('');
+            // setRoundedAmount(0);
+            // setFundContribution(0);
+            // setPaymethodId('');
         }).catch(error => {
             // console.log(error);
         });
@@ -136,7 +137,7 @@ export function TransactionForm({
                     className='form-button rounded-button coloured' 
                     type='submit'
                     disabled={loading}
-                >{initialData ? 'Save' : 'Process transaction'}</button>
+                >{formType === 'edit' ? 'Save' : 'Process transaction'}</button>
             </div>
         </form>
     )
