@@ -7,7 +7,7 @@ import { getTotalNZFundContributions } from "../../services/userTransactions";
 import { getTotalInvested } from "../../services/userInvestments";
 import { sortProductsBy } from '../../util/sortBy';
 
-function Invest({ userId }) {
+export default function InvestNow({ userId }) {
 
     const [sortType, setSortType] = useState('newest');
 
@@ -70,5 +70,3 @@ function Invest({ userId }) {
         </Layout>
     );
 }
-
-export default Invest;

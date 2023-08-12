@@ -9,7 +9,7 @@ import SingleInvestment from './views/pages/SingleInvestment';
 import AddTransaction from './views/pages/AddTransaction';
 import EditTransaction from './views/pages/EditTransaction';
 import InvestmentHistory from './views/pages/InvestmentHistory';
-import Invest from './views/pages/Invest';
+import InvestNow from './views/pages/InvestNow';
 import Settings from './views/pages/Settings';
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
         <Route path='/edit-transaction/:id' element={ <EditTransaction userId={loggedInUserId}/> } />
         <Route path='/add-transaction' element={ <AddTransaction userId={loggedInUserId}/> } />
         <Route path='/investment-history' element={ <InvestmentHistory userId={loggedInUserId}/> } />
-        <Route path='/invest' element={ <Invest userId={loggedInUserId}/> } />
+        <Route path='/invest' element={ <InvestNow userId={loggedInUserId}/> } />
         <Route path='/invest/:id' element={ <SingleInvestment userId={loggedInUserId}/> } />
         <Route path='/settings' element={ <Settings userId={loggedInUserId}/> } />
       </Routes>
