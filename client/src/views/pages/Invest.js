@@ -54,6 +54,7 @@ function Invest({ userId }) {
                     {sortProductsBy(products, sortType).map(product => 
                         <InvestmentProduct 
                             key={product.id}
+                            id={product.id}
                             description={product.description} 
                             benefit={product.benefit} 
                             originalPrice={product.originalPrice}

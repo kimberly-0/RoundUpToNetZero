@@ -6,3 +6,10 @@ export function getInvestmentProducts() {
         return [];
     });
 }
+
+export function getInvestmentById({ investmentId }) {
+    return makeRequest(`/investments/${investmentId}`).catch(error => {
+        console.log("Unable to retrieve investment");
+        return null;
+    });
+}

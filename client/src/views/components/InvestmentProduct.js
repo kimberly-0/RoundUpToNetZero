@@ -1,8 +1,18 @@
+import { useNavigate } from 'react-router-dom';
 import { FaLeaf } from 'react-icons/fa';
 
-export default function InvestmentProduct({ description, benefit, originalPrice, discountedPrice, impact }) {
+export default function InvestmentProduct({ id, description, benefit, originalPrice, discountedPrice, impact }) {
+
+    const navigate = useNavigate();
+    const viewInvestment = (id) => {
+        navigate(`/invest/${id}`);
+    }
+
     return (
-        <div className='component-container product-container'>
+        <div 
+            className='component-container product-container'
+            onClick={() => viewInvestment(id)}
+        >
             <h5 className='product-description'>{description}</h5>
             <p className='product-benefit'>{benefit}</p>
 
