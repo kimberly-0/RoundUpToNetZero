@@ -10,7 +10,7 @@ export default function InvestmentProduct({ id, description, benefit, originalPr
 
     return (
         <div 
-            className='component-container product-container'
+            className='component-container product-container link-effect link-effect-white'
             onClick={() => viewInvestment(id)}
         >
             <h5 className='product-description'>{description}</h5>

@@ -244,16 +244,6 @@ body {
   color: var(--white);
 }
 
-.transaction-history-table-body tr {
-  transition: background-color 0.2s ease-out;
-}
-
-.transaction-history-table-body tr:hover {
-  background-color: var(--lines-light-grey);
-  cursor: pointer;
-}
-
-
 /* -------- Components -------- */
 
 .component-container {
@@ -573,6 +563,19 @@ input, select {
   align-self: flex-end;
   margin: 0;
   color: red;
+}
+
+.link-effect {
+  transition: background-color 0.2s ease-out;
+}
+
+.link-effect:hover {
+  background-color: var(--lines-light-grey);
+  cursor: pointer;
+}
+
+.link-effect-white:hover {
+  background-color: rgba(255, 255, 255, .5);
 }
 
 .single-investment-container .product-description {

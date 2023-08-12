@@ -79,7 +79,11 @@ export default function TransactionHistory({ userId }) {
                         </thead>
                         <tbody className='transaction-history-table-body'>
                             {sortTransactionsBy(transactions, sortType).map(transaction => 
-                                <tr key={transaction.id} onClick={() => viewTransaction(transaction)}>
+                                <tr 
+                                    key={transaction.id} 
+                                    onClick={() => viewTransaction(transaction)}
+                                    className='link-effect'
+                                >
                                     <td>{parseDate(transaction.date)}</td>
                                     <td>£{Number(transaction.amount)}</td>
                                     <td>£{transaction.roundedAmount}</td>
