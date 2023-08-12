@@ -10,8 +10,6 @@ export default function SingleInvestment({ userId }) {
 
     const { loading, error, value: investment } = useAsync(() => getInvestmentById({ investmentId: params.id }), [params.id]);
 
-    console.log(JSON.stringify(investment));
-
     if (loading) return <h1>Loading</h1>
 
     if (error) return <h1 className="error-msg">{error}</h1>
@@ -31,6 +29,12 @@ export default function SingleInvestment({ userId }) {
 
                             <p className='impact big'>{investment.impact && <FaLeaf className={`impact-icon ${investment.impact || ""}`}/>}</p>
                         </div>
+
+                        {investment.imageSrc && (
+                            <div className='single-investment-row'>
+                                <img src={investment.imageSrc} alt='investment product'/>
+                            </div>
+                        )}
 
                         <div className='product-container-footer'>
                             <div className='price-container'>
