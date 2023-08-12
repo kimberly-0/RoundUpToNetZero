@@ -18,7 +18,7 @@ export default function AddTransaction({ userId }) {
     
     function onTransactionCreate(transaction) {
         return createTransactionFn({ transaction }).then(() => {
-            navigate('/transaction-history');
+            navigate('/transactions');
         })
     };
 

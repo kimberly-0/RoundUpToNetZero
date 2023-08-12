@@ -14,7 +14,7 @@ function SideNav() {
                 </NavLink>
 
                 <NavLink 
-                    to='/transaction-history'
+                    to='/transactions'
                     className={({ isActive, isPending }) =>
                         isPending ? 'pending' : isActive ? 'active' : ''
                     }

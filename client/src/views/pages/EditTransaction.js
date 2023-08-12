@@ -21,7 +21,7 @@ export default function EditTransaction({ userId }) {
     
     function onTransactionUpdate(transaction) {
         return updateTransactionFn({ userId, transactionId: params.id, transaction }).then(() => {
-            navigate(`/transaction/${params.id}`);
+            navigate(`/transactions/${params.id}`);
         })
     };
 

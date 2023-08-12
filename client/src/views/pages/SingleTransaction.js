@@ -18,7 +18,7 @@ export default function SingleTransaction({ userId }) {
     function onTransactionDelete() {
         if (window.confirm("Are you sure you want to delete this transaction?")) {
             return deleteTransactionFn({ userId, transactionId: params.id }).then(() => {
-                navigate(`/transaction-history`);
+                navigate(`/transactions`);
             }).catch(error => {
                 console.log("Error: " + error)
             });

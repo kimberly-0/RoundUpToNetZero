@@ -20,7 +20,7 @@ export default function TransactionHistory({ userId }) {
 
     const navigate = useNavigate();
     const viewTransaction = (transaction) => {
-        navigate(`/transaction/${transaction.id}`);
+        navigate(`/transactions/${transaction.id}`);
     }
 
     if (loadingA || loadingB || loadingC) return <h1>Loading</h1>
