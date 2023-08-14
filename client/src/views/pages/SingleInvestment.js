@@ -1,5 +1,8 @@
-import { useParams } from 'react-router-dom';
-import { useAsync } from '../../hooks/useAsync';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useAsync, useAsyncFn } from '../../hooks/useAsync';
+import { getTotalNZFundContributions } from "../../services/userTransactions";
+import { addPurchase } from "../../services/userInvestments";
+import { getTotalInvested } from "../../services/userInvestments";
 import { getInvestmentById } from '../../services/investments';
 import Layout from '../layout/Layout';
 import { FaLeaf } from 'react-icons/fa';
@@ -7,12 +10,38 @@ import { FaLeaf } from 'react-icons/fa';
 export default function SingleInvestment({ userId }) {
 
     const params = useParams();
+    const navigate = useNavigate();
 
     const { loading, error, value: investment } = useAsync(() => getInvestmentById({ investmentId: params.id }), [params.id]);
 
-    if (loading) return <h1>Loading</h1>
+    const { loadingB, errorB, value: totalNZFundContribution } = useAsync(() => getTotalNZFundContributions({ userId }), [userId]);
 
-    if (error) return <h1 className="error-msg">{error}</h1>
+    const { loadingC, errorC, value: totalInvested } = useAsync(() => getTotalInvested({ userId }), [userId]);
+
+    const { loadingPurchase, errorPurchase, execute: purchaseInvestmentFn } = useAsyncFn(addPurchase);
+
+    function onInvestmentPurchase() {
+        if (window.confirm("Are you sure you want to purchase this investment?")) {
+            return purchaseInvestmentFn({ userId, purchase: {
+                pricePaid: investment.discountedPrice,
+                userId: userId,
+                investmentId: params.id,
+            }}).then(() => {
+                navigate(`/investment-history`);
+            }).catch(error => {
+                console.log("Error: " + error)
+            });
+        } else {
+            console.log("Investment not purchased");
+            return;
+        }
+    };
+
+    if (loading || loadingB || loadingC || loadingPurchase) return <h1>Loading</h1>
+
+    if (error || errorB || errorC || errorPurchase) return <h1 className="error-msg">{error || errorB || errorC}</h1>
+
+    const canAfford = (totalNZFundContribution - totalInvested) - investment.discountedPrice < 0 ? true : false;
 
     return (
         <Layout>
@@ -44,8 +73,8 @@ export default function SingleInvestment({ userId }) {
                             <button 
                                 className='form-button rounded-button coloured' 
                                 type='button'
-                                onClick={() => console.log("Purchased investment")}
-                                disabled={loading}
+                                onClick={onInvestmentPurchase}
+                                disabled={loading || canAfford}
                             >Purchase investment</button>
                         </div>
                     </div>

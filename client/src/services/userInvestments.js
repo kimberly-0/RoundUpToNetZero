@@ -7,6 +7,13 @@ export function getPurchases({ userId }) {
     });
 }
 
+export function addPurchase({ userId, purchase }) {
+    return makeRequest(`/users/${userId}/purchases`, {
+        method: "POST",
+        data: { purchase: purchase },
+    });
+}
+
 export function getTotalInvested({ userId }) {
     return getPurchases({ userId }).then(purchases => {
         if (purchases) {
