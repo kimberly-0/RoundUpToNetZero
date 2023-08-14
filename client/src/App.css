@@ -126,9 +126,7 @@ body {
   gap: .8rem;
 }
 
-.side-nav a {
-  display: block;
-  width: 100%;
+.side-nav a, .settings-nav a {
   padding: .5rem 1rem;
   border-radius: 7px;
   text-decoration: none;
@@ -136,8 +134,25 @@ body {
   font-weight: 600;
 }
 
+.side-nav a {
+  display: block;
+  width: 100%;
+}
+
 .side-nav a.active, .side-nav a:hover {
   background-color: var(--blue-grey);
+}
+
+.settings-nav {
+  display: flex;
+  flex-direction: row;
+  gap: 0.8rem;
+}
+
+.settings-nav a.active,
+.settings-nav a:hover {
+  background-color: var(--light-green);
+  color: var(--dark-green);
 }
 
 /* -------- Pages -------- */
