@@ -11,6 +11,10 @@ import EditTransaction from './views/pages/EditTransaction';
 import InvestmentHistory from './views/pages/InvestmentHistory';
 import InvestNow from './views/pages/InvestNow';
 import Settings from './views/pages/Settings';
+import UserDetailsSettings from './views/components/Settings/UserDetailsSettings';
+import CompanyDetailsSettings from './views/components/Settings/CompanyDetailsSettings';
+import PaymentMethodsSettings from './views/components/Settings/PaymentMethodsSettings';
+import NotificationsSettings from './views/components/Settings/NotificationsSettings';
 
 function App() {
 
@@ -20,16 +24,50 @@ function App() {
     <div className="App">
       <Routes>
         <Route path='/' element={ <Navigate to={loggedInUserId ? "/dashboard" : "/log-in"} />  } />
+        
         <Route path='/log-in' element={ <LogIn /> } />
+
+        
         <Route path='/dashboard' element={ <Dashboard userId={loggedInUserId}/> } />
+        
         <Route path='/transactions' element={ <TransactionHistory userId={loggedInUserId}/> } />
+        
         <Route path='/transactions/:id' element={ <SingleTransaction userId={loggedInUserId}/> } />
         <Route path='/edit-transaction/:id' element={ <EditTransaction userId={loggedInUserId}/> } />
+        
         <Route path='/add-transaction' element={ <AddTransaction userId={loggedInUserId}/> } />
+        
         <Route path='/investment-history' element={ <InvestmentHistory userId={loggedInUserId}/> } />
+        
         <Route path='/invest' element={ <InvestNow userId={loggedInUserId}/> } />
+        
         <Route path='/invest/:id' element={ <SingleInvestment userId={loggedInUserId}/> } />
-        <Route path='/settings' element={ <Settings userId={loggedInUserId}/> } />
+
+        <Route path='/settings' element={ <Navigate to='/settings/user-details' />  } />
+        
+        <Route path='/settings/user-details' element={ 
+          <Settings>
+            <UserDetailsSettings userId={loggedInUserId} />
+          </Settings> 
+        } />
+
+        <Route path='/settings/company-details' element={ 
+          <Settings>
+            <CompanyDetailsSettings userId={loggedInUserId} />
+          </Settings> 
+        } />
+
+        <Route path='/settings/payment-methods' element={ 
+          <Settings>
+            <PaymentMethodsSettings userId={loggedInUserId} />
+          </Settings> 
+        } />
+
+        <Route path='/settings/notifications' element={ 
+          <Settings>
+            <NotificationsSettings userId={loggedInUserId} />
+          </Settings> 
+        } />
       </Routes>
     </div>
   );
