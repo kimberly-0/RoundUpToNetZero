@@ -505,7 +505,7 @@ table .align-right {
   margin-top: .5rem;
 }
 
-.input-container label {
+.input-container label, .label-style {
   display: block;
   margin-bottom: .5rem;
   font-weight: 600;
@@ -634,4 +634,33 @@ input, select {
 
 .settings-form .full-width {
   grid-column: 1/3;
+}
+
+.paymethods-label-container {
+  display: flex;
+  flex-direction: row;
+  display: grid;
+  gap: 1.5rem;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 1fr 1fr;
+}
+
+.paymethods-list-item-box {
+  display: flex;
+  flex-direction: row;
+  display: grid;
+  gap: 1.5rem;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 1fr 1fr;
+  padding: 0;
+}
+
+.paymethods-list-item-box li {
+  margin-left: 2rem;
+  padding-left: .5rem;
+}
+
+.paymethods-list-item-box input[type='checkbox'] {
+  max-width: 20px;
+  margin: 0;
 }

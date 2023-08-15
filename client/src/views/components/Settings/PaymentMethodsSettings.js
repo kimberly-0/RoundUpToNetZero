@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { useAsync, useAsyncFn } from '../../../hooks/useAsync';
+import { useAsync } from '../../../hooks/useAsync';
+// import { useAsyncFn } from '../../../hooks/useAsync';
 import { getUser } from '../../../services/user';
-import { updateCompany } from '../../../services/company';
+// import { updateCompany } from '../../../services/company';
 
 export default function PaymentMethodsSettings({  
     userId,
@@ -21,12 +22,13 @@ export default function PaymentMethodsSettings({
     }), [userId]);
 
     // TO CHANGE !!!!!
-    const { loadingUpdate, errorUpdate, execute: updateCompanyFn } = useAsyncFn(updateCompany);
+    // const { loadingUpdate, errorUpdate, execute: updateCompanyFn } = useAsyncFn(updateCompany);
 
     // TO CHANGE !!!!!
     function handleSubmit(e) {
         e.preventDefault();
         console.log("Saved");
+        console.log("User: " + user);
         // onSubmit(updateCompanyFn, { companyId, company: {
         //     name: companyName,
         //     registrationNumber: companyRegNumber,
@@ -47,24 +49,23 @@ export default function PaymentMethodsSettings({
             </div>
 
             <form className='settings-form' onSubmit={handleSubmit}>
-                <div className='input-container'>
-                    <p className='label-style'>Linked payment methods</p>
+                <div className='input-container full-width'>
+                    <div className='paymethods-label-container'>
+                        <label>Linked payment methods</label>
+                        <label htmlFor='monitored' className='paymethods-list-item-label'>Monitored</label>
+                    </div>
                     <div className="paymethods-list">
                         {userPaymethods?.length > 0 ? (
                             userPaymethods.map(paymethod => 
-                                <div key={paymethod.id}>
-                                    <label 
-                                        htmlFor={`monitored-${paymethod.id}`} 
-                                        className='paymethods-list-label'
-                                    >{paymethod.type} ending in {paymethod.cardNumber}</label>
-                                    <input type="checkbox" id={`monitored-${paymethod.id}`} name={`monitored-${paymethod.id}`} value={paymethod.monitored}></input>
-                                </div>
+                                <ul className='paymethods-list-item-box' key={paymethod.id}>
+                                    <li>{paymethod.type} ending in {paymethod.cardNumber}</li>
+                                    <input type="checkbox" id='monitored' name={`monitored-${paymethod.id}`} value={paymethod.monitored}></input>
+                                </ul>
                             )
                         ) : (
                             <p>There are no linked payment methods</p>
                         )}
                     </div>
-                    <label htmlFor="payment-monitored">Monitored</label>
                 </div>
                 
                 <div className='input-container'>
@@ -73,11 +74,11 @@ export default function PaymentMethodsSettings({
                 </div>
 
                 <div className='transaction-form-section button-section  full-width'>
-                    <p className={`error-msg ${!errorUpdate ? "hide" : ""}`}>{errorUpdate}</p>
+                    {/* <p className={`error-msg ${!errorUpdate ? "hide" : ""}`}>{errorUpdate}</p> */}
                     <button 
                         className='form-button rounded-button coloured' 
                         type='submit'
-                        disabled={loadingUpdate}
+                        // disabled={loadingUpdate}
                     >Save changes</button>
                 </div>
             </form>
