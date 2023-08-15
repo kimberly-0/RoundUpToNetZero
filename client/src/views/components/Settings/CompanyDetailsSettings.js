@@ -21,7 +21,7 @@ export default function CompanyDetailsSettings({
     const [industry, setIndustry] = useState(initialData.company.industry);
     const [numOfEmployees, setNumOfEmployees] = useState(initialData.company.numberOfEmployees);
 
-    const { loadingUser, errorUser, value: user } = useAsync(() => getUser({ userId }).then(user => {
+    const { loadingUser, errorUser } = useAsync(() => getUser({ userId }).then(user => {
         setCompanyId(user.company.id);
         setCompanyName(user.company.name);
         setCompanyRegNumber(user.company.registrationNumber);
