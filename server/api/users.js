@@ -12,6 +12,7 @@ const USER_SELECT_FIELDS = {
     password: false,
     company: {
         select: {
+            id: true,
             name: true,
             registrationNumber: true,
             industry: true,
@@ -21,13 +22,25 @@ const USER_SELECT_FIELDS = {
 }
 
 usersRouter.param('userId', async (req, res, next, userId) => {    
-    await prisma.user.findUnique({ where: { id: userId } })
-    .then(user => {
+    await prisma.user.findUnique({ 
+        where: { id: userId }, 
+        select: {
+            ...USER_SELECT_FIELDS,
+            password: true,
+            paymethods: {
+                select: {
+                    id: true,
+                    cardNumber: true,
+                    type: true,
+                    monitored: true,
+                },
+            },
+        },
+    }).then(user => {
         req.user = user;
         next();
         return;
-    })
-    .catch(error => {
+    }).catch(error => {
         console.log(error);
         return res.status(404).send("User not found");
     });

@@ -46,26 +46,26 @@ function App() {
         <Route path='/settings' element={ <Navigate to='/settings/user-details' />  } />
         
         <Route path='/settings/user-details' element={ 
-          <Settings>
-            <UserDetailsSettings userId={loggedInUserId} />
+          <Settings userId={loggedInUserId}>
+            <UserDetailsSettings />
           </Settings> 
         } />
 
         <Route path='/settings/company-details' element={ 
-          <Settings>
-            <CompanyDetailsSettings userId={loggedInUserId} />
+          <Settings userId={loggedInUserId}>
+            <CompanyDetailsSettings />
           </Settings> 
         } />
 
         <Route path='/settings/payment-methods' element={ 
-          <Settings>
-            <PaymentMethodsSettings userId={loggedInUserId} />
+          <Settings userId={loggedInUserId}>
+            <PaymentMethodsSettings />
           </Settings> 
         } />
 
         <Route path='/settings/notifications' element={ 
-          <Settings>
-            <NotificationsSettings userId={loggedInUserId} />
+          <Settings userId={loggedInUserId}>
+            <NotificationsSettings />
           </Settings> 
         } />
       </Routes>
