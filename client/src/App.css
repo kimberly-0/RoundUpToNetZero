@@ -620,3 +620,18 @@ input, select {
   margin: .5rem;
 }
 
+.settings-title-container {
+  border-bottom: 2px solid var(--lines-light-grey);
+  margin-bottom: 1.5rem;
+}
+
+.settings-form {
+  display: grid;
+  gap: 1.5rem;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 1fr 1fr;
+}
+
+.settings-form .full-width {
+  grid-column: 1/3;
+}
