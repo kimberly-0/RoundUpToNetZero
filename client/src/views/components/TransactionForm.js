@@ -44,6 +44,7 @@ export function TransactionForm({
             paymethodId: paymethodId,
             companyId: user.companyId
         }).then(() => {
+            console.log("Success!");
             // setDate(new Date(Date.now()).toISOString().split('T')[0] || '');
             // setDescription('');
             // setAmount('');
@@ -51,7 +52,7 @@ export function TransactionForm({
             // setFundContribution(0);
             // setPaymethodId('');
         }).catch(error => {
-            // console.log(error);
+            console.log(error);
         });
     };
 
