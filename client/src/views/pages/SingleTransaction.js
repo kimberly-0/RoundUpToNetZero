@@ -84,7 +84,7 @@ export default function SingleTransaction({ userId }) {
                                 disabled={loading}
                             >Edit transaction</button>
                             <button 
-                                className='form-button rounded-button icon-button red' 
+                                className='form-button rounded-button icon-button coloured-red' 
                                 type='button'
                                 onClick={onTransactionDelete}
                                 disabled={loadingDelete}

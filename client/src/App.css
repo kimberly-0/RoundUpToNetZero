@@ -249,12 +249,17 @@ body {
   padding: .7rem .9rem;
 }
 
-.rounded-button.coloured {
+.coloured {
     background-color: var(--dark-green);
     color: var(--white);
 }
 
-.rounded-button.red {
+.coloured-light {
+  background-color: var(--green);
+  color: var(--white);
+}
+
+.coloured-red {
   background-color: var(--red);
   color: var(--white);
 }
@@ -630,6 +635,10 @@ input, select {
   gap: 1.5rem;
   grid-auto-rows: 1fr;
   grid-template-columns: 1fr 1fr;
+}
+
+.settings-form.one-row {
+  grid-auto-rows: 0fr;
 }
 
 .settings-form .full-width {

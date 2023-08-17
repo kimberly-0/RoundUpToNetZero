@@ -1,46 +1,55 @@
 import { useState } from 'react';
 import { useAsync } from '../../../hooks/useAsync';
-// import { useAsyncFn } from '../../../hooks/useAsync';
+import { useAsyncFn } from '../../../hooks/useAsync';
 import { getUser } from '../../../services/user';
-// import { updateCompany } from '../../../services/company';
+import { updatePaymethod } from '../../../services/userPaymethods';
 
 export default function PaymentMethodsSettings({  
     userId,
     onSubmit,
     initialData = {
-        paymethods: [{
-            id: '',
-    }]} }) {
+        paymethods: []
+    } }) {
 
     const [userPaymethods, setUserPaymethods] = useState(initialData.paymethods);
 
-    const { loadingUser, errorUser, value: user } = useAsync(() => getUser({ userId }).then(user => {
-        // console.log("User: " + JSON.stringify(user));
-        console.log("User paymethods: " + JSON.stringify(user.paymethods));
+    const { loadingUser, errorUser } = useAsync(() => getUser({ userId }).then(user => {
+        console.log("user.paymethods:" +  JSON.stringify(user.paymethods, null, 1));
 
         setUserPaymethods(user.paymethods);
     }), [userId]);
 
-    // TO CHANGE !!!!!
-    // const { loadingUpdate, errorUpdate, execute: updateCompanyFn } = useAsyncFn(updateCompany);
+    const { loadingUpdate, errorUpdate, execute: updatePaymethodFn } = useAsyncFn(updatePaymethod);
 
-    // TO CHANGE !!!!!
-    function handleSubmit(e) {
-        e.preventDefault();
-        console.log("Saved");
-        console.log("User: " + user);
-        // onSubmit(updateCompanyFn, { companyId, company: {
-        //     name: companyName,
-        //     registrationNumber: companyRegNumber,
-        //     industry: industry,
-        //     numberOfEmployees: Number(numOfEmployees),
-        // }});
-    };
+    function toggleChecked(paymethodId) {
+        const paymethodObject = userPaymethods.find(paymethod => paymethod.id === paymethodId);
+        onSubmit({
+            updateFn: updatePaymethodFn, 
+            args: { 
+                userId, 
+                paymethodId,
+                paymethod: {
+                    cardNumber: paymethodObject.cardNumber,
+                    type: paymethodObject.type,
+                    monitored: !paymethodObject.monitored,
+                }
+            }, 
+            confirmMessage: 'Are you sure you want to ' + (!paymethodObject.monitored ? `have ${paymethodObject.type} ending in ${paymethodObject.cardNumber} monitored?` : `stop monitoring ${paymethodObject.type} ending in ${paymethodObject.cardNumber}?`)             
+        })?.then(() => {
+            const newUserPaymethods = userPaymethods.map(paymethod => {
+                if (paymethod.id === paymethodId) {
+                    return {...paymethod, monitored: !paymethod.monitored};
+                }
+                return paymethod;
+            });
+            setUserPaymethods(newUserPaymethods);
+        });
+    }
 
     if (loadingUser) return <h1>Loading</h1>
 
     if (errorUser) return <h1 className="error-msg">{errorUser}</h1>
-  
+
     return (
         <div className='page-table-container component-container'>
             <div className='settings-title-container'>
@@ -48,7 +57,7 @@ export default function PaymentMethodsSettings({
                 <p>Update your payment details here.</p>
             </div>
 
-            <form className='settings-form' onSubmit={handleSubmit}>
+            <form className='settings-form one-row' >
                 <div className='input-container full-width'>
                     <div className='paymethods-label-container'>
                         <label>Linked payment methods</label>
@@ -59,7 +68,13 @@ export default function PaymentMethodsSettings({
                             userPaymethods.map(paymethod => 
                                 <ul className='paymethods-list-item-box' key={paymethod.id}>
                                     <li>{paymethod.type} ending in {paymethod.cardNumber}</li>
-                                    <input type="checkbox" id='monitored' name={`monitored-${paymethod.id}`} value={paymethod.monitored}></input>
+                                    <input 
+                                        type="checkbox" 
+                                        id='monitored' 
+                                        checked={paymethod.monitored}
+                                        onChange={() => toggleChecked(paymethod.id)}
+                                        disabled={loadingUpdate}
+                                    ></input>
                                 </ul>
                             )
                         ) : (
@@ -67,19 +82,14 @@ export default function PaymentMethodsSettings({
                         )}
                     </div>
                 </div>
-                
-                <div className='input-container'>
-                    <label htmlFor="add-new-payment-method">Add new payment method</label>
-                    
-                </div>
 
                 <div className='transaction-form-section button-section  full-width'>
-                    {/* <p className={`error-msg ${!errorUpdate ? "hide" : ""}`}>{errorUpdate}</p> */}
+                    <p className={`error-msg ${!errorUpdate ? "hide" : ""}`}>{errorUpdate}</p>
                     <button 
-                        className='form-button rounded-button coloured' 
-                        type='submit'
-                        // disabled={loadingUpdate}
-                    >Save changes</button>
+                        className='form-button rounded-button coloured-light' 
+                        type='button'
+                        disabled={loadingUser}
+                    >Add new payment method</button>
                 </div>
             </form>
         </div>

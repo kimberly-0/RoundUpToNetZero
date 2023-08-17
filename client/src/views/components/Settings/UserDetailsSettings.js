@@ -25,10 +25,17 @@ export default function UserDetailsSettings({
 
     function handleSubmit(e) {
         e.preventDefault();
-        onSubmit(updateUserFn, { userId, user : {
-            email: email,
-            password: password,
-        }});
+        onSubmit({
+            updateFn: updateUserFn, 
+            args: { 
+                userId, 
+                user: {
+                    email: email,
+                    password: password,
+                }
+            }, 
+            confirmMessage: "Are you sure you want to save the changes?"
+        });
     };
 
     if (loadingUser) return <h1>Loading</h1>

@@ -71,7 +71,9 @@ paymethodsRouter.post('/', validatePaymethod, async (req, res) => {
         data: {
             cardNumber: newPaymethod.cardNumber,
             type: newPaymethod.type,
-            monitored: newPaymethod.monitored,
+            monitored: {
+                set: newPaymethod.monitored,
+            },
             userId: req.user.id,
         },
         select: PAYMETHOD_SELECT_FIELDS
@@ -94,7 +96,9 @@ paymethodsRouter.put('/:paymethodId', async (req, res) => {
         data: {
             cardNumber: newPaymethod.cardNumber || req.paymethod.cardNumber,
             type: newPaymethod.type || req.paymethod.type,
-            monitored: newPaymethod.monitored || req.paymethod.monitored,
+            monitored: {
+                set: newPaymethod.monitored !== undefined ? newPaymethod.monitored : req.paymethod.monitored,
+            },
             userId: req.user.id,
         },
         select: PAYMETHOD_SELECT_FIELDS
