@@ -33,12 +33,19 @@ export default function CompanyDetailsSettings({
 
     function handleSubmit(e) {
         e.preventDefault();
-        onSubmit(updateCompanyFn, { companyId, company: {
-            name: companyName,
-            registrationNumber: companyRegNumber,
-            industry: industry,
-            numberOfEmployees: Number(numOfEmployees),
-        }});
+        onSubmit({
+            updateFn: updateCompanyFn, 
+            args: { 
+                companyId, 
+                company: {
+                    name: companyName,
+                    registrationNumber: companyRegNumber,
+                    industry: industry,
+                    numberOfEmployees: Number(numOfEmployees),
+                }
+            }, 
+            confirmMessage: "Are you sure you want to save the changes?"
+        });
     };
 
     if (loadingUser) return <h1>Loading</h1>

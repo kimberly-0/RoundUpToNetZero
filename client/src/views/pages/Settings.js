@@ -4,8 +4,8 @@ import SettingsNav from '../layout/SettingsNav';
 
 const Settings = ({ userId, children }) => {
 
-    function handleSubmit(updateFn, args) {
-        if (window.confirm("Are you sure you want to save the changes?")) {
+    function handleSubmit({ updateFn, args, confirmMessage }) {
+        if (window.confirm(confirmMessage)) {
             return updateFn(args).then(() => {
                 console.log("Changes saved!");
             }).catch(error => {
@@ -13,7 +13,6 @@ const Settings = ({ userId, children }) => {
             });
         } else {
             console.log("Changes not saved");
-            return;
         }
     };
 
