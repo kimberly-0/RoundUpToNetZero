@@ -19,60 +19,59 @@ import NotificationsSettings from './views/components/Settings/NotificationsSett
 
 function App() {
 
-    const loggedInUserId = useUser().id;
-
     const { token, setToken } = useToken();
+    const { userId, setUserId } = useUser();
 
-    if(!token) {
-        return <LogIn setToken={setToken} />
+    if( !token || !userId ) {
+        return <LogIn setToken={setToken} setUserId={setUserId} />
     }
 
     return (
         <div className="App">
             <Routes>
                 
-                <Route path='/' element={ <Navigate to={loggedInUserId ? "/dashboard" : "/log-in"} />  } />
+                {/* <Route path='/log-in' element={ <LogIn setToken={setToken} setUserId={setUserId} /> } /> */}
 
-                <Route path='/log-in' element={ <LogIn /> } />
+                <Route path='/' element={ <Dashboard userId={userId}/>  } />
 
-                <Route path='/dashboard' element={ <Dashboard userId={loggedInUserId}/> } />
+                <Route path='/dashboard' element={ <Dashboard userId={userId}/> } />
 
-                <Route path='/transactions' element={ <TransactionHistory userId={loggedInUserId}/> } />
+                <Route path='/transactions' element={ <TransactionHistory userId={userId}/> } />
 
-                <Route path='/transactions/:id' element={ <SingleTransaction userId={loggedInUserId}/> } />
+                <Route path='/transactions/:id' element={ <SingleTransaction userId={userId}/> } />
 
-                <Route path='/edit-transaction/:id' element={ <EditTransaction userId={loggedInUserId}/> } />
+                <Route path='/edit-transaction/:id' element={ <EditTransaction userId={userId}/> } />
 
-                <Route path='/add-transaction' element={ <AddTransaction userId={loggedInUserId}/> } />
+                <Route path='/add-transaction' element={ <AddTransaction userId={userId}/> } />
 
-                <Route path='/investment-history' element={ <InvestmentHistory userId={loggedInUserId}/> } />
+                <Route path='/investment-history' element={ <InvestmentHistory userId={userId}/> } />
 
-                <Route path='/invest' element={ <InvestNow userId={loggedInUserId}/> } />
+                <Route path='/invest' element={ <InvestNow userId={userId}/> } />
 
-                <Route path='/invest/:id' element={ <SingleInvestment userId={loggedInUserId}/> } />
+                <Route path='/invest/:id' element={ <SingleInvestment userId={userId}/> } />
 
                 <Route path='/settings' element={ <Navigate to='/settings/user-details' />  } />
 
                 <Route path='/settings/user-details' element={ 
-                    <Settings userId={loggedInUserId}>
+                    <Settings userId={userId}>
                         <UserDetailsSettings />
                     </Settings> 
                 } />
 
                 <Route path='/settings/company-details' element={ 
-                    <Settings userId={loggedInUserId}>
+                    <Settings userId={userId}>
                         <CompanyDetailsSettings />
                     </Settings> 
                 } />
 
                 <Route path='/settings/payment-methods' element={ 
-                    <Settings userId={loggedInUserId}>
+                    <Settings userId={userId}>
                         <PaymentMethodsSettings />
                     </Settings> 
                 } />
 
                 <Route path='/settings/notifications' element={ 
-                    <Settings userId={loggedInUserId}>
+                    <Settings userId={userId}>
                         <NotificationsSettings />
                     </Settings> 
                 } />
