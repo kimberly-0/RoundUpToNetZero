@@ -74,6 +74,12 @@ body {
   overflow-y: scroll;
 }
 
+.page-content.small {
+  padding-top: 3rem;
+  max-width: 30rem;
+  margin: 0 auto;
+}
+
 .header__title-box {
   display: flex;
   flex-direction: row;
@@ -689,5 +695,15 @@ input, select {
 
 .paymethods-list-item-box input[type='checkbox'] {
   max-width: 20px;
+  margin: 0;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.login-form .button-section {
   margin: 0;
 }
