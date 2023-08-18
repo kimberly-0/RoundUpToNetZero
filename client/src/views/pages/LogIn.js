@@ -1,10 +1,26 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Header from '../layout/Header';
 
-function LogIn() {
+async function loginUser(credentials) {
+    return fetch(`${process.env.REACT_APP_SERVER_URL}/login`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials),
+    }).then(data => data.json());
+}
 
-    const [username, setUsername] = useState('');
+export default function LogIn({ setToken }) {
+
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const token = await loginUser({ email, password });
+        setToken(token);
+    }
 
     return (
         <div className='layout'>
@@ -17,16 +33,17 @@ function LogIn() {
                     <h2 className='page-title'>Log In</h2>
 
                     <div className='page-table-container component-container'>
-                        <form className='login-form'>
+                        <form className='login-form' onSubmit={handleSubmit}>
                             <div className='input-container'>
-                                <label htmlFor="username">Username</label>
+                                <label htmlFor="email">Email</label>
                                 <input
-                                    type='username'
-                                    id='username'
-                                    name='username'
-                                    value={username}
-                                    onChange={e => setUsername(e.target.value)}
-                                    placeholder='Username'
+                                    type='email'
+                                    id='email'
+                                    name='email'
+                                    value={email}
+                                    onChange={e => setEmail(e.target.value)}
+                                    placeholder='Email'
+                                    autoComplete='email'
                                 />
                             </div>
 
@@ -39,6 +56,7 @@ function LogIn() {
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
                                     placeholder='Password'
+                                    autoComplete='current-password'
                                 />
                             </div>
 
@@ -58,5 +76,3 @@ function LogIn() {
         </div>
     );
 }
-
-export default LogIn;

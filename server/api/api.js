@@ -7,6 +7,12 @@ module.exports = apiRouter;
 const onRequestHook = require('./activeUser');
 apiRouter.use(onRequestHook); // fake user login before each request
 
+apiRouter.use('/login', (req, res) => {
+    res.send({
+        token: 'test123'
+    });
+});
+
 const investmentsRouter = require('./investments');
 apiRouter.use('/investments', investmentsRouter);
 
