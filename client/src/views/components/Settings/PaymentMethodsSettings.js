@@ -14,7 +14,7 @@ export default function PaymentMethodsSettings({
     const [userPaymethods, setUserPaymethods] = useState(initialData.paymethods);
 
     const { loadingUser, errorUser } = useAsync(() => getUser({ userId }).then(user => {
-        console.log("user.paymethods:" +  JSON.stringify(user.paymethods, null, 1));
+        // console.log("user.paymethods:" +  JSON.stringify(user.paymethods, null, 1));
 
         setUserPaymethods(user.paymethods);
     }), [userId]);
@@ -57,8 +57,8 @@ export default function PaymentMethodsSettings({
                 <p>Update your payment details here.</p>
             </div>
 
-            <form className='settings-form one-row' >
-                <div className='input-container full-width'>
+            <form className='paymethods-settings-form' >
+                <div className='paymethods-container full-width'>
                     <div className='paymethods-label-container'>
                         <label>Linked payment methods</label>
                         <label htmlFor='monitored' className='paymethods-list-item-label'>Monitored</label>
