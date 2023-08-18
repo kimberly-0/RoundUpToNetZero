@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../layout/Header';
 
 async function loginUser(credentials) {
@@ -12,13 +13,10 @@ async function loginUser(credentials) {
     .then(response => {
         if (response.status !== 200) throw new Error("Invalid credentials");
         return response.json();
-    })
-    .catch(error => {
-        throw new Error(error.message);;
     });
 }
 
-export default function LogIn({ setToken }) {
+export default function LogIn({ setToken, setUserId }) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -32,8 +30,9 @@ export default function LogIn({ setToken }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await loginUser({ email, password })
-        .then(token => {
-            setToken(token);
+        .then(data => {
+            setToken(data.token);
+            setUserId(data.userId);
             setError('');
         })
         .catch(error => {
@@ -94,4 +93,8 @@ export default function LogIn({ setToken }) {
             </main>
         </div>
     );
+}
+
+LogIn.propTypes = {
+  setToken: PropTypes.func.isRequired
 }
