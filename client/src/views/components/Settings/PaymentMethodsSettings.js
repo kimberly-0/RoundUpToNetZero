@@ -14,7 +14,7 @@ export default function PaymentMethodsSettings({
     const [userPaymethods, setUserPaymethods] = useState(initialData.paymethods);
 
     const { loadingUser, errorUser } = useAsync(() => getUser({ userId }).then(user => {
-        console.log("user.paymethods:" +  JSON.stringify(user.paymethods, null, 1));
+        // console.log("user.paymethods:" +  JSON.stringify(user.paymethods, null, 1));
 
         setUserPaymethods(user.paymethods);
     }), [userId]);
