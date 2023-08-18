@@ -19,6 +19,13 @@ async function seed() {
         numberOfEmployees: 25,
     }, })
 
+    const neutralInc = await prisma.company.create({ data: { 
+        name: 'Neutral Inc',
+        registrationNumber: 'NI000000',
+        industry: 'education',
+        numberOfEmployees: 2,
+    }, })
+
     /*
     Create users
     */
@@ -34,6 +41,18 @@ async function seed() {
         email: 'jane.doe@email.com', 
         password: 'fakepassword',
         companyId: greenInc.id,
+    }, })
+
+    const joanneDoe = await prisma.user.create({ data: { 
+        name: 'Joanne Doe',
+        email: 'joanne.doe@email.com', 
+        password: 'fakepassword'
+    }, })
+
+    const jackDoe = await prisma.user.create({ data: { 
+        name: 'Jack Doe',
+        email: 'jack.doe@email.com', 
+        password: 'fakepassword'
     }, })
 
     /*
