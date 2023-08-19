@@ -13,6 +13,10 @@ const validateLogin = (req, res, next) => {
 };
 
 loginRouter.post('/', validateLogin, (req, res) => {
+    
+    // TO DELETE !!!!!!!
+    console.log("Req body: " + JSON.stringify(req.body));
+
     return prisma.user.findUniqueOrThrow({ 
         where: { email: req.body.email }, 
         select: {
