@@ -5,7 +5,14 @@ const prisma = new PrismaClient();
 const loginRouter = express.Router();
 module.exports = loginRouter;
 
-loginRouter.post('/', (req, res) => {
+const validateLogin = (req, res, next) => {
+    if (!req.body.email || !req.body.password) {
+        return res.status(400).send("Please enter your email and password");
+    }
+    next();
+};
+
+loginRouter.post('/', validateLogin, (req, res) => {
     return prisma.user.findUniqueOrThrow({ 
         where: { email: req.body.email }, 
         select: {
@@ -19,9 +26,9 @@ loginRouter.post('/', (req, res) => {
                 userId: user.id,
             });
         };
-        return res.status(401).json("Invalid credentials");
+        return res.status(401).send("Invalid credentials");
     }).catch(error => {
         console.log(error);
-        return res.status(401).json("Invalid credentials");
+        return res.status(401).send("Invalid credentials");
     });
 });
