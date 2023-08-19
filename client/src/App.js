@@ -22,8 +22,6 @@ function App() {
     const { token, setToken } = useToken();
     const { userId, setUserId } = useUser();
 
-    console.log("userId: " + userId);
-
     if( !token || !userId ) {
         return <LogIn setToken={setToken} setUserId={setUserId} />
     }
