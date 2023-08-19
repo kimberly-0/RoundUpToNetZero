@@ -1,26 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { makeRequest  } from '../../services/makeRequest';
 import PropTypes from 'prop-types';
 import Header from '../layout/Header';
 
 async function loginUser(credentials) {
-    return fetch(`${process.env.REACT_APP_SERVER_URL}/login`, {
-        method: 'POST',
+    return makeRequest('/login', {
+        method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(credentials),
-    })
-    .then(response => {
-        if (response.status !== 200) throw new Error("Invalid credentials");
-        return response.json();
+        data: JSON.stringify(credentials),
     });
 }
 
 export default function LogIn({ setToken, setUserId }) {
-
-    // TEST SETTING OF LOCAL STORAGE
-    localStorage.setItem('test', 'T12345');
-
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -40,7 +33,7 @@ export default function LogIn({ setToken, setUserId }) {
             setError('');
         })
         .catch(error => {
-            setError(error.message);
+            setError(error);
         });
     }
 
