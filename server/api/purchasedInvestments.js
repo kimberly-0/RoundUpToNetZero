@@ -42,6 +42,7 @@ Get -> Read operations:
 
 purchasedInvestmentsRouter.get('/', async (req, res) => {
     return await prisma.purchase.findMany({ 
+        where: { userId: req.params.userId },
         select: PURCHASES_SELECT_FIELDS,
     }).then(purchases => {
         purchases.sort(function(a, b){
@@ -95,7 +96,7 @@ purchasedInvestmentsRouter.post('/', validatePurchase, validateInvestment, async
         data: {
             date: newPurchase.date,
             pricePaid: newPurchase.pricePaid,
-            userId: req.user.id,
+            userId: req.params.userId,
             investmentId: req.investment.id,
         },
         select: PURCHASES_SELECT_FIELDS
@@ -118,7 +119,7 @@ purchasedInvestmentsRouter.put('/:purchaseId', async (req, res) => {
         data: {
             date: newPurchase.date || req.purchase.date,
             pricePaid: newPurchase.pricePaid || req.purchase.pricePaid,
-            userId: req.user.id || req.purchase.userId,
+            userId: req.params.userId || req.purchase.userId,
             investmentId: newPurchase.investmentId || req.purchase.investmentId,
         },
         select: PURCHASES_SELECT_FIELDS
