@@ -56,6 +56,7 @@ Get -> Read operations:
 
 transactionsRouter.get('/', async (req, res) => {
     return await prisma.transaction.findMany({ 
+        where: { userId: req.params.userId },
         select: TRANSACTION_SELECT_FIELDS,
     }).then(transactions => {
         transactions.sort(function(a, b){
@@ -159,7 +160,7 @@ transactionsRouter.put('/:transactionId', validateCompany, validatePayment, asyn
             amount: newTransaction.amount || req.transaction.amount,
             roundedAmount: newTransaction.roundedAmount || req.transaction.roundedAmount,
             fundContribution: newTransaction.fundContribution || req.transaction.fundContribution,
-            userId: req.user.id  || req.transaction.userId,
+            userId: req.params.userId  || req.transaction.userId,
             paymethodId: req.paymethod.id || req.transaction.paymethodId,
             companyId: req.company.id || req.transaction.companyId,
         },

@@ -35,6 +35,7 @@ Get -> Read operations:
 
 paymethodsRouter.get('/', async (req, res) => {
     return await prisma.paymethod.findMany({ 
+        where: { userId: req.params.userId },
         select: PAYMETHOD_SELECT_FIELDS,
     }).then(paymethods => {
         return res.status(200).json(paymethods);
@@ -74,7 +75,7 @@ paymethodsRouter.post('/', validatePaymethod, async (req, res) => {
             monitored: {
                 set: newPaymethod.monitored,
             },
-            userId: req.user.id,
+            userId: req.params.userId,
         },
         select: PAYMETHOD_SELECT_FIELDS
     }).then(paymethod => {
@@ -99,7 +100,7 @@ paymethodsRouter.put('/:paymethodId', async (req, res) => {
             monitored: {
                 set: newPaymethod.monitored !== undefined ? newPaymethod.monitored : req.paymethod.monitored,
             },
-            userId: req.user.id,
+            userId: req.params.userId,
         },
         select: PAYMETHOD_SELECT_FIELDS
     }).then(paymethod => {
