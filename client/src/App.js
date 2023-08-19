@@ -23,7 +23,7 @@ function App() {
     const { userId, setUserId } = useUser();
 
     console.log("userId: " + userId);
-    
+
     if( !token || !userId ) {
         return <LogIn setToken={setToken} setUserId={setUserId} />
     }
@@ -32,7 +32,7 @@ function App() {
         <div className="App">
             <Routes>
                 
-                {/* <Route path='/log-in' element={ <LogIn setToken={setToken} setUserId={setUserId} /> } /> */}
+                <Route path='/log-in' element={ <LogIn setToken={setToken} setUserId={setUserId} /> } />
 
                 <Route path='/' element={ <Dashboard userId={userId}/>  } />
 
