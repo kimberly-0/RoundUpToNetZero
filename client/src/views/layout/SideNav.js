@@ -53,6 +53,7 @@ function SideNav() {
                     className={({ isActive, isPending }) =>
                         isPending ? 'pending' : isActive ? 'active' : ''
                     }
+                    onClick={() => localStorage.clear()}
                 >
                     Log out
                 </NavLink>

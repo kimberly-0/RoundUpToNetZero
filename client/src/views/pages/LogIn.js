@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom'
 import { makeRequest  } from '../../services/makeRequest';
 import PropTypes from 'prop-types';
 import Header from '../layout/Header';
@@ -15,6 +16,9 @@ async function loginUser(credentials) {
 
 export default function LogIn({ setToken, setUserId }) {
 
+    const location = useLocation();
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -26,11 +30,15 @@ export default function LogIn({ setToken, setUserId }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        localStorage.clear();
         await loginUser({ email, password })
         .then(data => {
             setToken(data.token);
             setUserId(data.userId);
             setError('');
+            if (location.pathname === '/log-in') {
+                navigate('/');
+            }
         })
         .catch(error => {
             setError(error);
