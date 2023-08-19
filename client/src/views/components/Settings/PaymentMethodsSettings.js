@@ -14,8 +14,6 @@ export default function PaymentMethodsSettings({
     const [userPaymethods, setUserPaymethods] = useState(initialData.paymethods);
 
     const { loadingUser, errorUser } = useAsync(() => getUser({ userId }).then(user => {
-        // console.log("user.paymethods:" +  JSON.stringify(user.paymethods, null, 1));
-
         setUserPaymethods(user.paymethods);
     }), [userId]);
 
@@ -59,28 +57,30 @@ export default function PaymentMethodsSettings({
 
             <form className='paymethods-settings-form' >
                 <div className='paymethods-container full-width'>
-                    <div className='paymethods-label-container'>
-                        <label>Linked payment methods</label>
-                        <label htmlFor='monitored' className='paymethods-list-item-label'>Monitored</label>
-                    </div>
-                    <div className="paymethods-list">
-                        {userPaymethods?.length > 0 ? (
-                            userPaymethods.map(paymethod => 
-                                <ul className='paymethods-list-item-box' key={paymethod.id}>
-                                    <li>{paymethod.type} ending in {paymethod.cardNumber}</li>
-                                    <input 
-                                        type="checkbox" 
-                                        id='monitored' 
-                                        checked={paymethod.monitored}
-                                        onChange={() => toggleChecked(paymethod.id)}
-                                        disabled={loadingUpdate}
-                                    ></input>
-                                </ul>
-                            )
-                        ) : (
-                            <p>There are no linked payment methods</p>
-                        )}
-                    </div>
+                    {userPaymethods?.length > 0 ? (
+                    <>
+                        <div className='paymethods-label-container'>
+                            <label>Linked payment methods</label>
+                            <label htmlFor='monitored' className='paymethods-list-item-label'>Monitored</label>
+                        </div>
+                        <div className="paymethods-list">
+                                {userPaymethods.map(paymethod => 
+                                    <ul className='paymethods-list-item-box' key={paymethod.id}>
+                                        <li>{paymethod.type} ending in {paymethod.cardNumber}</li>
+                                        <input 
+                                            type="checkbox" 
+                                            id='monitored' 
+                                            checked={paymethod.monitored}
+                                            onChange={() => toggleChecked(paymethod.id)}
+                                            disabled={loadingUpdate}
+                                        ></input>
+                                    </ul>
+                                )}
+                        </div>
+                    </>
+                    ) : (
+                        <p>There are no linked payment methods</p>
+                    )}
                 </div>
 
                 <div className='transaction-form-section button-section  full-width'>
