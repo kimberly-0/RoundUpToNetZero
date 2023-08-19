@@ -38,14 +38,14 @@ CREATE TABLE "Investment" (
 );
 
 -- CreateTable
-CREATE TABLE "Purchases" (
-    "purchaseId" TEXT NOT NULL PRIMARY KEY,
-    "purchaseDate" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE "Purchase" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "date" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "pricePaid" DECIMAL NOT NULL,
     "userId" TEXT NOT NULL,
     "investmentId" TEXT NOT NULL,
-    CONSTRAINT "Purchases_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT "Purchases_investmentId_fkey" FOREIGN KEY ("investmentId") REFERENCES "Investment" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "Purchase_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT "Purchase_investmentId_fkey" FOREIGN KEY ("investmentId") REFERENCES "Investment" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -63,3 +63,6 @@ CREATE TABLE "Transaction" (
     CONSTRAINT "Transaction_paymethodId_fkey" FOREIGN KEY ("paymethodId") REFERENCES "Paymethod" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Transaction_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
