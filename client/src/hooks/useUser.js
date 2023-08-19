@@ -10,7 +10,7 @@ export function useUser() {
     const [userId, setUserId] = useState(getUserId());
 
     const saveUserId = userId => {
-        localStorage.setItem('userId', JSON.stringify(userId));
+        localStorage.setItem('userId', userId);
         setUserId(userId);
     };
 
