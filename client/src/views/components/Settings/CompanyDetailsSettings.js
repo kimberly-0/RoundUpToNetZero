@@ -27,7 +27,10 @@ export default function CompanyDetailsSettings({
         setCompanyRegNumber(user.company.registrationNumber);
         setIndustry(user.company.industry);
         setNumOfEmployees(user.company.numberOfEmployees);
-    }), [userId]);
+    })
+    .catch(error => console.log(error))
+    , [userId]);
+    
 
     const { loadingUpdate, errorUpdate, execute: updateCompanyFn } = useAsyncFn(updateCompany);
 
