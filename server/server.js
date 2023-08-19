@@ -35,17 +35,14 @@ module.exports = app
 
 // send user ID to front end since cookies do not work for cross-domain deployment (in case of deployment of client and server on a single domain, remove the code below
 apiRouter.get("/getUserId",  async (req, res) => {
-    // const CURRENT_USER_ID = (
-    //     await prisma.user.findFirst({ where: { name: 'John Doe' } }).then(user => {
-    //         return user.id
-    //     }).catch(error => {
-    //         console.log(error)
-    //         return
-    //     })
-    // ) 
+    const CURRENT_USER_ID = (
+        await prisma.user.findFirst({ where: { name: 'John Doe' } }).then(user => {
+            return user.id
+        }).catch(error => {
+            console.log(error)
+            return
+        })
+    ) 
 
-    const CURRENT_USER_ID = localStorage.getItem('userId');
-    if (!CURRENT_USER_ID) return res.status(404).send("User not found");
-    
     return res.status(200).json(CURRENT_USER_ID);
 })
