@@ -18,6 +18,10 @@ async function loginUser(credentials) {
 
 export default function LogIn({ setToken, setUserId }) {
 
+    // TEST SETTING OF LOCAL STORAGE
+    localStorage.setItem('test', 'T12345');
+
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
