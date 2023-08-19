@@ -24,7 +24,7 @@ function Dashboard({ userId }) {
                 <MoneyBalance 
                     balances={[{
                         title: 'Net Zero Fund',
-                        amount: totalNZFundContribution - totalInvested
+                        amount: (totalNZFundContribution - totalInvested) || null
                     }]} 
                     isColoured={true} 
                 />

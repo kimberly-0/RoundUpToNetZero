@@ -8,10 +8,12 @@ export default function MoneyBalance({ balances, isColoured }) {
                             className='balance-title'>
                                 {balance.title}
                         </h4>
-                        <p 
-                            className='balance-amount'>
-                                £{typeof balance.amount === 'number' ? balance.amount?.toFixed(2) : 0}
-                        </p>
+                        {typeof balance.amount === 'number' && 
+                            <p 
+                                className='balance-amount'>
+                                    £{balance.amount?.toFixed(2)}
+                            </p>
+                        }
                     </div>
                 )
             })}
