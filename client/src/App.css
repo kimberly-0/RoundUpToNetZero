@@ -588,6 +588,10 @@ input, select {
   display: none !important;
 }
 
+.warning-msg {
+  color: red;
+}
+
 .error-msg {
   flex-grow: 1;
   align-self: flex-end;
@@ -636,14 +640,15 @@ input, select {
   margin-bottom: 1.5rem;
 }
 
-.settings-form {
+.settings-form, .add-paymethod-form {
   display: grid;
   gap: 1.5rem;
   grid-auto-rows: 1fr;
   grid-template-columns: 1fr 1fr;
 }
 
-.settings-form .full-width {
+.settings-form .full-width,
+.add-paymethod-form .full-width {
   grid-column: 1/3;
 }
 
