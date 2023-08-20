@@ -13,10 +13,10 @@ export default function AddPaymentMethod({ userId }) {
     const [monitored, setMonitored] = useState('false');
     const [cardType, setCardType] = useState('');
     const [cardNumber, setCardNumber] = useState('');
-    const [expiryDate, setExpiryDate] = useState('');
-    const [securityCode, setSecurityCode] = useState('');
-    const [postcode, setPostcode] = useState('');
-    const [country, setCountry] = useState('');
+    // const [expiryDate, setExpiryDate] = useState('');
+    // const [securityCode, setSecurityCode] = useState('');
+    // const [postcode, setPostcode] = useState('');
+    // const [country, setCountry] = useState('');
 
     const { loading, error, execute: createPaymethodFn } = useAsyncFn(createPaymethod);
 
@@ -67,6 +67,7 @@ export default function AddPaymentMethod({ userId }) {
                         name='monitored'
                         value={monitored}
                         onChange={e => setMonitored(e.target.value)}
+                        required
                     >
                         <option value='false'>No</option>
                         <option value='true'>Yes</option>
@@ -81,6 +82,7 @@ export default function AddPaymentMethod({ userId }) {
                         onChange={e => setCardType(e.target.value)}
                         placeholder='Visa'
                         autoComplete='cc-type'
+                        required
                     />
                 </div>
                 <div className='input-container'>
@@ -92,9 +94,10 @@ export default function AddPaymentMethod({ userId }) {
                         onChange={e => setCardNumber(e.target.value)}
                         placeholder='1111-2222-3333-4444'
                         autoComplete='cc-number'
+                        required
                     />
                 </div>
-                <div className='input-container'>
+                {/* <div className='input-container'>
                     <label htmlFor="expiry-date">Expiry date</label>
                     <input
                         type='text'
@@ -137,7 +140,7 @@ export default function AddPaymentMethod({ userId }) {
                         placeholder='United Kingdom'
                         autoComplete='country'
                     />
-                </div>
+                </div> */}
 
                 <div className='transaction-form-section button-section  full-width'>
                     <p className={`error-msg ${!error ? "hide" : ""}`}>{error}</p>
