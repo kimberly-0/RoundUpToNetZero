@@ -35,8 +35,6 @@ function App() {
 
                 <Route path='/' element={ <Dashboard userId={userId}/>  } />
 
-                <Route path='/dashboard' element={ <Dashboard userId={userId}/> } />
-
                 <Route path='/transactions' element={ <TransactionHistory userId={userId}/> } />
 
                 <Route path='/transactions/:id' element={ <SingleTransaction userId={userId}/> } />

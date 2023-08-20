@@ -117,7 +117,7 @@ export default function ContributionsGraph({ userId }) {
             <div className='component-header'>
                 <h3 className='component-title'>Net Zero Fund contributions</h3>
                 <Link 
-                    to='/transaction-history'
+                    to='/transactions'
                     className='component-button-text-only'
                 >View all</Link>
             </div>
