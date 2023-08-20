@@ -270,6 +270,10 @@ body {
   color: var(--white);
 }
 
+.icon-button.red {
+  color: var(--red);
+}
+
 /* -------- Components -------- */
 
 .component-container {
@@ -652,9 +656,9 @@ input, select {
   grid-column: 1/3;
 }
 
-.paymethods-container {
+/* .paymethods-container {
   max-width: 550px;
-}
+} */
 
 .paymethods-label-container,
 .paymethods-list-item-box {
@@ -663,7 +667,7 @@ input, select {
   display: grid;
   gap: 1.5rem;
   grid-auto-rows: 1fr;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 3fr 2fr 1fr;
   padding: 0;
 }
 
@@ -672,25 +676,6 @@ input, select {
   .paymethods-list-item-box {
     grid-template-columns: 3fr 1fr !important;
   }
-}
-
-.paymethods-label-container {
-  display: flex;
-  flex-direction: row;
-  display: grid;
-  gap: 1.5rem;
-  grid-auto-rows: 1fr;
-  grid-template-columns: 1fr 1fr;
-}
-
-.paymethods-list-item-box {
-  display: flex;
-  flex-direction: row;
-  display: grid;
-  gap: 1.5rem;
-  grid-auto-rows: 1fr;
-  grid-template-columns: 1fr 1fr;
-  padding: 0;
 }
 
 .paymethods-list-item-box li {
