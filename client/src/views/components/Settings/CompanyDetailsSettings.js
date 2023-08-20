@@ -30,9 +30,9 @@ export default function CompanyDetailsSettings({
         }
     }).catch(error => console.log(error)), [userId]);
     
-    const { loadingUpdate, errorUpdate, execute: updateCompanyFn } = useAsyncFn(updateCompany);
+    const { loadingUpdate, execute: updateCompanyFn } = useAsyncFn(updateCompany);
 
-    const { loadingCreate, errorCreate, execute: createCompanyFn } = useAsyncFn(createCompany);
+    const { loadingCreate, execute: createCompanyFn } = useAsyncFn(createCompany);
 
     function handleSubmit(e) {
         e.preventDefault();
