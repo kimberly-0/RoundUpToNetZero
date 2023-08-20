@@ -111,7 +111,7 @@ export default function PaymentMethodsSettings({
 
                 <div className='transaction-form-section button-section  full-width'>
                     <p className={`error-msg ${!error ? "hide" : ""}`}>{error}</p>
-                    <Link to='/settings/add-payment-method'><button 
+                    <Link to='/settings/payment-methods/add-new'><button 
                         className='form-button rounded-button coloured-light' 
                         type='button'
                         disabled={loadingPaymethods}
