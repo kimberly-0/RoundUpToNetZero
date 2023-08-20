@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { useAsync } from '../../../hooks/useAsync';
 import { useAsyncFn } from '../../../hooks/useAsync';
 import { getPaymethods } from '../../../services/userPaymethods';
-import { updatePaymethod } from '../../../services/userPaymethods';
+import { updatePaymethod, deletePaymethod } from '../../../services/userPaymethods';
+import { FaTrash } from 'react-icons/fa';
 
 export default function PaymentMethodsSettings({  
     userId,
@@ -19,6 +20,8 @@ export default function PaymentMethodsSettings({
     }), [userId]);
 
     const { loadingUpdate, errorUpdate, execute: updatePaymethodFn } = useAsyncFn(updatePaymethod);
+
+    const { loadingDelete, errorDelete, execute: deletePaymethodFn } = useAsyncFn(deletePaymethod);
 
     function toggleChecked(paymethodId) {
         const paymethodObject = userPaymethods.find(paymethod => paymethod.id === paymethodId);
@@ -44,6 +47,21 @@ export default function PaymentMethodsSettings({
             setUserPaymethods(newUserPaymethods);
         });
     }
+
+    function onPaymethodDelete(paymethodId) {
+        if (window.confirm("Are you sure you want to delete this payment method?")) {
+            return deletePaymethodFn({ userId, paymethodId }).then(() => {
+                setUserPaymethods(prev =>
+                    prev.filter(paymethod => paymethod.id !== paymethodId)
+                );
+            }).catch(error => {
+                console.log("Error: " + error)
+            });
+        } else {
+            console.log("Payment method not deleted")
+            return
+        }
+    };
 
     if (loadingPaymethods) return <h1>Loading</h1>
 
@@ -75,6 +93,12 @@ export default function PaymentMethodsSettings({
                                             onChange={() => toggleChecked(paymethod.id)}
                                             disabled={loadingUpdate}
                                         ></input>
+                                        <button 
+                                            className='form-button rounded-button icon-button red' 
+                                            type='button'
+                                            onClick={() => onPaymethodDelete(paymethod.id)}
+                                            disabled={loadingDelete}
+                                        ><FaTrash /></button>
                                     </ul>
                                 )}
                         </div>
@@ -85,7 +109,7 @@ export default function PaymentMethodsSettings({
                 </div>
 
                 <div className='transaction-form-section button-section  full-width'>
-                    <p className={`error-msg ${!errorUpdate ? "hide" : ""}`}>{errorUpdate}</p>
+                    <p className={`error-msg ${(!errorUpdate && !errorDelete) ? "hide" : ""}`}>{errorUpdate || errorDelete}</p>
                     <Link to='/settings/add-payment-method'><button 
                         className='form-button rounded-button coloured-light' 
                         type='button'
