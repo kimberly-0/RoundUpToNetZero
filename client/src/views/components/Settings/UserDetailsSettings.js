@@ -58,6 +58,7 @@ export default function UserDetailsSettings({
                         value={email}
                         autoComplete='email'
                         onChange={e => setEmail(e.target.value)}
+                        required
                     />
                 </div>
                 <div className='input-container'>
@@ -68,6 +69,7 @@ export default function UserDetailsSettings({
                         value={password}
                         autoComplete='new-password'
                         onChange={e => setPassword(e.target.value)}
+                        required
                     />
                 </div>
                 <div className='input-container'>
@@ -78,6 +80,7 @@ export default function UserDetailsSettings({
                         value={confirmPassword}
                         autoComplete='new-password'
                         onChange={e => setConfirmPassword(e.target.value)}
+                        required
                     />
                 </div>
 

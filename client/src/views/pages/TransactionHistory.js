@@ -88,7 +88,7 @@ export default function TransactionHistory({ userId }) {
                                     <td>£{Number(transaction.amount)}</td>
                                     <td>£{transaction.roundedAmount}</td>
                                     <td>£{Number(transaction.fundContribution).toFixed(2)}</td>
-                                    <td>{transaction.paymethod.type} ending in {transaction.paymethod.cardNumber}</td>
+                                    <td>{transaction.paymethod.type} ending in {transaction.paymethod.cardNumber.slice(-4)}</td>
                                     <td>{transaction.description}</td>
                                 </tr>
                             )}

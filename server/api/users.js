@@ -27,14 +27,6 @@ usersRouter.param('userId', async (req, res, next, userId) => {
         select: {
             ...USER_SELECT_FIELDS,
             password: true,
-            paymethods: {
-                select: {
-                    id: true,
-                    cardNumber: true,
-                    type: true,
-                    monitored: true,
-                },
-            },
         },
     }).then(user => {
         req.user = user;
@@ -70,11 +62,12 @@ Post -> Create operations:
 */
 
 const validateUser = (req, res, next) => {
-    const toCreateUser = req.body.user;
-    if (!toCreateUser.name || !toCreateUser.email || !toCreateUser.password) {
-        return res.status(400).send();
+    const newUserData = req.body.user;
+    const oldUserData = req.user;
+    if ((!newUserData.name && !oldUserData?.name) || (!newUserData.email && !oldUserData?.email) || (!newUserData.password && !oldUserData?.password)) {
+        return res.status(400).send("Missing information");
     }
-    if (!toCreateUser.companyId) {
+    if (!newUserData.companyId && !oldUserData?.companyId) {
         req.body.companyId = null;
     }
     next();
@@ -102,7 +95,7 @@ usersRouter.post('/', validateUser, async (req, res) => {
 Put -> Update operations:
 */
 
-usersRouter.put('/:userId', async (req, res) => {
+usersRouter.put('/:userId', validateUser, async (req, res) => {
     const newUser = req.body.user;    
     return await prisma.user.update({
         where: { id: req.user.id },

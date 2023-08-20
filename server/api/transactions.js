@@ -79,7 +79,12 @@ Post -> Create operations:
 
 const validateTransaction = (req, res, next) => {
     const toCreateTransaction = req.body.transaction;
-    if (!toCreateTransaction.paymethodId || !toCreateTransaction.companyId || !toCreateTransaction.amount || !toCreateTransaction.roundedAmount || !toCreateTransaction.fundContribution) {
+
+    if (!toCreateTransaction.companyId) {
+        return res.status(400).send("You are not registered with a company");
+    }
+
+    if (!toCreateTransaction.paymethodId || !toCreateTransaction.amount || !toCreateTransaction.roundedAmount || !toCreateTransaction.fundContribution) {
         return res.status(400).send("Missing information");
     }
 

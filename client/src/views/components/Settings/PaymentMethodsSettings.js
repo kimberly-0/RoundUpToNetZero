@@ -1,23 +1,28 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAsync } from '../../../hooks/useAsync';
 import { useAsyncFn } from '../../../hooks/useAsync';
-import { getUser } from '../../../services/user';
-import { updatePaymethod } from '../../../services/userPaymethods';
+import { getPaymethods } from '../../../services/userPaymethods';
+import { updatePaymethod, deletePaymethod } from '../../../services/userPaymethods';
+import { FaTrash } from 'react-icons/fa';
 
 export default function PaymentMethodsSettings({  
     userId,
     onSubmit,
+    error = null,
     initialData = {
         paymethods: []
     } }) {
 
     const [userPaymethods, setUserPaymethods] = useState(initialData.paymethods);
 
-    const { loadingUser, errorUser } = useAsync(() => getUser({ userId }).then(user => {
-        setUserPaymethods(user.paymethods);
+    const { loadingPaymethods, errorPaymethods } = useAsync(() => getPaymethods({ userId }).then(paymethods => {
+        setUserPaymethods(paymethods);
     }), [userId]);
 
-    const { loadingUpdate, errorUpdate, execute: updatePaymethodFn } = useAsyncFn(updatePaymethod);
+    const { loadingUpdate, execute: updatePaymethodFn } = useAsyncFn(updatePaymethod);
+
+    const { loadingDelete, execute: deletePaymethodFn } = useAsyncFn(deletePaymethod);
 
     function toggleChecked(paymethodId) {
         const paymethodObject = userPaymethods.find(paymethod => paymethod.id === paymethodId);
@@ -44,9 +49,24 @@ export default function PaymentMethodsSettings({
         });
     }
 
-    if (loadingUser) return <h1>Loading</h1>
+    function onPaymethodDelete(paymethodId) {
+        if (window.confirm("Are you sure you want to delete this payment method?")) {
+            return deletePaymethodFn({ userId, paymethodId }).then(() => {
+                setUserPaymethods(prev =>
+                    prev.filter(paymethod => paymethod.id !== paymethodId)
+                );
+            }).catch(error => {
+                console.log("Error: " + error)
+            });
+        } else {
+            console.log("Payment method not deleted")
+            return
+        }
+    };
 
-    if (errorUser) return <h1 className="error-msg">{errorUser}</h1>
+    if (loadingPaymethods) return <h1>Loading</h1>
+
+    if (errorPaymethods) return <h1 className="error-msg">{errorPaymethods}</h1>
 
     return (
         <div className='page-table-container component-container'>
@@ -66,7 +86,7 @@ export default function PaymentMethodsSettings({
                         <div className="paymethods-list">
                                 {userPaymethods.map(paymethod => 
                                     <ul className='paymethods-list-item-box' key={paymethod.id}>
-                                        <li>{paymethod.type} ending in {paymethod.cardNumber}</li>
+                                        <li>{paymethod.type} ending in {paymethod.cardNumber.slice(-4)}</li>
                                         <input 
                                             type="checkbox" 
                                             id='monitored' 
@@ -74,6 +94,12 @@ export default function PaymentMethodsSettings({
                                             onChange={() => toggleChecked(paymethod.id)}
                                             disabled={loadingUpdate}
                                         ></input>
+                                        <button 
+                                            className='form-button rounded-button icon-button red' 
+                                            type='button'
+                                            onClick={() => onPaymethodDelete(paymethod.id)}
+                                            disabled={loadingDelete}
+                                        ><FaTrash /></button>
                                     </ul>
                                 )}
                         </div>
@@ -84,12 +110,12 @@ export default function PaymentMethodsSettings({
                 </div>
 
                 <div className='transaction-form-section button-section  full-width'>
-                    <p className={`error-msg ${!errorUpdate ? "hide" : ""}`}>{errorUpdate}</p>
-                    <button 
+                    <p className={`error-msg ${!error ? "hide" : ""}`}>{error}</p>
+                    <Link to='/settings/add-payment-method'><button 
                         className='form-button rounded-button coloured-light' 
                         type='button'
-                        disabled={loadingUser}
-                    >Add new payment method</button>
+                        disabled={loadingPaymethods}
+                    >Add new payment method</button></Link>
                 </div>
             </form>
         </div>

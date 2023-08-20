@@ -53,7 +53,7 @@ Post -> Create operations:
 
 const validateCompany = (req, res, next) => {
     if (!req.body.company.name) {
-        return res.status(400).send();
+        return res.status(400).send("Missing information");
     }
 
     next();
