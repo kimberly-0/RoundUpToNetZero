@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAsync } from '../../../hooks/useAsync';
 import { useAsyncFn } from '../../../hooks/useAsync';
-import { getUser } from '../../../services/user';
+import { getPaymethods } from '../../../services/userPaymethods';
 import { updatePaymethod } from '../../../services/userPaymethods';
 
 export default function PaymentMethodsSettings({  
@@ -13,8 +14,8 @@ export default function PaymentMethodsSettings({
 
     const [userPaymethods, setUserPaymethods] = useState(initialData.paymethods);
 
-    const { loadingUser, errorUser } = useAsync(() => getUser({ userId }).then(user => {
-        setUserPaymethods(user.paymethods);
+    const { loadingPaymethods, errorPaymethods } = useAsync(() => getPaymethods({ userId }).then(paymethods => {
+        setUserPaymethods(paymethods);
     }), [userId]);
 
     const { loadingUpdate, errorUpdate, execute: updatePaymethodFn } = useAsyncFn(updatePaymethod);
@@ -44,9 +45,9 @@ export default function PaymentMethodsSettings({
         });
     }
 
-    if (loadingUser) return <h1>Loading</h1>
+    if (loadingPaymethods) return <h1>Loading</h1>
 
-    if (errorUser) return <h1 className="error-msg">{errorUser}</h1>
+    if (errorPaymethods) return <h1 className="error-msg">{errorPaymethods}</h1>
 
     return (
         <div className='page-table-container component-container'>
@@ -66,7 +67,7 @@ export default function PaymentMethodsSettings({
                         <div className="paymethods-list">
                                 {userPaymethods.map(paymethod => 
                                     <ul className='paymethods-list-item-box' key={paymethod.id}>
-                                        <li>{paymethod.type} ending in {paymethod.cardNumber}</li>
+                                        <li>{paymethod.type} ending in {paymethod.cardNumber.slice(-4)}</li>
                                         <input 
                                             type="checkbox" 
                                             id='monitored' 
@@ -85,11 +86,11 @@ export default function PaymentMethodsSettings({
 
                 <div className='transaction-form-section button-section  full-width'>
                     <p className={`error-msg ${!errorUpdate ? "hide" : ""}`}>{errorUpdate}</p>
-                    <button 
+                    <Link to='/settings/add-payment-method'><button 
                         className='form-button rounded-button coloured-light' 
                         type='button'
-                        disabled={loadingUser}
-                    >Add new payment method</button>
+                        disabled={loadingPaymethods}
+                    >Add new payment method</button></Link>
                 </div>
             </form>
         </div>
