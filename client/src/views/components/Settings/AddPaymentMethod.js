@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { useAsync } from '../../../hooks/useAsync';
 import { useAsyncFn } from '../../../hooks/useAsync';
-// import { getUser } from '../../../services/user';
 import { createPaymethod } from '../../../services/userPaymethods';
 
 /*
