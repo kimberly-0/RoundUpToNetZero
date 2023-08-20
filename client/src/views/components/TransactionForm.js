@@ -42,7 +42,7 @@ export function TransactionForm({
             fundContribution: fundContribution,
             userId: user.id,
             paymethodId: paymethodId,
-            companyId: user.company.id
+            companyId: user.company?.id
         }).then(() => {
             console.log("Success!");
         }).catch(error => {
