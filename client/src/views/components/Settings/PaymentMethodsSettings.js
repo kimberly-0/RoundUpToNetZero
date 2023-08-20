@@ -9,6 +9,7 @@ import { FaTrash } from 'react-icons/fa';
 export default function PaymentMethodsSettings({  
     userId,
     onSubmit,
+    error = null,
     initialData = {
         paymethods: []
     } }) {
@@ -19,9 +20,9 @@ export default function PaymentMethodsSettings({
         setUserPaymethods(paymethods);
     }), [userId]);
 
-    const { loadingUpdate, errorUpdate, execute: updatePaymethodFn } = useAsyncFn(updatePaymethod);
+    const { loadingUpdate, execute: updatePaymethodFn } = useAsyncFn(updatePaymethod);
 
-    const { loadingDelete, errorDelete, execute: deletePaymethodFn } = useAsyncFn(deletePaymethod);
+    const { loadingDelete, execute: deletePaymethodFn } = useAsyncFn(deletePaymethod);
 
     function toggleChecked(paymethodId) {
         const paymethodObject = userPaymethods.find(paymethod => paymethod.id === paymethodId);
@@ -109,7 +110,7 @@ export default function PaymentMethodsSettings({
                 </div>
 
                 <div className='transaction-form-section button-section  full-width'>
-                    <p className={`error-msg ${(!errorUpdate && !errorDelete) ? "hide" : ""}`}>{errorUpdate || errorDelete}</p>
+                    <p className={`error-msg ${!error ? "hide" : ""}`}>{error}</p>
                     <Link to='/settings/add-payment-method'><button 
                         className='form-button rounded-button coloured-light' 
                         type='button'
