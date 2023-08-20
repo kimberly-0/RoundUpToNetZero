@@ -69,7 +69,7 @@ function App() {
                     </Settings> 
                 } />
 
-                <Route path='/settings/add-payment-method' element={ 
+                <Route path='/settings/payment-methods/add-new' element={ 
                     <Settings userId={userId}>
                         <AddPaymentMethod />
                     </Settings> 
