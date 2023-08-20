@@ -42,15 +42,9 @@ export function TransactionForm({
             fundContribution: fundContribution,
             userId: user.id,
             paymethodId: paymethodId,
-            companyId: user.companyId
+            companyId: user.company.id
         }).then(() => {
             console.log("Success!");
-            // setDate(new Date(Date.now()).toISOString().split('T')[0] || '');
-            // setDescription('');
-            // setAmount('');
-            // setRoundedAmount(0);
-            // setFundContribution(0);
-            // setPaymethodId('');
         }).catch(error => {
             console.log(error);
         });
@@ -98,7 +92,7 @@ export function TransactionForm({
                                     <option 
                                         key={method.id}
                                         value={method.id}
-                                    >{method.type} ending {method.cardNumber}</option>
+                                    >{method.type} ending {method.cardNumber.slice(-4)}</option>
                                 )}
                             </select>
                         ) : (
