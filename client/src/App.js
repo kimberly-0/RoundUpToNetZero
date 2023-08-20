@@ -15,6 +15,7 @@ import Settings from './views/pages/Settings';
 import UserDetailsSettings from './views/components/Settings/UserDetailsSettings';
 import CompanyDetailsSettings from './views/components/Settings/CompanyDetailsSettings';
 import PaymentMethodsSettings from './views/components/Settings/PaymentMethodsSettings';
+import AddPaymentMethod from './views/components/Settings/AddPaymentMethod';
 import NotificationsSettings from './views/components/Settings/NotificationsSettings';
 
 function App() {
@@ -67,6 +68,12 @@ function App() {
                 <Route path='/settings/payment-methods' element={ 
                     <Settings userId={userId}>
                         <PaymentMethodsSettings />
+                    </Settings> 
+                } />
+
+                <Route path='/settings/add-payment-method' element={ 
+                    <Settings userId={userId}>
+                        <AddPaymentMethod />
                     </Settings> 
                 } />
 
