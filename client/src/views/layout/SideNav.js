@@ -5,7 +5,7 @@ function SideNav() {
         <nav className='side-nav'>
             <div className='side-nav__top'>
                 <NavLink 
-                    to='/dashboard'
+                    to='/'
                     className={({ isActive, isPending }) =>
                         isPending ? 'pending' : isActive ? 'active' : ''
                     }
