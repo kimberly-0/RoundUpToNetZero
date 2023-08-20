@@ -3,8 +3,7 @@ import { useAsync, useAsyncFn } from '../../hooks/useAsync';
 import { getTransactionById, deleteTransaction } from '../../services/userTransactions';
 import { parseDate } from '../../util/parseDate';
 import Layout from '../layout/Layout';
-import { FaTrash } from 'react-icons/fa'
-// import { FaTrash, FaEdit } from 'react-icons/fa'
+import { FaTrash } from 'react-icons/fa';
 
 export default function SingleTransaction({ userId }) {
 
@@ -55,7 +54,7 @@ export default function SingleTransaction({ userId }) {
 
                             <div className='input-container'>
                                 <label htmlFor="paymethodId">Payment method</label>
-                                <p>{transaction.paymethod?.type} ending {transaction.paymethod?.cardNumber}</p>
+                                <p>{transaction.paymethod?.type} ending {transaction.paymethod?.cardNumber.slice(-4)}</p>
                             </div>
 
                             <div className='input-container'>
