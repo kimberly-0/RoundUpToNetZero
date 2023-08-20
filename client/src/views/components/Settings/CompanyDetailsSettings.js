@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAsync, useAsyncFn } from '../../../hooks/useAsync';
 import { getUser } from '../../../services/user';
-import { updateCompany } from '../../../services/company';
+import { createCompany, updateCompany } from '../../../services/company';
 
 export default function CompanyDetailsSettings({  
     userId,
@@ -15,36 +15,36 @@ export default function CompanyDetailsSettings({
             numberOfEmployees: '',
     }} }) {
 
-    const [companyId, setCompanyId] = useState(initialData.company.id);
-    const [companyName, setCompanyName] = useState(initialData.company.name);
-    const [companyRegNumber, setCompanyRegNumber] = useState(initialData.company.registrationNumber);
-    const [industry, setIndustry] = useState(initialData.company.industry);
-    const [numOfEmployees, setNumOfEmployees] = useState(initialData.company.numberOfEmployees);
+    const [companyData, setCompanyData] = useState(initialData.company);
 
-    const { loadingUser, errorUser } = useAsync(() => getUser({ userId }).then(user => {
-        setCompanyId(user.company.id);
-        setCompanyName(user.company.name);
-        setCompanyRegNumber(user.company.registrationNumber);
-        setIndustry(user.company.industry);
-        setNumOfEmployees(user.company.numberOfEmployees);
-    })
-    .catch(error => console.log(error))
-    , [userId]);
+    function updateFields(fields) {    
+        setCompanyData(prev => {
+            return { ...prev, ...fields }
+        })
+    }
+
+    const { loadingUser, errorUser, value: user } = useAsync(() => getUser({ userId }).then(user => {
+        if (user.company) {
+            updateFields(user.company);
+        }
+    }).catch(error => console.log(error)), [userId]);
     
-
     const { loadingUpdate, errorUpdate, execute: updateCompanyFn } = useAsyncFn(updateCompany);
+
+    const { loadingCreate, errorCreate, execute: createCompanyFn } = useAsyncFn(createCompany);
 
     function handleSubmit(e) {
         e.preventDefault();
         onSubmit({
-            updateFn: updateCompanyFn, 
+            updateFn: user?.company ? updateCompanyFn : createCompanyFn, 
             args: { 
-                companyId, 
-                company: {
-                    name: companyName,
-                    registrationNumber: companyRegNumber,
-                    industry: industry,
-                    numberOfEmployees: Number(numOfEmployees),
+                userId,
+                companyId: companyData.id,
+                company : {
+                    name: companyData.name,
+                    registrationNumber: companyData.registrationNumber,
+                    industry: companyData.industry,
+                    numberOfEmployees: Number(companyData.numberOfEmployees),
                 }
             }, 
             confirmMessage: "Are you sure you want to save the changes?"
@@ -68,8 +68,8 @@ export default function CompanyDetailsSettings({
                     <input
                         type='text'
                         name='company-name'
-                        value={companyName}
-                        onChange={e => setCompanyName(e.target.value)}
+                        value={companyData.name}
+                        onChange={e => {updateFields({name: e.target.value})}}
                     />
                 </div>
                 <div className='input-container'>
@@ -77,8 +77,8 @@ export default function CompanyDetailsSettings({
                     <input
                         type='text'
                         name='company-reg-number'
-                        value={companyRegNumber}
-                        onChange={e => setCompanyRegNumber(e.target.value)}
+                        value={companyData.registrationNumber}
+                        onChange={e => {updateFields({registrationNumber: e.target.value})}}
                     />
                 </div>
                 <div className='input-container'>
@@ -86,8 +86,8 @@ export default function CompanyDetailsSettings({
                     <input
                         type='text'
                         name='industry'
-                        value={industry}
-                        onChange={e => setIndustry(e.target.value)}
+                        value={companyData.industry}
+                        onChange={e => {updateFields({industry: e.target.value})}}
                     />
                 </div>
                 <div className='input-container'>
@@ -95,17 +95,17 @@ export default function CompanyDetailsSettings({
                     <input
                         type='number'
                         name='num-of-employees'
-                        value={numOfEmployees}
-                        onChange={e => setNumOfEmployees(e.target.value)}
+                        value={companyData.numberOfEmployees}
+                        onChange={e => {updateFields({numberOfEmployees: e.target.value})}}
                     />
                 </div>
 
                 <div className='transaction-form-section button-section  full-width'>
-                    <p className={`error-msg ${!errorUpdate ? "hide" : ""}`}>{errorUpdate}</p>
+                    <p className={`error-msg ${(!errorUpdate && !errorCreate) ? "hide" : ""}`}>{errorUpdate || errorCreate}</p>
                     <button 
                         className='form-button rounded-button coloured' 
                         type='submit'
-                        disabled={loadingUpdate}
+                        disabled={loadingUpdate || loadingCreate}
                     >Save changes</button>
                 </div>
             </form>
