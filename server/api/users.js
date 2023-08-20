@@ -27,14 +27,6 @@ usersRouter.param('userId', async (req, res, next, userId) => {
         select: {
             ...USER_SELECT_FIELDS,
             password: true,
-            paymethods: {
-                select: {
-                    id: true,
-                    cardNumber: true,
-                    type: true,
-                    monitored: true,
-                },
-            },
         },
     }).then(user => {
         req.user = user;
