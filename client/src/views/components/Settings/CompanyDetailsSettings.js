@@ -6,6 +6,7 @@ import { createCompany, updateCompany } from '../../../services/company';
 export default function CompanyDetailsSettings({  
     userId,
     onSubmit,
+    error = null,
     initialData = {
         company: {
             id: '',
@@ -101,7 +102,7 @@ export default function CompanyDetailsSettings({
                 </div>
 
                 <div className='transaction-form-section button-section  full-width'>
-                    <p className={`error-msg ${(!errorUpdate && !errorCreate) ? "hide" : ""}`}>{errorUpdate || errorCreate}</p>
+                    <p className={`error-msg ${!error ? "hide" : ""}`}>{error}</p>
                     <button 
                         className='form-button rounded-button coloured' 
                         type='submit'
