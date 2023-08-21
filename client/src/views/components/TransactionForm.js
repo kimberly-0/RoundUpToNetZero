@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { roundUp } from '../../util/roundUp';
 
@@ -23,16 +23,9 @@ export function TransactionForm({
 
     const [transactionData, setTransactionData] = useState(initialData.transaction);
 
-    useEffect(() => {
-        updateFields({
-            roundedAmount: roundUp(transactionData.amount),
-            fundContribution: roundUp(transactionData.amount) - transactionData.amount,
-        });
-    }, [transactionData.amount]);
-
     const navigate = useNavigate();
 
-    function updateFields(fields) {    
+    const updateFields = useCallback((fields) => {
         if (fields.paymethodId && fields.paymethodId === 'add-new') {
             if (window.confirm("Do you want to leave this page?")) {
                 navigate('/settings/payment-methods/add-new');
@@ -42,7 +35,14 @@ export function TransactionForm({
         setTransactionData(prev => {
             return { ...prev, ...fields }
         })
-    }
+    }, [navigate])
+
+    useEffect(() => {
+        updateFields({
+            roundedAmount: roundUp(transactionData.amount),
+            fundContribution: roundUp(transactionData.amount) - transactionData.amount,
+        });
+    }, [transactionData.amount, updateFields]);
     
     function handleSubmit(e) {
         e.preventDefault();
