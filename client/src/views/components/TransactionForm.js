@@ -9,39 +9,42 @@ export function TransactionForm({
     user, 
     paymethods, 
     initialData = {
-        date: new Date(Date.now()).toISOString().split('T')[0] || '',
-        description: '',
-        amount: '',
-        roundedAmount: 0,
-        fundContribution: 0,
-        paymethod: {
-            id: '',
-        },
+        transaction: {
+            date: new Date(Date.now()).toISOString().split('T')[0] || '',
+            description: '',
+            amount: '',
+            roundedAmount: 0,
+            fundContribution: 0,
+            paymethodId: '',
+        }
     }
 }) {
-    
-    const [date, setDate] = useState(initialData.date.split('T')[0]);
-    const [description, setDescription] = useState(initialData.description);
-    const [amount, setAmount] = useState(initialData.amount);
-    const [roundedAmount, setRoundedAmount] = useState(initialData.roundedAmount);
-    const [fundContribution, setFundContribution] = useState(initialData.fundContribution);
-    const [paymethodId, setPaymethodId] = useState(initialData.paymethod.id);
 
+    const [transactionData, setTransactionData] = useState(initialData.transaction);
+
+    function updateFields(fields) {    
+        setTransactionData(prev => {
+            return { ...prev, ...fields }
+        })
+    }
+    
     useEffect(() => {
-        setRoundedAmount(roundUp(amount));
-        setFundContribution(roundUp(amount) - amount);
-    }, [amount]);
+        updateFields({
+            roundedAmount: roundUp(transactionData.amount),
+            fundContribution: roundUp(transactionData.amount) - transactionData.amount,
+        });
+    }, [transactionData.amount]);
 
     function handleSubmit(e) {
         e.preventDefault();
         onSubmit({
-            date: date + 'T00:00:00.000Z',
-            description: description,
-            amount: amount,
-            roundedAmount: roundedAmount,
-            fundContribution: fundContribution,
+            date: transactionData.date + 'T00:00:00.000Z',
+            description: transactionData.description,
+            amount: transactionData.amount,
+            roundedAmount: transactionData.roundedAmount,
+            fundContribution: transactionData.fundContribution,
             userId: user.id,
-            paymethodId: paymethodId,
+            paymethodId: transactionData.paymethodId,
             companyId: user.company?.id
         }).then(() => {
             console.log("Success!");
@@ -62,8 +65,8 @@ export function TransactionForm({
                         type='date'
                         id='addtransaction-date'
                         name='date'
-                        value={date}
-                        onChange={e => setDate(e.target.value)}
+                        value={transactionData.date}
+                        onChange={e => {updateFields({date: e.target.value})}}
                         placeholder='Date'
                     />
                 </div>
@@ -73,8 +76,8 @@ export function TransactionForm({
                     <input
                         type='text'
                         name='description'
-                        value={description}
-                        onChange={e => setDescription(e.target.value)}
+                        value={transactionData.description}
+                        onChange={e => {updateFields({description: e.target.value})}}
                         placeholder='Description'
                     />
                 </div>
@@ -84,8 +87,8 @@ export function TransactionForm({
                         {paymethods?.length > 0 ? (
                             <select
                                 name='paymethodId'
-                                onChange={e => setPaymethodId(e.target.value)}
-                                value={paymethodId}
+                                onChange={e => {updateFields({paymethodId: e.target.value})}}
+                                value={transactionData.paymethodId}
                             >
                                 <option value='' disabled>Select payment method</option>
                                 {paymethods.map(method => 
@@ -106,8 +109,8 @@ export function TransactionForm({
                         type='number'
                         id='addtransaction-amount'
                         name='amount'
-                        value={amount}
-                        onChange={e => setAmount(e.target.value)}
+                        value={transactionData.amount}
+                        onChange={e => {updateFields({amount: e.target.value})}}
                         placeholder='Amount'
                     />
                 </div>
@@ -117,11 +120,11 @@ export function TransactionForm({
             <div className='transaction-form-section contribution-section'>
                 <div className='section-row'>
                     <p>Transaction will be rounded up to</p>
-                    <p>£{Number(roundedAmount)?.toFixed(2)}</p>
+                    <p>£{Number(transactionData.roundedAmount)?.toFixed(2)}</p>
                 </div>
                 <div className='section-row'>
                     <p>Contribution to Net Zero Fund</p>
-                    <p>£{Number(fundContribution)?.toFixed(2)}</p>
+                    <p>£{Number(transactionData.fundContribution)?.toFixed(2)}</p>
                 </div>
             </div>
 

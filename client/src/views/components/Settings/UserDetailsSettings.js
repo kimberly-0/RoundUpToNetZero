@@ -6,19 +6,27 @@ export default function UserDetailsSettings({
     userId,
     onSubmit,
     initialData = {
-        email: '',
-        password: '',
-        confirmPassword: '',
+        user: {
+            email: '',
+            password: '',
+            confirmPassword: '',
+        }
     }}) {
 
-    const [email, setEmail] = useState(initialData.email);
-    const [password, setPassword] = useState(initialData.password);
-    const [confirmPassword, setConfirmPassword] = useState(initialData.password);
+    const [userData, setUserData] = useState(initialData.user);
+
+    function updateFields(fields) {    
+        setUserData(prev => {
+            return { ...prev, ...fields }
+        })
+    }
 
     const { loadingUser, errorUser } = useAsync(() => getUser({ userId }).then(user => {
-        setEmail(user.email);
-        setPassword(user.password);
-        setConfirmPassword(user.password);
+        updateFields({
+            email: user.email, 
+            password: user.password, 
+            confirmPassword: user.password
+        });
     }), [userId]);
 
     const { loadingUpdate, errorUpdate, execute: updateUserFn } = useAsyncFn(updateUser);
@@ -30,8 +38,9 @@ export default function UserDetailsSettings({
             args: { 
                 userId, 
                 user: {
-                    email: email,
-                    password: password,
+                    email: userData.email,
+                    password: userData.password,
+                    confirmPassword: userData.confirmPassword,
                 }
             }, 
             confirmMessage: "Are you sure you want to save the changes?"
@@ -55,9 +64,9 @@ export default function UserDetailsSettings({
                     <input
                         type='email'
                         name='email'
-                        value={email}
+                        value={userData.email}
                         autoComplete='email'
-                        onChange={e => setEmail(e.target.value)}
+                        onChange={e => {updateFields({email: e.target.value})}}
                         required
                     />
                 </div>
@@ -66,9 +75,9 @@ export default function UserDetailsSettings({
                     <input
                         type='password'
                         name='password'
-                        value={password}
+                        value={userData.password}
                         autoComplete='new-password'
-                        onChange={e => setPassword(e.target.value)}
+                        onChange={e => {updateFields({password: e.target.value})}}
                         required
                     />
                 </div>
@@ -77,9 +86,9 @@ export default function UserDetailsSettings({
                     <input
                         type='password'
                         name='confirm-password'
-                        value={confirmPassword}
+                        value={userData.confirmPassword}
                         autoComplete='new-password'
-                        onChange={e => setConfirmPassword(e.target.value)}
+                        onChange={e => {updateFields({confirmPassword: e.target.value})}}
                         required
                     />
                 </div>

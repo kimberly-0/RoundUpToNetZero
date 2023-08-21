@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAsync, useAsyncFn } from '../../../hooks/useAsync';
-import { getUser } from '../../../services/user';
+import { getUser, updateUser } from '../../../services/user';
 import { createCompany, updateCompany } from '../../../services/company';
 
 export default function CompanyDetailsSettings({  
@@ -31,25 +31,46 @@ export default function CompanyDetailsSettings({
     }).catch(error => console.log(error)), [userId]);
     
     const { loadingUpdate, execute: updateCompanyFn } = useAsyncFn(updateCompany);
-
     const { loadingCreate, execute: createCompanyFn } = useAsyncFn(createCompany);
+    const { loadingUserUpdate, execute: updateUserFn } = useAsyncFn(updateUser);
+
+    function allFieldsAreEmptyExceptId(fields) {
+        for (const [key, value] of Object.entries(fields)) {
+            if (key === 'id') continue;
+            if (value) return false;
+        }
+        return true;
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
-        onSubmit({
-            updateFn: user?.company ? updateCompanyFn : createCompanyFn, 
-            args: { 
-                userId,
-                companyId: companyData.id,
-                company : {
-                    name: companyData.name,
-                    registrationNumber: companyData.registrationNumber,
-                    industry: companyData.industry,
-                    numberOfEmployees: Number(companyData.numberOfEmployees),
-                }
-            }, 
-            confirmMessage: "Are you sure you want to save the changes?"
-        });
+        if (allFieldsAreEmptyExceptId(companyData)) {
+            console.log("Remove user from company")
+            onSubmit({
+                updateFn: updateUserFn, 
+                args: { 
+                    userId, 
+                    user: { companyId: null }
+                }, 
+                confirmMessage: "Are you sure you want to remove yourself from this company?"
+            });
+        } else {
+            console.log("Create or update user from company")
+            onSubmit({
+                updateFn: user?.company ? updateCompanyFn : createCompanyFn, 
+                args: { 
+                    userId,
+                    companyId: companyData.id,
+                    company : {
+                        name: companyData.name,
+                        registrationNumber: companyData.registrationNumber,
+                        industry: companyData.industry,
+                        numberOfEmployees: Number(companyData.numberOfEmployees),
+                    }
+                }, 
+                confirmMessage: "Are you sure you want to save the changes?"
+            });
+        }
     };
 
     if (loadingUser) return <h1>Loading</h1>
@@ -106,7 +127,7 @@ export default function CompanyDetailsSettings({
                     <button 
                         className='form-button rounded-button coloured' 
                         type='submit'
-                        disabled={loadingUpdate || loadingCreate}
+                        disabled={loadingCreate || loadingUpdate || loadingUserUpdate}
                     >Save changes</button>
                 </div>
             </form>

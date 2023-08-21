@@ -41,7 +41,7 @@ export default function EditTransaction({ userId }) {
                     onSubmit={onTransactionUpdate}
                     user={user}
                     paymethods={paymethods}
-                    initialData={transaction}
+                    initialData={{transaction: transaction}}
                 />
             </div>
         </Layout>
