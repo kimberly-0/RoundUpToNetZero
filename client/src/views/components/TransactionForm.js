@@ -23,6 +23,13 @@ export function TransactionForm({
 
     const [transactionData, setTransactionData] = useState(initialData.transaction);
 
+    useEffect(() => {
+        updateFields({
+            roundedAmount: roundUp(transactionData.amount),
+            fundContribution: roundUp(transactionData.amount) - transactionData.amount,
+        });
+    }, [transactionData.amount]);
+
     const navigate = useNavigate();
 
     function updateFields(fields) {    
@@ -37,13 +44,6 @@ export function TransactionForm({
         })
     }
     
-    useEffect(() => {
-        updateFields({
-            roundedAmount: roundUp(transactionData.amount),
-            fundContribution: roundUp(transactionData.amount) - transactionData.amount,
-        });
-    }, [transactionData.amount]);
-
     function handleSubmit(e) {
         e.preventDefault();
         onSubmit({
