@@ -67,9 +67,6 @@ const validateUser = (req, res, next) => {
     if ((!newUserData.name && !oldUserData?.name) || (!newUserData.email && !oldUserData?.email) || (!newUserData.password && !oldUserData?.password)) {
         return res.status(400).send("Missing information");
     }
-    if (!newUserData.companyId && !oldUserData?.companyId) {
-        req.body.companyId = null;
-    }
     next();
 };
 
@@ -80,7 +77,7 @@ usersRouter.post('/', validateUser, async (req, res) => {
             name: newUser.name,
             email: newUser.email,
             password: newUser.password,
-            companyId: newUser.companyId,
+            companyId: newUser.companyId || null,
         },
         select: USER_SELECT_FIELDS,
     }).then(user => {
@@ -103,7 +100,7 @@ usersRouter.put('/:userId', validateUser, async (req, res) => {
             name: newUser.name || req.user.name,
             email: newUser.email || req.user.email,
             password: newUser.password || req.user.password,
-            companyId: newUser.companyId || req.user.companyId,
+            companyId: newUser.companyId,
         },
         select: USER_SELECT_FIELDS,
     }).then(user => {
