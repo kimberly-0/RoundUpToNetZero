@@ -9,14 +9,22 @@ WARNING: Data is not being encrypted or stored in the database in a secure way. 
 
 export default function AddPaymentMethod({ userId }) {
 
-    const [cardholderName, setCardholderName] = useState('');
-    const [monitored, setMonitored] = useState('false');
-    const [cardType, setCardType] = useState('');
-    const [cardNumber, setCardNumber] = useState('');
-    // const [expiryDate, setExpiryDate] = useState('');
-    // const [securityCode, setSecurityCode] = useState('');
-    // const [postcode, setPostcode] = useState('');
-    // const [country, setCountry] = useState('');
+    const [paymethodData, setPaymethodData] = useState({
+        cardholderName: '',
+        monitored: 'false',
+        cardType: '',
+        cardNumber: '',
+        expiryDate: '',
+        securityCode: '',
+        postcode: '',
+        country: '',
+    });
+
+    function updateFields(fields) {    
+        setPaymethodData(prev => {
+            return { ...prev, ...fields }
+        })
+    }
 
     const { loading, error, execute: createPaymethodFn } = useAsyncFn(createPaymethod);
 
@@ -27,9 +35,9 @@ export default function AddPaymentMethod({ userId }) {
         createPaymethodFn({ 
             userId,
             paymethod: {
-                cardNumber: cardNumber,
-                type: cardType,
-                monitored: monitored === 'true' ? true : false,
+                cardNumber: paymethodData.cardNumber,
+                type: paymethodData.cardType,
+                monitored: paymethodData.monitored === 'true' ? true : false,
             }
         })
          .then(() => {
@@ -54,8 +62,8 @@ export default function AddPaymentMethod({ userId }) {
                     <input
                         type='text'
                         name='cardholder-name'
-                        value={cardholderName}
-                        onChange={e => setCardholderName(e.target.value)}
+                        value={paymethodData.cardholderName}
+                        onChange={e => {updateFields({cardholderName: e.target.value})}}
                         placeholder='John M. Doe'
                         autoComplete='cc-name'
                     />
@@ -65,8 +73,8 @@ export default function AddPaymentMethod({ userId }) {
                     <select
                         type='text'
                         name='monitored'
-                        value={monitored}
-                        onChange={e => setMonitored(e.target.value)}
+                        value={paymethodData.monitored}
+                        onChange={e => {updateFields({monitored: e.target.value})}}
                         required
                     >
                         <option value='false'>No</option>
@@ -78,8 +86,8 @@ export default function AddPaymentMethod({ userId }) {
                     <input
                         type='text'
                         name='card-type'
-                        value={cardType}
-                        onChange={e => setCardType(e.target.value)}
+                        value={paymethodData.cardType}
+                        onChange={e => {updateFields({cardType: e.target.value})}}
                         placeholder='Visa'
                         autoComplete='cc-type'
                         required
@@ -90,20 +98,20 @@ export default function AddPaymentMethod({ userId }) {
                     <input
                         type='text'
                         name='card-number'
-                        value={cardNumber}
-                        onChange={e => setCardNumber(e.target.value)}
+                        value={paymethodData.cardNumber}
+                        onChange={e => {updateFields({cardNumber: e.target.value})}}
                         placeholder='1111-2222-3333-4444'
                         autoComplete='cc-number'
                         required
                     />
                 </div>
-                {/* <div className='input-container'>
+                <div className='input-container'>
                     <label htmlFor="expiry-date">Expiry date</label>
                     <input
                         type='text'
                         name='expiry-date'
-                        value={expiryDate}
-                        onChange={e => setExpiryDate(e.target.value)}
+                        value={paymethodData.expiryDate}
+                        onChange={e => {updateFields({expiryDate: e.target.value})}}
                         placeholder='01/22'
                         autoComplete='cc-exp'
                     />
@@ -113,8 +121,8 @@ export default function AddPaymentMethod({ userId }) {
                     <input
                         type='text'
                         name='security-code'
-                        value={securityCode}
-                        onChange={e => setSecurityCode(e.target.value)}
+                        value={paymethodData.securityCode}
+                        onChange={e => {updateFields({securityCode: e.target.value})}}
                         placeholder='123'
                         autoComplete='cc-csc'
                     />
@@ -124,8 +132,8 @@ export default function AddPaymentMethod({ userId }) {
                     <input
                         type='text'
                         name='postcode'
-                        value={postcode}
-                        onChange={e => setPostcode(e.target.value)}
+                        value={paymethodData.postcode}
+                        onChange={e => {updateFields({postcode: e.target.value})}}
                         placeholder='AB1 2CD'
                         autoComplete='postal-code'
                     />
@@ -135,12 +143,12 @@ export default function AddPaymentMethod({ userId }) {
                     <input
                         type='text'
                         name='country'
-                        value={country}
-                        onChange={e => setCountry(e.target.value)}
+                        value={paymethodData.country}
+                        onChange={e => {updateFields({country: e.target.value})}}
                         placeholder='United Kingdom'
                         autoComplete='country'
                     />
-                </div> */}
+                </div>
 
                 <div className='transaction-form-section button-section  full-width'>
                     <p className={`error-msg ${!error ? "hide" : ""}`}>{error}</p>
