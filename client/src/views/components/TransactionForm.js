@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { roundUp } from '../../util/roundUp';
 
 export function TransactionForm({
@@ -22,7 +23,15 @@ export function TransactionForm({
 
     const [transactionData, setTransactionData] = useState(initialData.transaction);
 
+    const navigate = useNavigate();
+
     function updateFields(fields) {    
+        if (fields.paymethodId && fields.paymethodId === 'add-new') {
+            if (window.confirm("Do you want to leave this page?")) {
+                navigate('/settings/payment-methods/add-new');
+            }
+            return;
+        }
         setTransactionData(prev => {
             return { ...prev, ...fields }
         })
@@ -97,9 +106,13 @@ export function TransactionForm({
                                         value={method.id}
                                     >{method.type} ending {method.cardNumber.slice(-4)}</option>
                                 )}
+                                <option value='add-new'>Add new payment method</option>
                             </select>
                         ) : (
-                            <p>No payment methods</p>
+                            <p>No payment methods, <Link 
+                                to='/settings/payment-methods/add-new'
+                                className='link'
+                            >click here to add one</Link></p>
                         )}
                 </div>
 
