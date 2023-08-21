@@ -45,7 +45,6 @@ export default function CompanyDetailsSettings({
     function handleSubmit(e) {
         e.preventDefault();
         if (allFieldsAreEmptyExceptId(companyData)) {
-            console.log("Remove user from company")
             onSubmit({
                 updateFn: updateUserFn, 
                 args: { 
@@ -55,7 +54,6 @@ export default function CompanyDetailsSettings({
                 confirmMessage: "Are you sure you want to remove yourself from this company?"
             });
         } else {
-            console.log("Create or update user from company")
             onSubmit({
                 updateFn: user?.company ? updateCompanyFn : createCompanyFn, 
                 args: { 
