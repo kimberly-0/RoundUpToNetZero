@@ -33,11 +33,11 @@ export default function TransactionHistory({ userId }) {
 
             <div className='page-header'>
                 <div className='page-header__info'>
-                    <div className='balanace-info coloured'>
+                    <div className='balance-info coloured'>
                         <h6 className='balance-info__label'>Net Zero Fund</h6>
                         <p className='balance-info__amount'>£{typeof (totalNZFundContribution - totalInvested) === 'number' ? (totalNZFundContribution - totalInvested)?.toFixed(2) : 0}</p>
                     </div>
-                    <div className='balanace-info'>
+                    <div className='balance-info'>
                         <h6 className='balance-info__label'>Total contributions</h6>
                         <p className='balance-info__amount'>£{typeof totalNZFundContribution === 'number' ? totalNZFundContribution?.toFixed(2) : 0}</p>
                     </div>
@@ -64,17 +64,17 @@ export default function TransactionHistory({ userId }) {
                 </div>
             </div>
 
-            <div className='page-table-container component-container'>
+            <div className='page-table-container component-container transactions-page-table'>
                 {transactions?.length > 0 ? (
                     <table>
                         <thead>
                             <tr className='top-row'>
-                                <th>Date</th>
-                                <th>Amount</th>
-                                <th>Rounded up</th>
-                                <th>Added to NZF</th>
-                                <th>Payment method</th>
-                                <th>Description</th>
+                                <th className='column-date'>Date</th>
+                                <th className='column-amount'>Amount</th>
+                                <th className='column-rounded-amount'>Rounded up</th>
+                                <th className='column-contribution'>Added to NZF</th>
+                                <th className='column-payment-method'>Payment method</th>
+                                <th className='column-description'>Description</th>
                             </tr>
                         </thead>
                         <tbody className='transaction-history-table-body'>
@@ -84,12 +84,12 @@ export default function TransactionHistory({ userId }) {
                                     onClick={() => viewTransaction(transaction)}
                                     className='link-effect'
                                 >
-                                    <td>{parseDate(transaction.date)}</td>
-                                    <td>£{Number(transaction.amount)}</td>
-                                    <td>£{transaction.roundedAmount}</td>
-                                    <td>£{Number(transaction.fundContribution).toFixed(2)}</td>
-                                    <td>{transaction.paymethod.type} ending in {transaction.paymethod.cardNumber.slice(-4)}</td>
-                                    <td>{transaction.description}</td>
+                                    <td className='column-date'>{parseDate(transaction.date)}</td>
+                                    <td className='column-amount'>£{Number(transaction.amount)}</td>
+                                    <td className='column-rounded-amount'>£{transaction.roundedAmount}</td>
+                                    <td className='column-contribution'>£{Number(transaction.fundContribution).toFixed(2)}</td>
+                                    <td className='column-payment-method'>{transaction.paymethod.type} ending in {transaction.paymethod.cardNumber.slice(-4)}</td>
+                                    <td  className='column-description'>{transaction.description}</td>
                                 </tr>
                             )}
                         </tbody>

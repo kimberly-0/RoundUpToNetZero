@@ -124,7 +124,7 @@ export default function ContributionsGraph({ userId }) {
 
             {contributionsPerMonth?.length > 0 ? (
                 <div className='graph-container'>
-                    <Line options={options} data={data} />
+                    <Line options={options} data={data} width={100} />
                 </div>
             ) : (
                 <p>You haven't made any contributions in the last 12 months</p>

@@ -1,6 +1,6 @@
-export default function MoneyBalance({ balances, isColoured }) {
+export default function MoneyBalance({ balances, isColoured, className }) {
     return (
-        <div className={`component-container balance-container ${isColoured ? "coloured" : ""}`}>
+        <div className={`component-container balance-container ${isColoured ? "coloured" : ""} ${className}`}>
             {balances.map((balance, i) => {
                 return (
                     <div key={i}>

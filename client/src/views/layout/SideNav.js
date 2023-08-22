@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { BiTachometer, BiDollar, BiLeaf, BiShoppingBag, BiCog, BiLogOut } from "react-icons/bi";
 
 function SideNav() {
     return (
@@ -10,7 +11,8 @@ function SideNav() {
                         isPending ? 'pending' : isActive ? 'active' : ''
                     }
                 >
-                    Dashboard
+                    <p className='side-nav__icon'><BiTachometer /></p>
+                    <p className='side-nav__text'>Dashboard</p>
                 </NavLink>
 
                 <NavLink 
@@ -19,7 +21,8 @@ function SideNav() {
                         isPending ? 'pending' : isActive ? 'active' : ''
                     }
                 >
-                    Transaction history
+                    <p className='side-nav__icon'><BiDollar /></p>
+                    <p className='side-nav__text'>Transaction history</p>
                 </NavLink>
                 <NavLink 
                     to='/investment-history'
@@ -27,7 +30,8 @@ function SideNav() {
                         isPending ? 'pending' : isActive ? 'active' : ''
                     }
                 >
-                    Investment history
+                    <p className='side-nav__icon'><BiLeaf /></p>
+                    <p className='side-nav__text'>Investment history</p>
                 </NavLink>
                 <NavLink 
                     to='/invest'
@@ -35,7 +39,8 @@ function SideNav() {
                         isPending ? 'pending' : isActive ? 'active' : ''
                     }
                 >
-                    Invest now
+                    <p className='side-nav__icon'><BiShoppingBag /></p>
+                    <p className='side-nav__text'>Invest now</p>
                 </NavLink>
             </div>
 
@@ -46,7 +51,8 @@ function SideNav() {
                         isPending ? 'pending' : isActive ? 'active' : ''
                     }
                 >
-                    Settings
+                    <p className='side-nav__icon'><BiCog /></p>
+                    <p className='side-nav__text'>Settings</p>   
                 </NavLink>
                 <NavLink 
                     to='/log-in'
@@ -55,7 +61,8 @@ function SideNav() {
                     }
                     onClick={() => localStorage.clear()}
                 >
-                    Log out
+                    <p className='side-nav__icon'><BiLogOut /></p>
+                    <p className='side-nav__text'>Log out</p>
                 </NavLink>
             </div>
         </nav>            

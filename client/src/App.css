@@ -124,9 +124,10 @@ body {
   max-width: fit-content;
   padding: 1.5rem;
   background-color: var(--white);
+  transition: all 0.1s ease-out;
 }
 
-.side-nav__top {
+.side-nav__top, .side-nav__bottom {
   display: flex;
   flex-direction: column;
   gap: .8rem;
@@ -149,6 +150,21 @@ body {
   background-color: var(--blue-grey);
 }
 
+.side-nav a p {
+  padding: 0;
+  margin: 0;
+}
+
+.side-nav__icon {
+  display: none !important;
+  vertical-align: middle;
+  font-size: 1.5rem;
+}
+
+.side-nav__text {
+  display: inline-block !important;
+}
+
 .settings-nav {
   display: flex;
   flex-direction: row;
@@ -159,6 +175,25 @@ body {
 .settings-nav a:hover {
   background-color: var(--light-green);
   color: var(--dark-green);
+}
+
+@media only screen and (max-width: 600px) {
+  .side-nav {
+    padding: 1.5rem 1rem;
+  }
+
+  .side-nav__icon {
+    display: inline-block !important;
+  }
+
+  .side-nav__text {
+    display: none !important;
+  }
+
+  .settings-nav {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }
 
 /* -------- Pages -------- */
@@ -172,7 +207,6 @@ body {
   display: flex;
   flex-direction: row;
   gap: 1.5rem;
-  /* flex-grow: 1; */
 }
 
 .columns>:first-child {
@@ -192,20 +226,27 @@ body {
   }
 }
 
+@media only screen and (max-width: 900px) {
+  .columns {
+    flex-direction: column;
+  }
+}
+
 .page-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   font-weight: 600;
+  gap: 1rem;
 }
 
-.page-header__info {
+.page-header__info, .page-header__buttons {
     display: flex;
     flex-direction: row;
     gap: 1rem;
 }
 
-.balanace-info {
+.balance-info {
   display: flex;
   flex-direction: row;
   gap: 1rem;
@@ -221,16 +262,16 @@ body {
   font-size: 1rem;
 }
 
-.balanace-info.coloured {
+.balance-info.coloured {
   background-color: var(--green);
   color: var(--white);
 }
 
-.balanace-info.coloured .balance-info__label {
+.balance-info.coloured .balance-info__label {
   color: var(--light-green);
 }
 
-.balanace-info.coloured .balance-info__amount {
+.balance-info.coloured .balance-info__amount {
   font-weight: 700;
 }
 
@@ -253,6 +294,8 @@ body {
 
 .icon-button {
   padding: .7rem .9rem;
+  vertical-align: middle;
+  align-self: center;
 }
 
 .coloured {
@@ -272,6 +315,22 @@ body {
 
 .icon-button.red {
   color: var(--red);
+}
+
+@media only screen and (max-width: 1000px) {
+  .page-header__info {
+    flex-direction: column;
+  }
+
+  .page-header__buttons {
+    flex-direction: column-reverse;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .page-header {
+    flex-direction: column;
+  }
 }
 
 /* -------- Components -------- */
@@ -358,6 +417,32 @@ table .align-right {
   text-align: center;
 }
 
+@media only screen and (max-width: 600px) {
+  .component-container .column-amount {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .transactions-page-table .column-amount, .transactions-page-table .column-payment-method {
+    display: none;
+  }
+
+  .investment-history-page-table .column-benefit {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .transactions-page-table .column-contribution {
+    display: none;
+  }
+
+  .investment-history-page-table .column-impact {
+    display: none;
+  }
+}
+
 .balance-container div {
   flex-grow: 1;
   flex-shrink: 1;
@@ -391,6 +476,32 @@ table .align-right {
 .balance-container.coloured .balance-amount {
   color: white;  
   font-weight: bold;
+}
+
+@media only screen and (max-width: 900px) {
+  .balance-container {
+    flex-direction: column;
+    text-align: left;
+    gap: 1rem;
+  }
+
+  .balance-container div {
+    flex-direction: row;
+  }
+
+  .balance-container .balance-title {
+    margin: 0.2rem 0;
+  }
+
+  .balance-container .balance-amount {
+    font-size: 1rem;
+    align-self: center;
+    margin-left: .8rem;
+  }
+
+  /* .balance-container:not(.main-balance) {
+    display: none;
+  } */
 }
 
 .impact-icon.high {
@@ -429,13 +540,10 @@ table .align-right {
 
 .contributions-graph-container {
   flex-grow: 1;
-  /* height: 100%; */
 }
 
 .graph-container canvas {
-  /* max-height: 15rem; */
   max-height: 20rem;
-  /* height: 100%; */
 }
 
 .products-container {
@@ -664,9 +772,16 @@ input, select {
   grid-column: 1/3;
 }
 
-/* .paymethods-container {
-  max-width: 550px;
-} */
+@media only screen and (max-width: 600px) {
+  .settings-form, .add-paymethod-form {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.paymethods-container {
+  margin-bottom: 2.5rem;
+}
 
 .paymethods-label-container,
 .paymethods-list-item-box {
@@ -675,20 +790,21 @@ input, select {
   display: grid;
   gap: 1.5rem;
   grid-auto-rows: 1fr;
-  grid-template-columns: 3fr 2fr 1fr;
+  grid-template-columns: 4fr 2fr 1fr;
   padding: 0;
 }
 
-@media only screen and (max-width: 650px) {
+@media only screen and (max-width: 700px) {
   .paymethods-label-container,
   .paymethods-list-item-box {
-    grid-template-columns: 3fr 1fr !important;
+    grid-template-columns: 5fr 1fr 1fr !important;
   }
 }
 
 .paymethods-list-item-box li {
   margin-left: 2rem;
   padding-left: .5rem;
+  align-self: center;
 }
 
 .paymethods-list-item-box input[type='checkbox'] {
