@@ -23,6 +23,7 @@ export default function LogIn({ setToken, setUserId }) {
     const [password, setPassword] = useState('');
 
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     useEffect(() => {
         setError('');
@@ -33,6 +34,7 @@ export default function LogIn({ setToken, setUserId }) {
         localStorage.clear();
         await loginUser({ email, password })
         .then(data => {
+            setSuccess('Success');
             setToken(data.token);
             setUserId(data.userId);
             setError('');
@@ -42,6 +44,7 @@ export default function LogIn({ setToken, setUserId }) {
         })
         .catch(error => {
             setError(error);
+            setSuccess('');
         });
     }
 
@@ -85,6 +88,7 @@ export default function LogIn({ setToken, setUserId }) {
 
                             <div className='button-section'>
                                 <p className={`error-msg ${!error ? "hide" : ""}`}>{error}</p>
+                                <p className={`success-msg ${!success ? "hide" : ""}`}>{success}</p>
 
                                 <button 
                                     className='form-button rounded-button coloured' 
