@@ -31,10 +31,10 @@ export default function TransactionHistory({ userId }) {
                 <table>
                     <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>Rounded up</th>
-                            <th>Added to NZF</th>
+                            <th className='column-date'>Date</th>
+                            <th className='column-amount'>Amount</th>
+                            <th className='column-rounded-amount'>Rounded up</th>
+                            <th className='column-contribution'>Added to NZF</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,10 +44,10 @@ export default function TransactionHistory({ userId }) {
                                 onClick={() => viewTransaction(transaction)}
                                 className='link-effect'
                             >
-                                <td>{parseDate(transaction.date)}</td>
-                                <td>£{Number(transaction.amount).toFixed(2)}</td>
-                                <td>£{transaction.roundedAmount}</td>
-                                <td>£{Number(transaction.fundContribution).toFixed(2)}</td>
+                                <td className='column-date'>{parseDate(transaction.date)}</td>
+                                <td className='column-amount'>£{Number(transaction.amount).toFixed(2)}</td>
+                                <td className='column-rounded-amount'>£{transaction.roundedAmount}</td>
+                                <td className='column-contribution'>£{Number(transaction.fundContribution).toFixed(2)}</td>
                             </tr>
                         )}
                     </tbody>

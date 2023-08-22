@@ -95,7 +95,7 @@ export default function PaymentMethodsSettings({
                                             disabled={loadingUpdate}
                                         ></input>
                                         <button 
-                                            className='form-button rounded-button icon-button red' 
+                                            className='rounded-button icon-button red' 
                                             type='button'
                                             onClick={() => onPaymethodDelete(paymethod.id)}
                                             disabled={loadingDelete}

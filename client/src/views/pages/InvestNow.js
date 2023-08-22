@@ -27,7 +27,7 @@ export default function InvestNow({ userId }) {
 
             <div className='page-header'>
                 <div className='page-header__info'>
-                    <div className='balanace-info coloured'>
+                    <div className='balance-info coloured'>
                         <h6 className='balance-info__label'>Net Zero Fund</h6>
                         <p className='balance-info__amount'>£{typeof (totalNZFundContribution - totalInvested) === 'number' ? (totalNZFundContribution - totalInvested)?.toFixed(2) : 0}</p>
                     </div>

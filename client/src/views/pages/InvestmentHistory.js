@@ -25,7 +25,7 @@ export default function InvestmentHistory({ userId }) {
 
             <div className='page-header'>
                 <div className='page-header__info'>
-                    <div className='balanace-info'>
+                    <div className='balance-info'>
                         <h6 className='balance-info__label'>Total invested</h6>
                         <p className='balance-info__amount'>£{typeof totalInvested === 'number' ? totalInvested?.toFixed(2) : 0}</p>
                     </div>
@@ -52,26 +52,26 @@ export default function InvestmentHistory({ userId }) {
                 </div>
             </div>
 
-            <div className='page-table-container component-container'>
+            <div className='page-table-container component-container investment-history-page-table'>
                 {purchases?.length > 0 ? (
                     <table>
                         <thead>
                             <tr className='top-row'>
-                                <th>Date</th>
-                                <th>Description</th>
-                                <th>Benefit</th>
-                                <th>Price</th>
-                                <th>Impact</th>
+                                <th className='column-date'>Date</th>
+                                <th className='column-description'>Description</th>
+                                <th className='column-benefit'>Benefit</th>
+                                <th className='column-price'>Price</th>
+                                <th className='column-impact'>Impact</th>
                             </tr>
                         </thead>
                         <tbody>
                             {sortPurchasesBy(purchases, sortType).map(purchase => 
                                 <tr key={purchase.id}>
-                                    <td>{parseDate(purchase.date)}</td>
-                                    <td>{purchase.investment.description}</td>
-                                    <td>{purchase.investment.benefit}</td>
-                                    <td>{purchase.pricePaid && `£${Number(purchase.pricePaid)?.toFixed(2)}`}</td>
-                                    <td>{purchase.investment.impact && <p className={`impact-label ${purchase.investment.impact}`}>{purchase.investment.impact}</p>}</td>
+                                    <td className='column-date'>{parseDate(purchase.date)}</td>
+                                    <td className='column-description'>{purchase.investment.description}</td>
+                                    <td className='column-benefit'>{purchase.investment.benefit}</td>
+                                    <td className='column-price'>{purchase.pricePaid && `£${Number(purchase.pricePaid)?.toFixed(2)}`}</td>
+                                    <td className='column-impact'>{purchase.investment.impact && <p className={`impact-label ${purchase.investment.impact}`}>{purchase.investment.impact}</p>}</td>
                                 </tr>
                             )}
                         </tbody>

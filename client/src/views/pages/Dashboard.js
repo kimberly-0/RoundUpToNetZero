@@ -20,8 +20,9 @@ function Dashboard({ userId }) {
         <Layout>
             <h2 className='page-title'>Dashboard</h2>
 
-            <div className='columns'>
+            <div className='columns balance-columns'>
                 <MoneyBalance 
+                    className='main-balance'
                     balances={[{
                         title: 'Net Zero Fund',
                         amount: (totalNZFundContribution - totalInvested) || null
